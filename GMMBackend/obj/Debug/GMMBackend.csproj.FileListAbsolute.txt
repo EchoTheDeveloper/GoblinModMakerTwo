@@ -1,0 +1,6 @@
+D:\RiderProjs\GoblinModMaker\GMMBackend\bin\Debug\GMMBackend.dll
+D:\RiderProjs\GoblinModMaker\GMMBackend\bin\Debug\GMMBackend.pdb
+D:\RiderProjs\GoblinModMaker\GMMBackend\obj\Debug\GMMBackend.csproj.AssemblyReference.cache
+D:\RiderProjs\GoblinModMaker\GMMBackend\obj\Debug\GMMBackend.csproj.CoreCompileInputs.cache
+D:\RiderProjs\GoblinModMaker\GMMBackend\obj\Debug\GMMBackend.dll
+D:\RiderProjs\GoblinModMaker\GMMBackend\obj\Debug\GMMBackend.pdb

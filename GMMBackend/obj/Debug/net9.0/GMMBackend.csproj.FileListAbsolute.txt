@@ -1,5 +1,0 @@
-D:\RiderProjs\GoblinModMaker\GMMBackend\obj\Debug\net9.0\GMMBackend.GeneratedMSBuildEditorConfig.editorconfig
-D:\RiderProjs\GoblinModMaker\GMMBackend\obj\Debug\net9.0\GMMBackend.AssemblyInfoInputs.cache
-D:\RiderProjs\GoblinModMaker\GMMBackend\obj\Debug\net9.0\GMMBackend.AssemblyInfo.cs
-D:\RiderProjs\GoblinModMaker\GMMBackend\obj\Debug\net9.0\GMMBackend.csproj.CoreCompileInputs.cache
-D:\RiderProjs\GoblinModMaker\GMMBackend\obj\Debug\net9.0\GMMBackend.sourcelink.json

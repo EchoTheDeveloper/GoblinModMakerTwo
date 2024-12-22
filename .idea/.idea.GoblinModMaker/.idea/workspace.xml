@@ -9,7 +9,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/net9.0/GMMBackend.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/net9.0/GMMBackend.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/net9.0/GMMBackend.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/net9.0/GMMBackend.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/net9.0/GMMBackend.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/net9.0/GMMBackend.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/Resources.Inputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/Resources.Inputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,6 +128,7 @@
       <workItem from="1734868098891" duration="192000" />
       <workItem from="1734868349304" duration="2524000" />
       <workItem from="1734876415399" duration="1111000" />
+      <workItem from="1734908142436" duration="64000" />
     </task>
     <task id="LOCAL-00001" summary="Changed simple stuff">
       <option name="closed" value="true" />
