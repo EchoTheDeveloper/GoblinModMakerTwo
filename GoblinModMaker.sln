@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMMLauncher", "GMMLauncher\GMMLauncher.csproj", "{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMMBackend", "GMMBackend\GMMBackend.csproj", "{C50C1325-8D4D-4A53-8CE7-FF889C7EE015}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50C1325-8D4D-4A53-8CE7-FF889C7EE015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C50C1325-8D4D-4A53-8CE7-FF889C7EE015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C50C1325-8D4D-4A53-8CE7-FF889C7EE015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C50C1325-8D4D-4A53-8CE7-FF889C7EE015}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
