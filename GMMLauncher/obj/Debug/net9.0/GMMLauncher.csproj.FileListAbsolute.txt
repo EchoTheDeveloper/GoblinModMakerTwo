@@ -69,3 +69,4 @@ D:\RiderProjs\GoblinModMaker\GMMLauncher\bin\Debug\net9.0\DynamicData.dll
 D:\RiderProjs\GoblinModMaker\GMMLauncher\bin\Debug\net9.0\ReactiveUI.dll
 D:\RiderProjs\GoblinModMaker\GMMLauncher\bin\Debug\net9.0\Splat.dll
 D:\RiderProjs\GoblinModMaker\GMMLauncher\bin\Debug\net9.0\System.Reactive.dll
+D:\RiderProjs\GoblinModMaker\GMMLauncher\obj\Debug\net9.0\GMMLauncher.sourcelink.json
