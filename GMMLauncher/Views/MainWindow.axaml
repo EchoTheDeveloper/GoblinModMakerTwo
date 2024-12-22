@@ -152,7 +152,7 @@
                             <StackPanel>
                                 <PathIcon Data="{StaticResource document_regular}"
                                          Width="32" Height="32" />
-                                <TextBlock Text="Open GMM File"
+                                <TextBlock Text="Open From File"
                                          FontSize="18"
                                          Margin="0,10"/>
                             </StackPanel>

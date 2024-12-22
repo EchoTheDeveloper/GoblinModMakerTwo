@@ -8,7 +8,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="" />
+    <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/avalonia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/avalonia.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,10 +21,26 @@
   <component name="DpaMonitoringSettings">
     <option name="firstShow" value="false" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "EchoTheDeveloper"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/EchoTheDeveloper/GoblinModMakerTwo.git",
+    "accountId": "6da991ee-1c94-4243-b8f0-21f40b22d47a"
+  }
+}]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 6
 }]]></component>
   <component name="ProjectId" id="2qY7qloBhORbw8bJTeWWPfvC9ry" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -29,6 +49,7 @@
   "keyToString": {
     ".NET Project.GMMLauncher.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -84,7 +105,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1734827853096</updated>
-      <workItem from="1734827854423" duration="2031000" />
+      <workItem from="1734827854423" duration="2273000" />
     </task>
     <servers />
   </component>
