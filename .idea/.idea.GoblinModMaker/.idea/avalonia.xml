@@ -3,6 +3,7 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="GMMLauncher/App.axaml" value="GMMLauncher/GMMLauncher.csproj" />
         <entry key="GMMLauncher/Views/MainWindow.axaml" value="GMMLauncher/GMMLauncher.csproj" />
       </map>
     </option>
