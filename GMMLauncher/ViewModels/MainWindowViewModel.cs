@@ -4,6 +4,7 @@ using System.Reactive;
 using ReactiveUI;
 using Avalonia;
 using Avalonia.Threading;
+using GMMBackend
 
 namespace GMMLauncher.ViewModels
 {
