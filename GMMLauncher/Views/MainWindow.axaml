@@ -111,7 +111,10 @@
                                 <PathIcon Data="{StaticResource document_add_regular}"
                                          Width="32" Height="32" />
                                 <TextBlock Text="Create New Project"
-                                         FontSize="18"
+										 HorizontalAlignment="Center"
+										 VerticalAlignment="Center"
+										 Foreground="White"
+                                         FontSize="20"
                                          Margin="0,10"/>
                             </StackPanel>
                         </Button>
@@ -125,7 +128,10 @@
                                 <PathIcon Data="{StaticResource folder_open_regular}"
                                          Width="32" Height="32" />
                                 <TextBlock Text="Open Existing Project"
-                                         FontSize="18"
+										 HorizontalAlignment="Center"
+										 VerticalAlignment="Center"
+										 Foreground="White"
+                                         FontSize="20"
                                          Margin="0,10"/>
                             </StackPanel>
                         </Button>
@@ -139,7 +145,10 @@
                                 <PathIcon Data="{StaticResource settings_regular}"
                                          Width="32" Height="32" />
                                 <TextBlock Text="Settings"
-                                         FontSize="18"
+										 HorizontalAlignment="Center"
+										 VerticalAlignment="Center"
+										 Foreground="White"
+                                         FontSize="20"
                                          Margin="0,10"/>
                             </StackPanel>
                         </Button>
@@ -153,7 +162,10 @@
                                 <PathIcon Data="{StaticResource document_regular}"
                                          Width="32" Height="32" />
                                 <TextBlock Text="Open From File"
-                                         FontSize="18"
+										 HorizontalAlignment="Center"
+										 VerticalAlignment="Center"
+										 Foreground="White"
+                                         FontSize="20"
                                          Margin="0,10"/>
                             </StackPanel>
                         </Button>
