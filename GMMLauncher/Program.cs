@@ -1,21 +1,28 @@
 ﻿using Avalonia;
 using System;
+using GMMBackend;
 
-namespace GMMLauncher;
-
-sealed class Program
+namespace GMMLauncher
 {
-    // Initialization code. Don't use any Avalonia, third-party APIs or any
-    // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-    // yet and stuff might break.
-    [STAThread]
-    public static void Main(string[] args) => BuildAvaloniaApp()
-        .StartWithClassicDesktopLifetime(args);
+    sealed class Program
+    {
+        // Main method
+        [STAThread]
+        public static void Main(string[] args)
+        {
+            Logger.LogInfo("Starting GMMLauncher");
+            Logger.LogWarning("Using InfDev");
 
-    // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
-            .UsePlatformDetect()
-            .WithInterFont()
-            .LogToTrace();
+            // Build and start the Avalonia application
+            BuildAvaloniaApp()
+                .StartWithClassicDesktopLifetime(args);
+        }
+
+        // Avalonia configuration, don't remove; also used by visual designer.
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .WithInterFont()
+                .LogToTrace();
+    }
 }
