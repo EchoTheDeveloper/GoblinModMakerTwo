@@ -8,25 +8,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="Changed simple stuff">
+    <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="made exit button work">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/MainWindowViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/MainWindowViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.exe" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/net9.0/GMMBackend.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/net9.0/GMMBackend.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/net9.0/GMMBackend.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/net9.0/GMMBackend.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/apphost.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/ref/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/ref/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/Avalonia/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/Avalonia/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/GMMLauncher.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +61,11 @@
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "AiIgnore"
+    ]
   }
 }]]></component>
   <component name="RunManager" selected=".NET Project.GMMLauncher">
@@ -121,7 +114,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1734827853096</updated>
-      <workItem from="1734827854423" duration="2769000" />
+      <workItem from="1734827854423" duration="3039000" />
     </task>
     <task id="LOCAL-00001" summary="Changed simple stuff">
       <option name="closed" value="true" />
@@ -131,7 +124,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734830169657</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="made exit button work">
+      <option name="closed" value="true" />
+      <created>1734830670631</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1734830670631</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,6 +143,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Changed simple stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed simple stuff" />
+    <MESSAGE value="made exit button work" />
+    <option name="LAST_COMMIT_MESSAGE" value="made exit button work" />
   </component>
 </project>
