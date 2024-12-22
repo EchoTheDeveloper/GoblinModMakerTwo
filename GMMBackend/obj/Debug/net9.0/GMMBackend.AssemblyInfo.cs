@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GMMBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a83e6bf999bdabd77836f27ad4e480065bc51668")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+836d2f90c312486757fd008c670ae6bcaa166616")]
 [assembly: System.Reflection.AssemblyProductAttribute("GMMBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GMMBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
