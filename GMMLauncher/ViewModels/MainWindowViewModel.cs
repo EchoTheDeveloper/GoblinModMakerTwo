@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Reactive;
 using ReactiveUI;
 using Avalonia.Threading;
+using System.Reactive;
 
 namespace GMMLauncher.ViewModels
 {
@@ -12,20 +12,11 @@ namespace GMMLauncher.ViewModels
 
         public ReactiveCommand<Unit, Unit> OpenDocumentationCommand { get; }
         public ReactiveCommand<Unit, Unit> QuitAppCommand { get; }
-        
+
         public MainWindowViewModel()
         {
-            OpenDocumentationCommand = ReactiveCommand.Create(() =>
-            {
-                Dispatcher.UIThread.InvokeAsync(OpenDocumentation, DispatcherPriority.Normal);
-                return Unit.Default;
-            });
-
-            QuitAppCommand = ReactiveCommand.Create(() =>
-            {
-                Dispatcher.UIThread.InvokeAsync(QuitApp, DispatcherPriority.Normal);
-                return Unit.Default;
-            });
+            OpenDocumentationCommand = ReactiveCommand.CreateFromTask(async () => await Dispatcher.UIThread.InvokeAsync(OpenDocumentation));
+            QuitAppCommand = ReactiveCommand.CreateFromTask(async () => await Dispatcher.UIThread.InvokeAsync(QuitApp));
         }
 
         private void OpenDocumentation()
