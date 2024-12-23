@@ -42,7 +42,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Exit" Command="{Binding QuitAppCmd}">
+                    <MenuItem Header="_Exit" Command="{Binding QuitAppCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource dismiss_regular}" />
                         </MenuItem.Icon>
