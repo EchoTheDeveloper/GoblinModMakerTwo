@@ -12,7 +12,7 @@ namespace GMMLauncher.ViewModels
 
         public ReactiveCommand<Unit, Unit> OpenDocumentationCommand { get; }
         public ReactiveCommand<Unit, Unit> QuitAppCommand { get; }
-
+        
         public MainWindowViewModel()
         {
             OpenDocumentationCommand = ReactiveCommand.Create(() =>
