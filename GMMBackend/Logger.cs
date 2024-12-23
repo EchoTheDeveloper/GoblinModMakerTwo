@@ -51,8 +51,11 @@ namespace GMMBackend
 
         public static void LogTrace(string message)
         {
-            var callerLine = new System.Diagnostics.StackTrace(true).GetFrame(1).GetFileLineNumber();
-            WriteLog("TRACE:", $"{message} (Line: {callerLine})");
+            var stackTrace = new System.Diagnostics.StackTrace(true);
+            var callerLine = stackTrace.GetFrame(1).GetFileLineNumber();
+            var callerFile = stackTrace.GetFrame(1).GetFileName();
+            WriteLog("TRACE:", $"{message} \n From: [File: {callerFile} | Line: {callerLine}]");
+
         }
 
         public static void LogWarning(string message)
