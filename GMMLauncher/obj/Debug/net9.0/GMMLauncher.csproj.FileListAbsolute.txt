@@ -72,6 +72,3 @@ D:\RiderProjs\GoblinModMaker\GMMLauncher\bin\Debug\net9.0\System.Reactive.dll
 D:\RiderProjs\GoblinModMaker\GMMLauncher\obj\Debug\net9.0\GMMLauncher.sourcelink.json
 D:\RiderProjs\GoblinModMaker\GMMLauncher\bin\Debug\net9.0\GMMBackend.dll
 D:\RiderProjs\GoblinModMaker\GMMLauncher\bin\Debug\net9.0\GMMBackend.pdb
-D:\RiderProjs\GoblinModMaker\GMMLauncher\obj\Debug\net9.0\GMMLauncher.dll
-D:\RiderProjs\GoblinModMaker\GMMLauncher\obj\Debug\net9.0\refint\GMMLauncher.dll
-D:\RiderProjs\GoblinModMaker\GMMLauncher\obj\Debug\net9.0\GMMLauncher.pdb
