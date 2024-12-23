@@ -12,6 +12,7 @@ namespace GMMLauncher
             Logger.LogInfo("Starting GMMLauncher");
             Logger.LogInfo("GMMLauncher v1.0.0-alpha1");
             Logger.LogWarning("Using Development Build");
+            Logger.LogTrace("TraceTest - should be Program.cs line 15");
 
             // Build and start the Avalonia application
             BuildAvaloniaApp()
