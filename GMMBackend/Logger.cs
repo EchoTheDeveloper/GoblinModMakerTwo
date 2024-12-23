@@ -36,31 +36,31 @@ namespace GMMBackend
 
         public static void Log(string message)
         {
-            WriteLog("LOG", message);
+            WriteLog("LOG:", message);
         }
 
         public static void LogError(string message)
         {
-            WriteLog("ERROR", message);
+            WriteLog("ERROR:", message);
         }
 
         public static void LogInfo(string message)
         {
-            WriteLog("INFO", message);
+            WriteLog("INFO:", message);
         }
 
         public static void LogTrace(string message)
         {
             var callerLine = new System.Diagnostics.StackTrace(true).GetFrame(1).GetFileLineNumber();
-            WriteLog("TRACE", $"{message} (Line: {callerLine})");
+            WriteLog("TRACE:", $"{message} (Line: {callerLine})");
         }
 
         public static void LogWarning(string message)
         {
-            WriteLog("WARNING", message);
+            WriteLog("WARNING:", message);
         }
 
-        public static void LogFatal(string message, int exitCode = 1)
+        public static async void LogFatal(string message, int exitCode = 1)
         {
             WriteLog("FATAL", message);
             Environment.Exit(exitCode);

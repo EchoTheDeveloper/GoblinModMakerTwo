@@ -6,12 +6,12 @@ namespace GMMLauncher
 {
     sealed class Program
     {
-        // Main method
         [STAThread]
         public static void Main(string[] args)
         {
             Logger.LogInfo("Starting GMMLauncher");
-            Logger.LogWarning("Using InfDev");
+            Logger.LogInfo("GMMLauncher v1.0.0-alpha1");
+            Logger.LogWarning("Using Development Build");
 
             // Build and start the Avalonia application
             BuildAvaloniaApp()

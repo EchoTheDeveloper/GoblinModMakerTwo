@@ -2,32 +2,30 @@
 using System.Diagnostics;
 using System.Reactive;
 using ReactiveUI;
-using Avalonia;
 using Avalonia.Threading;
-using GMMBackend;
 
 namespace GMMLauncher.ViewModels
 {
-    // TODO: This keeps crashing giving an async error but its being called from the correct thread
-
     public partial class MainWindowViewModel : ViewModelBase
     {
-        private readonly string DocumentationURL = "https://github.com/EchoTheDeveloper/Goblin-Mod-Maker/blob/main/DOCUMENTATION.md";
+        private const string DocumentationURL = "https://github.com/EchoTheDeveloper/Goblin-Mod-Maker/blob/main/DOCUMENTATION.md";
 
         public ReactiveCommand<Unit, Unit> OpenDocumentationCommand { get; }
-        public ReactiveCommand<Unit, Unit> QuitAppCmd { get; }
+        public ReactiveCommand<Unit, Unit> QuitAppCommand { get; }
 
         public MainWindowViewModel()
         {
-            OpenDocumentationCommand = ReactiveCommand.CreateFromTask(async () =>
+            OpenDocumentationCommand = ReactiveCommand.Create(() =>
             {
-                await Dispatcher.UIThread.InvokeAsync(OpenDocumentation);
-            }, outputScheduler: RxApp.MainThreadScheduler);
+                Dispatcher.UIThread.InvokeAsync(OpenDocumentation, DispatcherPriority.Normal);
+                return Unit.Default;
+            });
 
-            QuitAppCmd = ReactiveCommand.CreateFromTask(async () =>
+            QuitAppCommand = ReactiveCommand.Create(() =>
             {
-                await Dispatcher.UIThread.InvokeAsync(QuitApp);
-            }, outputScheduler: RxApp.MainThreadScheduler);
+                Dispatcher.UIThread.InvokeAsync(QuitApp, DispatcherPriority.Normal);
+                return Unit.Default;
+            });
         }
 
         private void OpenDocumentation()
