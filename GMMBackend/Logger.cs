@@ -3,34 +3,19 @@ using System.IO;
 
 namespace GMMBackend
 {
-
-    /*
-    Simple logger class that writes log messages to a file.
-    The log is found in appdata/Goblin Mod Maker/LOG.txt
-    I made it to make debugging easier than using Console.WriteLine
-    It also Console.WriteLine the message so you can see it in the console
-    to use it you do not need to make an instance all you need to do is include using GMMbackend; which will most likely be included in the files you need to use it in
-    than just do Logger.Log or all the others.
-    NOTE: Logger.LogTrace will log the line number of the caller
-    NOTE: Logger.LogFatal will log the message and exit the program with exit code 1 (unless we give a seperate exit code)
-     */
-
-    public class Logger
+    public static class Logger
     {
-        private static readonly string logFilePath = Path.Combine(
+        private static readonly string logDirectory = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "Goblin Mod Maker", "LOG.txt");
+            "Goblin Mod Maker");
+
+        private static readonly string logFilePath = Path.Combine(logDirectory, "LOG.txt");
 
         static Logger()
         {
-            string logDirectory = Path.GetDirectoryName(logFilePath);
             if (!Directory.Exists(logDirectory))
             {
                 Directory.CreateDirectory(logDirectory);
-            }
-            if (File.Exists(logFilePath))
-            {
-                File.Delete(logFilePath);
             }
         }
 
@@ -54,8 +39,7 @@ namespace GMMBackend
             var stackTrace = new System.Diagnostics.StackTrace(true);
             var callerLine = stackTrace.GetFrame(1).GetFileLineNumber();
             var callerFile = stackTrace.GetFrame(1).GetFileName();
-            WriteLog("TRACE:", $"{message} \n From: [File: {callerFile} | Line: {callerLine}]");
-
+            WriteLog("TRACE:", $"{message} \nFrom: [File: {callerFile} | Line: {callerLine}]");
         }
 
         public static void LogWarning(string message)
@@ -63,9 +47,9 @@ namespace GMMBackend
             WriteLog("WARNING:", message);
         }
 
-        public static async void LogFatal(string message, int exitCode = 1)
+        public static void LogFatal(string message, int exitCode = 1)
         {
-            WriteLog("FATAL", message);
+            WriteLog("FATAL:", $"{message} SHUTDOWN CAUSED BY A FATAL ERROR. Exit Code: {exitCode}");
             Environment.Exit(exitCode);
         }
 
@@ -73,8 +57,8 @@ namespace GMMBackend
         {
             try
             {
-                string logMessage = $"{DateTime.Now:dd-MM-yyyy ss:mm:HH} [{logType}] {message}";
-                Console.Write(logMessage);
+                string logMessage = $"{DateTime.Now:yyyy-MM-ddTHH:mm:ss.fff} [{logType}] {message}";
+                Console.WriteLine(logMessage);
                 File.AppendAllText(logFilePath, logMessage + Environment.NewLine);
             }
             catch (Exception ex)
