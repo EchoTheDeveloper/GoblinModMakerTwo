@@ -64,11 +64,11 @@
               "DocumentIndex": 1,
               "Title": "Dispatcher.cs",
               "DocumentMoniker": "C:\\Users\\Arda\\AppData\\Local\\Temp\\.vsdbgsrc\\fb6d3f88e02a22992112304e15fd943684665d6124894f2da5b21ce3f04a7f36\\Dispatcher.cs",
-              "ToolTip": "C:\\Users\\Arda\\AppData\\Local\\Temp\\.vsdbgsrc\\fb6d3f88e02a22992112304e15fd943684665d6124894f2da5b21ce3f04a7f36\\Dispatcher.cs [Read Only]",
+              "ToolTip": "C:\\Users\\Arda\\AppData\\Local\\Temp\\.vsdbgsrc\\fb6d3f88e02a22992112304e15fd943684665d6124894f2da5b21ce3f04a7f36\\Dispatcher.cs",
               "ViewState": "AgIAAMUAAAAAAAAAAIAwwN0AAAADAAAAAQAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-23T23:02:56.713Z",
-              "EditorCaption": " [Read Only]"
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -80,8 +80,7 @@
               "RelativeToolTip": "GMMBackend\\Logger.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-22T23:19:56.26Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-22T23:19:56.26Z"
             },
             {
               "$type": "Document",
@@ -126,7 +125,7 @@
               "RelativeDocumentMoniker": "GMMLauncher\\ViewModels\\MainWindowViewModel.cs",
               "ToolTip": "D:\\RiderProjs\\GoblinModMaker\\GMMLauncher\\ViewModels\\MainWindowViewModel.cs",
               "RelativeToolTip": "GMMLauncher\\ViewModels\\MainWindowViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-22T14:43:12.901Z",
               "EditorCaption": ""
@@ -164,8 +163,7 @@
               "RelativeToolTip": "GMMLauncher\\Views\\MainWindow.axaml",
               "ViewState": "AgIAAA4AAAAAAAAAAIA1wCwAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-22T14:33:23.876Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-22T14:33:23.876Z"
             },
             {
               "$type": "Document",
