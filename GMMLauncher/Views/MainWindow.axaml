@@ -172,7 +172,7 @@
                     </Border>
                 </UniformGrid>
 
-                <!-- Bottom Area idk what its called -->
+                <!-- Footer -->
                 <StackPanel Grid.Row="2" 
                           HorizontalAlignment="Center"
                           Spacing="10"
