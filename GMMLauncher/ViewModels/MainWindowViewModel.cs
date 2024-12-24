@@ -3,6 +3,7 @@ using System.Diagnostics;
 using ReactiveUI;
 using Avalonia.Threading;
 using System.Reactive;
+using System.Threading.Tasks;
 
 namespace GMMLauncher.ViewModels
 {
@@ -14,23 +15,34 @@ namespace GMMLauncher.ViewModels
         public ReactiveCommand<Unit, Unit> QuitAppCommand { get; }
 
         public MainWindowViewModel()
-        {
-            OpenDocumentationCommand = ReactiveCommand.CreateFromTask(async () => await Dispatcher.UIThread.InvokeAsync(OpenDocumentation));
-            QuitAppCommand = ReactiveCommand.CreateFromTask(async () => await Dispatcher.UIThread.InvokeAsync(QuitApp));
+        {// im acc so confused rn
+            OpenDocumentationCommand = ReactiveCommand.CreateFromTask(async () => 
+                Dispatcher.UIThread.Post(OpenDocumentation));
+
+            QuitAppCommand = ReactiveCommand.CreateFromTask(async () => 
+                Dispatcher.UIThread.Post(QuitApp));
         }
 
-        private void OpenDocumentation()
+        // The error is somewhere here: I think its due to the async file running on the background thread
+        
+        private async void OpenDocumentation()
         {
-            Process.Start(new ProcessStartInfo
+            await Dispatcher.UIThread.InvokeAsync(() =>
             {
-                FileName = DocumentationURL,
-                UseShellExecute = true
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = DocumentationURL,
+                    UseShellExecute = true
+                });
             });
         }
 
-        private void QuitApp()
+        private async void QuitApp()
         {
-            Environment.Exit(0);
+            await Dispatcher.UIThread.InvokeAsync(() => 
+            {
+                Environment.Exit(0);
+            });
         }
     }
 }
