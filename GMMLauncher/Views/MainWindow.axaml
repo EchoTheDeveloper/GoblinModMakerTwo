@@ -180,6 +180,7 @@
                     <Button Classes="link"
                             Command="{Binding OpenDocumentationCommand}"
                             Content="Need help? Visit our documentation"
+							IsEnabled="True"
                             Foreground="#5EA7FF"/>
                     <Button Classes="link"
                             Content="Report an issue or give feedback"
