@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using ReactiveUI;
+using System.Windows.Input;
 using Avalonia.Threading;
-using System.Reactive;
-using System.Threading.Tasks;
 
 namespace GMMLauncher.ViewModels
 {
@@ -11,38 +9,62 @@ namespace GMMLauncher.ViewModels
     {
         private const string DocumentationURL = "https://github.com/EchoTheDeveloper/Goblin-Mod-Maker/blob/main/DOCUMENTATION.md";
 
-        public ReactiveCommand<Unit, Unit> OpenDocumentationCommand { get; }
-        public ReactiveCommand<Unit, Unit> QuitAppCommand { get; }
+        public ICommand OpenDocumentationCommand { get; }
+        public ICommand QuitAppCommand { get; }
 
         public MainWindowViewModel()
         {// im acc so confused rn
-            OpenDocumentationCommand = ReactiveCommand.CreateFromTask(async () => 
-                Dispatcher.UIThread.Post(OpenDocumentation));
-
-            QuitAppCommand = ReactiveCommand.CreateFromTask(async () => 
-                Dispatcher.UIThread.Post(QuitApp));
+            OpenDocumentationCommand = new RelayCommand(OpenDocumentation);
+            QuitAppCommand = new RelayCommand(QuitApp);
         }
 
         // The error is somewhere here: I think its due to the async file running on the background thread
         
-        private async void OpenDocumentation()
+        private void OpenDocumentation()
         {
-            await Dispatcher.UIThread.InvokeAsync(() =>
+            Dispatcher.UIThread.Post(() =>
             {
-                Process.Start(new ProcessStartInfo
+                try
                 {
-                    FileName = DocumentationURL,
-                    UseShellExecute = true
-                });
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = DocumentationURL,
+                        UseShellExecute = true
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error opening documentation: {ex.Message}");
+                }
             });
         }
 
-        private async void QuitApp()
+        private void QuitApp()
         {
-            await Dispatcher.UIThread.InvokeAsync(() => 
+            Dispatcher.UIThread.Post(() => 
             {
                 Environment.Exit(0);
             });
         }
+    }
+    
+    public class RelayCommand : ICommand
+    {
+        private readonly Action _execute;
+        private readonly Func<bool> _canExecute;
+
+        public RelayCommand(Action execute, Func<bool> canExecute = null)
+        {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute;
+        }
+
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter) => _canExecute?.Invoke() ?? true;
+
+        public void Execute(object parameter) => _execute();
+
+        public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }
