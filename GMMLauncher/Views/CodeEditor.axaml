@@ -1,0 +1,236 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:GMMLauncher.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+        x:Class="GMMLauncher.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Goblin Mod Maker"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <DockPanel Margin="0,30,0,0">
+            <!-- Menu Bar -->
+            <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
+                <MenuItem Header="_File" Foreground="White">
+                    <MenuItem Header="_New Project">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource document_add_regular}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Open Project">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource folder_open_regular}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="_Exit" Command="{Binding QuitAppCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource dismiss_regular}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Version Control" Foreground="White">
+                    <MenuItem Header="_Get from VCS">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource arrow_download_regular}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Settings" Foreground="White">
+                    <MenuItem Header="_Preferences">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource settings_regular}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Help" Foreground="White">
+                    <MenuItem Header="_Documentation">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource book_regular}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_About">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource info_regular}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+
+            <!-- Main -->
+            <Grid Margin="40,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <StackPanel Grid.Row="0" Spacing="10">
+                    <TextBlock Text="Welcome to Goblin Mod Maker"
+                             HorizontalAlignment="Center"
+                             FontSize="32"
+                             FontWeight="Light"
+                             Foreground="White"/>
+                    <TextBlock Text="Create and manage your mods with ease"
+                             HorizontalAlignment="Center"
+                             Opacity="0.7"
+                             Foreground="White"/>
+                </StackPanel>
+
+                <!-- Buttons -->
+                <UniformGrid Grid.Row="1" 
+                            Columns="2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0,40">
+                    <Border Classes="card" Margin="10" Width="280" Height="160">
+                        <Button Classes="action"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">
+                            <StackPanel>
+                                <PathIcon Data="{StaticResource document_add_regular}"
+                                         Width="32" Height="32" />
+                                <TextBlock Text="Create New Project"
+										 HorizontalAlignment="Center"
+										 VerticalAlignment="Center"
+										 Foreground="White"
+                                         FontSize="20"
+                                         Margin="0,10"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+
+                    <Border Classes="card" Margin="10" Width="280" Height="160">
+                        <Button Classes="action"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">
+                            <StackPanel>
+                                <PathIcon Data="{StaticResource folder_open_regular}"
+                                         Width="32" Height="32" />
+                                <TextBlock Text="Open Existing Project"
+										 HorizontalAlignment="Center"
+										 VerticalAlignment="Center"
+										 Foreground="White"
+                                         FontSize="20"
+                                         Margin="0,10"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+
+                    <Border Classes="card" Margin="10" Width="280" Height="160">
+                        <Button Classes="action"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">
+                            <StackPanel>
+                                <PathIcon Data="{StaticResource settings_regular}"
+                                         Width="32" Height="32" />
+                                <TextBlock Text="Settings"
+										 HorizontalAlignment="Center"
+										 VerticalAlignment="Center"
+										 Foreground="White"
+                                         FontSize="20"
+                                         Margin="0,10"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+
+                    <Border Classes="card" Margin="10" Width="280" Height="160">
+                        <Button Classes="action"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">
+                            <StackPanel>
+                                <PathIcon Data="{StaticResource document_regular}"
+                                         Width="32" Height="32" />
+                                <TextBlock Text="Open From File"
+										 HorizontalAlignment="Center"
+										 VerticalAlignment="Center"
+										 Foreground="White"
+                                         FontSize="20"
+                                         Margin="0,10"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+                </UniformGrid>
+
+                <!-- Footer -->
+                <StackPanel Grid.Row="2" 
+                          HorizontalAlignment="Center"
+                          Spacing="10"
+                          Margin="0,20">
+                    <Button Classes="link"
+                            Command="{Binding OpenDocumentationCommand}"
+                            Content="Need help? Visit our documentation"
+							IsEnabled="True"
+                            Foreground="#5EA7FF"/>
+                    <Button Classes="link"
+                            Content="Report an issue or give feedback"
+                            Foreground="#5EA7FF"/>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+    </Panel>
+
+    <Window.Styles>
+        <Style Selector="Button.action">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <ContentPresenter Name="PART_ContentPresenter"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Content="{TemplateBinding Content}"
+                                    Padding="{TemplateBinding Padding}"/>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="Button.action:pointerover">
+            <Setter Property="Background" Value="#20FFFFFF"/>
+        </Style>
+
+        <Style Selector="Button.link">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style Selector="Button.link:pointerover">
+            <Setter Property="Opacity" Value="0.8"/>
+        </Style>
+
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="#30FFFFFF"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="ClipToBounds" Value="True"/>
+        </Style>
+
+        <Style Selector="PathIcon">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Styles>
+</Window>
