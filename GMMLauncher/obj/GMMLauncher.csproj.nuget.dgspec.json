@@ -73,6 +73,10 @@
               "target": "Package",
               "version": "[11.2.1, )"
             },
+            "Avalonia.AvaloniaEdit": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
             "Avalonia.Desktop": {
               "target": "Package",
               "version": "[11.2.1, )"
@@ -88,6 +92,10 @@
             "Avalonia.Themes.Fluent": {
               "target": "Package",
               "version": "[11.2.1, )"
+            },
+            "AvaloniaEdit.TextMate": {
+              "target": "Package",
+              "version": "[11.1.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
