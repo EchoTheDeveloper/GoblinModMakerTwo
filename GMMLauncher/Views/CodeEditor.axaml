@@ -3,9 +3,11 @@
         xmlns:vm="using:GMMLauncher.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+        xmlns:editing="using:AvaloniaEdit.Editing"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
-        x:Class="GMMLauncher.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
+        x:Class="GMMLauncher.Views.CodeEditor"
+        x:DataType="vm:CodeEditorViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="Goblin Mod Maker"
         TransparencyLevelHint="AcrylicBlur"
@@ -13,7 +15,7 @@
         ExtendClientAreaToDecorationsHint="True">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:CodeEditorViewModel/>
     </Design.DataContext>
 
     <Panel>
@@ -27,8 +29,14 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
-        <DockPanel Margin="0,30,0,0">
+        <DockPanel Margin="10,10,0,0">
+            <TextBlock DockPanel.Dock="Top" 
+                       Text="Goblin Mod Maker"/>
+        </DockPanel>
+        <DockPanel Margin="0,34,0,0">
             <!-- Menu Bar -->
+            <!-- <Separator Background="#212121" -->
+            <!--            DockPanel.Dock="Top"/> -->
             <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
                 <MenuItem Header="_File" Foreground="White">
                     <MenuItem Header="_New Project">
@@ -83,110 +91,39 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+    
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <!-- Header -->
-                <StackPanel Grid.Row="0" Spacing="10">
-                    <TextBlock Text="Welcome to Goblin Mod Maker"
-                             HorizontalAlignment="Center"
-                             FontSize="32"
-                             FontWeight="Light"
-                             Foreground="White"/>
-                    <TextBlock Text="Create and manage your mods with ease"
-                             HorizontalAlignment="Center"
-                             Opacity="0.7"
-                             Foreground="White"/>
-                </StackPanel>
+                <!-- Text Editor -->
+                <avaloniaEdit:TextEditor Name="Editor"
+                                         Grid.Row="1"
+                                         ShowLineNumbers="True"
+                                         SyntaxHighlighting="C#"
+                                         FontSize="14"
+                                         Background="Black"
+                                         Foreground="White"
+                                         HorizontalScrollBarVisibility="Auto"
+                                         VerticalScrollBarVisibility="Visible"
+                                         Options="{Binding #Editor.Options.ShowTabs}">
+                    <avaloniaEdit:TextEditor.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuItem Header="Copy" InputGesture="ctrl+C" Command="{Binding CopyMouseCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
+                            <MenuItem Header="Cut" InputGesture="ctrl+X" Command="{Binding CutMouseCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
+                            <MenuItem Header="Paste" InputGesture="ctrl+V" Command="{Binding PasteMouseCommand}"  CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
+                            <MenuItem Header="-"/>
+                            <MenuItem Header="Select All" InputGesture="ctrl+A" Command="{Binding SelectAllMouseCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
+                        </MenuFlyout>
+                    </avaloniaEdit:TextEditor.ContextFlyout>
+                </avaloniaEdit:TextEditor>
 
-                <!-- Buttons -->
-                <UniformGrid Grid.Row="1" 
-                            Columns="2"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Margin="0,40">
-                    <Border Classes="card" Margin="10" Width="280" Height="160">
-                        <Button Classes="action"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                            <StackPanel>
-                                <PathIcon Data="{StaticResource document_add_regular}"
-                                         Width="32" Height="32" />
-                                <TextBlock Text="Create New Project"
-										 HorizontalAlignment="Center"
-										 VerticalAlignment="Center"
-										 Foreground="White"
-                                         FontSize="20"
-                                         Margin="0,10"/>
-                            </StackPanel>
-                        </Button>
-                    </Border>
-
-                    <Border Classes="card" Margin="10" Width="280" Height="160">
-                        <Button Classes="action"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                            <StackPanel>
-                                <PathIcon Data="{StaticResource folder_open_regular}"
-                                         Width="32" Height="32" />
-                                <TextBlock Text="Open Existing Project"
-										 HorizontalAlignment="Center"
-										 VerticalAlignment="Center"
-										 Foreground="White"
-                                         FontSize="20"
-                                         Margin="0,10"/>
-                            </StackPanel>
-                        </Button>
-                    </Border>
-
-                    <Border Classes="card" Margin="10" Width="280" Height="160">
-                        <Button Classes="action"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                            <StackPanel>
-                                <PathIcon Data="{StaticResource settings_regular}"
-                                         Width="32" Height="32" />
-                                <TextBlock Text="Settings"
-										 HorizontalAlignment="Center"
-										 VerticalAlignment="Center"
-										 Foreground="White"
-                                         FontSize="20"
-                                         Margin="0,10"/>
-                            </StackPanel>
-                        </Button>
-                    </Border>
-
-                    <Border Classes="card" Margin="10" Width="280" Height="160">
-                        <Button Classes="action"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                            <StackPanel>
-                                <PathIcon Data="{StaticResource document_regular}"
-                                         Width="32" Height="32" />
-                                <TextBlock Text="Open From File"
-										 HorizontalAlignment="Center"
-										 VerticalAlignment="Center"
-										 Foreground="White"
-                                         FontSize="20"
-                                         Margin="0,10"/>
-                            </StackPanel>
-                        </Button>
-                    </Border>
-                </UniformGrid>
-
-                <!-- Footer -->
-                <StackPanel Grid.Row="2" 
-                          HorizontalAlignment="Center"
-                          Spacing="10"
-                          Margin="0,20">
-                    <Button Classes="link"
-                            Command="{Binding OpenDocumentationCommand}"
-                            Content="Need help? Visit our documentation"
-							IsEnabled="True"
-                            Foreground="#5EA7FF"/>
-                    <Button Classes="link"
-                            Content="Report an issue or give feedback"
-                            Foreground="#5EA7FF"/>
+                <!-- Status Bar -->
+                <StackPanel Grid.Row="2" Name="StatusBar" Background="Transparent" Height="25" Orientation="Horizontal">
+                    <TextBlock Name="StatusText" Text="Ready" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="12"/>
                 </StackPanel>
             </Grid>
+
         </DockPanel>
     </Panel>
 

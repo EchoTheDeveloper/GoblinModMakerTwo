@@ -22,6 +22,8 @@ C:\Users\Nick\.nuget\packages\avalonia.themes.simple\11.2.1\lib\net8.0\Avalonia.
 C:\Users\Nick\.nuget\packages\avalonia\11.2.1\ref\net8.0\Avalonia.Vulkan.dll
 C:\Users\Nick\.nuget\packages\avalonia.win32\11.2.1\lib\net8.0\Avalonia.Win32.dll
 C:\Users\Nick\.nuget\packages\avalonia.x11\11.2.1\lib\net8.0\Avalonia.X11.dll
+C:\Users\Nick\.nuget\packages\avalonia.avaloniaedit\11.1.0\lib\net6.0\AvaloniaEdit.dll
+C:\Users\Nick\.nuget\packages\avaloniaedit.textmate\11.1.0\lib\net6.0\AvaloniaEdit.TextMate.dll
 C:\Users\Nick\.nuget\packages\communitytoolkit.mvvm\8.2.1\lib\net6.0\CommunityToolkit.Mvvm.dll
 C:\Users\Nick\.nuget\packages\dynamicdata\9.0.4\lib\net8.0\DynamicData.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\GMMBackend.dll
@@ -194,5 +196,7 @@ C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.2\ref\net9.0\System.
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.2\ref\net9.0\System.Xml.XmlSerializer.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.2\ref\net9.0\System.Xml.XPath.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.2\ref\net9.0\System.Xml.XPath.XDocument.dll
+C:\Users\Nick\.nuget\packages\textmatesharp\1.0.59\lib\netstandard2.0\TextMateSharp.dll
+C:\Users\Nick\.nuget\packages\textmatesharp.grammars\1.0.59\lib\netstandard2.0\TextMateSharp.Grammars.dll
 C:\Users\Nick\.nuget\packages\tmds.dbus.protocol\0.20.0\lib\net8.0\Tmds.DBus.Protocol.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.2\ref\net9.0\WindowsBase.dll

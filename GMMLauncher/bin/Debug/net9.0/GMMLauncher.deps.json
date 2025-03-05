@@ -9,10 +9,12 @@
       "GMMLauncher/1.0.0": {
         "dependencies": {
           "Avalonia": "11.2.1",
+          "Avalonia.AvaloniaEdit": "11.1.0",
           "Avalonia.Desktop": "11.2.1",
           "Avalonia.Diagnostics": "11.2.1",
           "Avalonia.Fonts.Inter": "11.2.1",
           "Avalonia.Themes.Fluent": "11.2.1",
+          "AvaloniaEdit.TextMate": "11.1.0",
           "CommunityToolkit.Mvvm": "8.2.1",
           "GMMBackend": "1.0.0",
           "ReactiveUI": "20.1.63"
@@ -90,6 +92,17 @@
             "rid": "win-x86",
             "assetType": "native",
             "fileVersion": "2.1.22045.0"
+          }
+        }
+      },
+      "Avalonia.AvaloniaEdit/11.1.0": {
+        "dependencies": {
+          "Avalonia": "11.2.1"
+        },
+        "runtime": {
+          "lib/net6.0/AvaloniaEdit.dll": {
+            "assemblyVersion": "11.0.6.0",
+            "fileVersion": "11.0.6.0"
           }
         }
       },
@@ -257,6 +270,20 @@
           "lib/net8.0/Avalonia.X11.dll": {
             "assemblyVersion": "11.2.1.0",
             "fileVersion": "11.2.1.0"
+          }
+        }
+      },
+      "AvaloniaEdit.TextMate/11.1.0": {
+        "dependencies": {
+          "Avalonia": "11.2.1",
+          "Avalonia.AvaloniaEdit": "11.1.0",
+          "TextMateSharp": "1.0.59",
+          "TextMateSharp.Grammars": "1.0.59"
+        },
+        "runtime": {
+          "lib/net6.0/AvaloniaEdit.TextMate.dll": {
+            "assemblyVersion": "11.0.6.0",
+            "fileVersion": "11.0.6.0"
           }
         }
       },
@@ -454,6 +481,57 @@
           }
         }
       },
+      "System.Text.Encodings.Web/8.0.0": {},
+      "System.Text.Json/8.0.4": {
+        "dependencies": {
+          "System.Text.Encodings.Web": "8.0.0"
+        }
+      },
+      "TextMateSharp/1.0.59": {
+        "dependencies": {
+          "System.Text.Json": "8.0.4"
+        },
+        "runtime": {
+          "lib/netstandard2.0/TextMateSharp.dll": {
+            "assemblyVersion": "1.0.59.0",
+            "fileVersion": "1.0.59.0"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/linux/native/libonigwrap.so": {
+            "rid": "linux",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx/native/libonigwrap.dylib": {
+            "rid": "osx",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/onigwrap-x64.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/onigwrap-x86.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "TextMateSharp.Grammars/1.0.59": {
+        "dependencies": {
+          "System.Text.Json": "8.0.4",
+          "TextMateSharp": "1.0.59"
+        },
+        "runtime": {
+          "lib/netstandard2.0/TextMateSharp.Grammars.dll": {
+            "assemblyVersion": "1.0.59.0",
+            "fileVersion": "1.0.59.0"
+          }
+        }
+      },
       "Tmds.DBus.Protocol/0.20.0": {
         "dependencies": {
           "System.IO.Pipelines": "8.0.0"
@@ -494,6 +572,13 @@
       "sha512": "sha512-Bo3qOhKC1b84BIhiogndMdAzB3UrrESKK7hS769f5HWeoMw/pcd42US5KFYW2JJ4ZSTrXnP8mXwLTMzh+S+9Lg==",
       "path": "avalonia.angle.windows.natives/2.1.22045.20230930",
       "hashPath": "avalonia.angle.windows.natives.2.1.22045.20230930.nupkg.sha512"
+    },
+    "Avalonia.AvaloniaEdit/11.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2s0bkZIviwb++fyD2S6GkX1dTsv2e3yJX5GvJKG4+R5KDcJpRtwOkH4GX1dvOL+eX35tPgmrDmrhBKCk/ezOBw==",
+      "path": "avalonia.avaloniaedit/11.1.0",
+      "hashPath": "avalonia.avaloniaedit.11.1.0.nupkg.sha512"
     },
     "Avalonia.BuildServices/0.0.29": {
       "type": "package",
@@ -592,6 +677,13 @@
       "sha512": "sha512-h2aCpyLmxGkldPK7cbncEgyobrJ5En7gQtrwVARLmN32Rw6dHut3jyF3P8at2DmWxRuKwZVXgWBSSI62hINgrQ==",
       "path": "avalonia.x11/11.2.1",
       "hashPath": "avalonia.x11.11.2.1.nupkg.sha512"
+    },
+    "AvaloniaEdit.TextMate/11.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fxrhvXqgOEjMWtQzDfKvjO3xmCa4t7XIoP6uWwaDOgMRn3A56LUSHJb1JW1e91JgYRP01G+64s+C3tmMMVrKYg==",
+      "path": "avaloniaedit.textmate/11.1.0",
+      "hashPath": "avaloniaedit.textmate.11.1.0.nupkg.sha512"
     },
     "CommunityToolkit.Mvvm/8.2.1": {
       "type": "package",
@@ -718,6 +810,34 @@
       "sha512": "sha512-rHaWtKDwCi9qJ3ObKo8LHPMuuwv33YbmQi7TcUK1C264V3MFnOr5Im7QgCTdLniztP3GJyeiSg5x8NqYJFqRmg==",
       "path": "system.reactive/6.0.1",
       "hashPath": "system.reactive.6.0.1.nupkg.sha512"
+    },
+    "System.Text.Encodings.Web/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ==",
+      "path": "system.text.encodings.web/8.0.0",
+      "hashPath": "system.text.encodings.web.8.0.0.nupkg.sha512"
+    },
+    "System.Text.Json/8.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bAkhgDJ88XTsqczoxEMliSrpijKZHhbJQldhAmObj/RbrN3sU5dcokuXmWJWsdQAhiMJ9bTayWsL1C9fbbCRhw==",
+      "path": "system.text.json/8.0.4",
+      "hashPath": "system.text.json.8.0.4.nupkg.sha512"
+    },
+    "TextMateSharp/1.0.59": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ODHnoARRFAnlqWiBw5Ya0gz04BCYAjQndGVjWhvW+fCz2Pv2bcFw60MBJ4ivdMGpFJlvdJWElwRTN/uXDYrqxQ==",
+      "path": "textmatesharp/1.0.59",
+      "hashPath": "textmatesharp.1.0.59.nupkg.sha512"
+    },
+    "TextMateSharp.Grammars/1.0.59": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9BrfG9SzoyoUJLqB41/o08G3/uNRNcC2RzjT7fBWPEIaMarmNFyLwZh6cwzqfSrmpHDzTXbq729ipoZCkLRuAw==",
+      "path": "textmatesharp.grammars/1.0.59",
+      "hashPath": "textmatesharp.grammars.1.0.59.nupkg.sha512"
     },
     "Tmds.DBus.Protocol/0.20.0": {
       "type": "package",

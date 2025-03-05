@@ -8,9 +8,9 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="Goblin Mod Maker"
-        TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
-        ExtendClientAreaToDecorationsHint="True">
+        ExtendClientAreaToDecorationsHint="True"
+        TransparencyLevelHint="AcrylicBlur">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -27,8 +27,14 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
-        <DockPanel Margin="0,30,0,0">
+        <DockPanel Margin="10,10,0,0">
+            <TextBlock DockPanel.Dock="Top" 
+                       Text="Goblin Mod Maker"/>
+        </DockPanel>
+        <DockPanel Margin="0,34,0,0">
             <!-- Menu Bar -->
+            <!-- <Separator Background="#212121" -->
+            <!--            DockPanel.Dock="Top"/> -->
             <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
                 <MenuItem Header="_File" Foreground="White">
                     <MenuItem Header="_New Project">
@@ -105,6 +111,7 @@
                             Margin="0,40">
                     <Border Classes="card" Margin="10" Width="280" Height="160">
                         <Button Classes="action"
+                                Command="{Binding NewFile}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch">
                             <StackPanel>

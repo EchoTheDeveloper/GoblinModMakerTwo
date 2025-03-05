@@ -146,3 +146,11 @@ C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Dev
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\obj\Debug\net9.0\GMMLaunc.39CCC4BB.Up2Date
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\obj\Debug\net9.0\GMMLauncher.genruntimeconfig.cache
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\obj\Debug\net9.0\ref\GMMLauncher.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\AvaloniaEdit.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\AvaloniaEdit.TextMate.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\TextMateSharp.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\TextMateSharp.Grammars.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\runtimes\linux\native\libonigwrap.so
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\runtimes\osx\native\libonigwrap.dylib
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\runtimes\win-x64\native\onigwrap-x64.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\runtimes\win-x86\native\onigwrap-x86.dll
