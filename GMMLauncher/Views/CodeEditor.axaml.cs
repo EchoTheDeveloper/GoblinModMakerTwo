@@ -50,7 +50,6 @@ public partial class CodeEditor : Window
             mod.CreateMainFile();
         }
         string content = File.ReadAllText(filePath);
-        content = Regex.Replace(content, " {4}", _editor.Options.ShowSpacesGlyph); // Replace 4 spaces with a tab
         _editor.Document = new TextDocument(content);
         _editor.FontFamily = new FontFamily("Cascadia Code");
         _editor.FontSize = 14;
