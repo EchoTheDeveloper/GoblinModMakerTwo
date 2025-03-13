@@ -26,8 +26,8 @@ namespace GMMLauncher.ViewModels
         #region MenuBarFunctions
             private void NewFile()
             {
-                var window = new CodeEditor();
-                window.Show();
+                // var window = new CodeEditor();
+                // window.Show();
             }
             
             private void OpenDocumentation()

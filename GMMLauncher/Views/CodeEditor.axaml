@@ -8,7 +8,7 @@
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="GMMLauncher.Views.CodeEditor"
         x:DataType="vm:CodeEditorViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/goblin-mod-maker.ico"
         Title="Goblin Mod Maker"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
@@ -105,8 +105,7 @@
                                          Background="Black"
                                          Foreground="White"
                                          HorizontalScrollBarVisibility="Auto"
-                                         VerticalScrollBarVisibility="Visible"
-                                         Options="{Binding #Editor.Options.ShowTabs}">
+                                         VerticalScrollBarVisibility="Visible">
                     <avaloniaEdit:TextEditor.ContextFlyout>
                         <MenuFlyout>
                             <MenuItem Header="Copy" InputGesture="ctrl+C" Command="{Binding CopyMouseCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>

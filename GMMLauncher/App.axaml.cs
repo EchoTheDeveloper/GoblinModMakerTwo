@@ -15,6 +15,7 @@ namespace GMMLauncher
         {
             AvaloniaXamlLoader.Load(this);
         }
+        
 
         public override void OnFrameworkInitializationCompleted()
         {
