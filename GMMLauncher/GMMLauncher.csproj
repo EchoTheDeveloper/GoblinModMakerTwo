@@ -7,6 +7,9 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     </PropertyGroup>
+    <PropertyGroup>
+        <Version>1.0.0</Version>
+    </PropertyGroup>
 
     <ItemGroup>
         <Folder Include="Models\" />
@@ -36,6 +39,10 @@
     <ItemGroup>
       <Compile Update="Views\CodeEditor.axaml.cs">
         <DependentUpon>CodeEditor.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\PromptWindow.axaml.cs">
+        <DependentUpon>PromptWindow.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

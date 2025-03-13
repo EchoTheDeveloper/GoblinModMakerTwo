@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="GMMLauncher.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/goblin-mod-maker.ico"
         Title="Goblin Mod Maker"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"

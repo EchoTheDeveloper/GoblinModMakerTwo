@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Input;
+using Avalonia.Controls;
 using Avalonia.Threading;
 using GMMLauncher.Views;
 
@@ -23,10 +26,25 @@ namespace GMMLauncher.ViewModels
 
         public void NewFile()
         {
-            var window = new CodeEditor();
+            var window = new PromptWindow("New File", ["Mod Name: ", "Description", "Developers (Separate by comma)"], NewFileDone, NewFileCancel);
             window.Show();
-            
         }
+
+        private void NewFileDone(List<TextBox> answers, Window promptWindow)
+        {
+            Mod mod = new(answers[0].Text, answers[1].Text, answers[2].Text,
+                Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            mod.CreateMainFile();
+            var editor = new CodeEditor(mod);
+            editor.Show();
+            promptWindow.Close();
+        }
+
+        private void NewFileCancel(Window window)
+        {
+            window.Close();
+        }
+        
         
         private void OpenDocumentation()
         {

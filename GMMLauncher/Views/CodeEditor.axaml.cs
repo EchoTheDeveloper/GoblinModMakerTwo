@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
@@ -30,10 +32,28 @@ public partial class CodeEditor : Window
     private TextBlock _statusTextBlock;
     private CustomMargin _margin;
     
-    public CodeEditor()
+    public CodeEditor(Mod mod)
     {
+        
         InitializeComponent();
         _editor = this.FindControl<TextEditor>("Editor");
+        _registryOptions = new RegistryOptions(
+            (ThemeName)_currentTheme);
+        
+        _textMateInstallation = _editor.InstallTextMate(_registryOptions);
+        _textMateInstallation.AppliedTheme += TextMateInstallationOnAppliedTheme;
+        Language csharpLanguage = _registryOptions.GetLanguageByExtension(".cs");
+        
+        string filePath = mod.GetFilePath();
+        if (!File.Exists(filePath))
+        {
+            mod.CreateMainFile();
+        }
+        string content = File.ReadAllText(filePath);
+        content = Regex.Replace(content, " {4}", _editor.Options.ShowSpacesGlyph); // Replace 4 spaces with a tab
+        _editor.Document = new TextDocument(content);
+        _editor.FontFamily = new FontFamily("Cascadia Code");
+        _editor.FontSize = 14;
         _editor.HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Visible;
         _editor.ShowLineNumbers = true;
         _editor.Options.ShowTabs = true;
@@ -44,6 +64,8 @@ public partial class CodeEditor : Window
         _editor.Options.AllowToggleOverstrikeMode = true;
         _editor.Options.EnableTextDragDrop = true;
         _editor.Options.ShowBoxForControlCharacters = true;
+        _editor.Options.ConvertTabsToSpaces = true;
+        _editor.Options.IndentationSize = 4;
         _editor.TextArea.Background = this.Background;
         _editor.TextArea.TextEntered += textEditor_TextArea_TextEntered;
         _editor.TextArea.TextEntering += textEditor_TextArea_TextEntering;
@@ -51,16 +73,7 @@ public partial class CodeEditor : Window
         _editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
         _editor.TextArea.LeftMargins.Insert(0, _margin);
         
-        _registryOptions = new RegistryOptions(
-            (ThemeName)_currentTheme);
         
-        _textMateInstallation = _editor.InstallTextMate(_registryOptions);
-        _textMateInstallation.AppliedTheme += TextMateInstallationOnAppliedTheme;
-        Language csharpLanguage = _registryOptions.GetLanguageByExtension(".cs");
-        
-        _editor.Document = new TextDocument(
-            "// AvaloniaEdit supports displaying control chars: \a or \b or \v" + Environment.NewLine +
-            "// AvaloniaEdit supports displaying underline and strikethrough" + Environment.NewLine);
         
         _textMateInstallation.SetGrammar(_registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
         _statusTextBlock = this.Find<TextBlock>("StatusText");
