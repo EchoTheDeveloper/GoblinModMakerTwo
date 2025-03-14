@@ -38,12 +38,17 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="1" 
-                            Spacing="10"
-                            HorizontalAlignment="Center"
-                            Margin="0,20"
-                            Name="PromptsPanel">
-                </StackPanel>
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto">
+                    <StackPanel  
+                                Spacing="10"
+                                HorizontalAlignment="Center"
+                                Margin="0,20"
+                                Name="PromptsPanel"
+                                Orientation="Vertical">
+                    </StackPanel>
+                </ScrollViewer>
+                
                 <!-- Footer -->
                 <StackPanel Grid.Row="2" 
                           Spacing="10"

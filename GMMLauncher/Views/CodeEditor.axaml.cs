@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -23,7 +24,7 @@ namespace GMMLauncher.Views;
 
 public partial class CodeEditor : Window
 {
-    private readonly TextEditor _editor;
+    public readonly TextEditor _editor;
     private readonly TextMate.Installation _textMateInstallation;
     private CompletionWindow _completionWindow;
     private OverloadInsightWindow _insightWindow;
@@ -31,28 +32,34 @@ public partial class CodeEditor : Window
     private int _currentTheme = (int)ThemeName.DarkPlus;
     private TextBlock _statusTextBlock;
     private CustomMargin _margin;
+
+    public Mod Mod;
     
     public CodeEditor(Mod mod)
     {
-        
+        this.Mod = mod;
         InitializeComponent();
+
         _editor = this.FindControl<TextEditor>("Editor");
-        _registryOptions = new RegistryOptions(
-            (ThemeName)_currentTheme);
-        
+        _registryOptions = new RegistryOptions((ThemeName)_currentTheme);
         _textMateInstallation = _editor.InstallTextMate(_registryOptions);
         _textMateInstallation.AppliedTheme += TextMateInstallationOnAppliedTheme;
+
         Language csharpLanguage = _registryOptions.GetLanguageByExtension(".cs");
-        
+
         string filePath = mod.GetFilePath();
         if (!File.Exists(filePath))
         {
             mod.CreateMainFile();
         }
+
         string content = File.ReadAllText(filePath);
         _editor.Document = new TextDocument(content);
         _editor.FontFamily = new FontFamily("Cascadia Code");
         _editor.FontSize = 14;
+
+        SetupFileTree(Path.Combine(mod.GetFolderPath(), "Files"));
+
         _editor.HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Visible;
         _editor.ShowLineNumbers = true;
         _editor.Options.ShowTabs = true;
@@ -66,6 +73,9 @@ public partial class CodeEditor : Window
         _editor.Options.ConvertTabsToSpaces = true;
         _editor.Options.IndentationSize = 4;
         _editor.TextArea.Background = this.Background;
+        
+        _statusTextBlock = this.Find<TextBlock>("StatusText");
+        
         _editor.TextArea.TextEntered += textEditor_TextArea_TextEntered;
         _editor.TextArea.TextEntering += textEditor_TextArea_TextEntering;
         _editor.TextArea.IndentationStrategy = new CSharpIndentationStrategy(_editor.Options);
@@ -73,11 +83,90 @@ public partial class CodeEditor : Window
         _editor.TextArea.LeftMargins.Insert(0, _margin);
         
         
-        
         _textMateInstallation.SetGrammar(_registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
-        _statusTextBlock = this.Find<TextBlock>("StatusText");
-        DataContext = new CodeEditorViewModel();
+        DataContext = new CodeEditorViewModel(this);
     }
+
+    private void SetupFileTree(string folderPath)
+    {
+        var fileTree = this.FindControl<TreeView>("FileTree");
+
+        var rootDirectory = new DirectoryInfo(folderPath);
+        var rootItem = new TreeViewItem
+        {
+            Header = rootDirectory.Name,
+            IsExpanded = true,
+            Tag = rootDirectory
+        };
+
+        fileTree.Items.Clear();
+        fileTree.Items.Add(rootItem);
+        fileTree.SelectionChanged += (sender, e) =>
+        {
+            if (fileTree.SelectedItem is TreeViewItem selectedItem && selectedItem.Tag is string filePath)
+            {
+                if (File.Exists(filePath))
+                {
+                    string content = File.ReadAllText(filePath);
+                    _editor.Document = new TextDocument(content);
+                }
+            }
+        };
+
+        PopulateTreeView(rootDirectory, rootItem);
+    }
+    
+    private void PopulateTreeView(DirectoryInfo directoryInfo, TreeViewItem parentItem)
+    {
+        var directories = directoryInfo.GetDirectories();
+        var files = directoryInfo.GetFiles();
+
+        foreach (var file in files)
+        {
+            var fileItem = new TreeViewItem
+            {
+                Header = file.Name,
+                Tag = file.FullName
+            };
+
+            parentItem.Items.Add(fileItem);
+        }
+
+        foreach (var directory in directories)
+        {
+            var dirItem = new TreeViewItem
+            {
+                Header = directory.Name,
+                IsExpanded = true,
+                Tag = directory.FullName
+            };
+
+            parentItem.Items.Add(dirItem);
+            PopulateTreeView(directory, dirItem);
+        }
+    }
+    
+    private void UpdateFileTree(string folderPath)
+    {
+        var fileTree = this.FindControl<TreeView>("FileTree");
+        if (fileTree == null) return;
+
+        fileTree.Items.Clear();
+
+        var rootDirectory = new DirectoryInfo(folderPath);
+        var rootItem = new TreeViewItem
+        {
+            Header = rootDirectory.Name,
+            IsExpanded = true,
+            Tag = rootDirectory
+        };
+
+        PopulateTreeView(rootDirectory, rootItem);
+
+        fileTree.Items.Add(rootItem);
+    }
+
+
     
     private void Caret_PositionChanged(object sender, EventArgs e)
     {

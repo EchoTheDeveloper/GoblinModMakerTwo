@@ -35,10 +35,14 @@
         </DockPanel>
         <DockPanel Margin="0,34,0,0">
             <!-- Menu Bar -->
-            <!-- <Separator Background="#212121" -->
-            <!--            DockPanel.Dock="Top"/> -->
             <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
                 <MenuItem Header="_File" Foreground="White">
+                    <MenuItem Header="_Save Project"
+                              Command="{Binding SaveModCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource folder_open_regular}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="_New Project">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource document_add_regular}" />
@@ -50,11 +54,43 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
+                    <MenuItem Header="_New File">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource document_new}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
                     <MenuItem Header="_Exit" Command="{Binding QuitAppCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource dismiss_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Edit" Foreground="White">
+                    <MenuItem Header="_Undo"/>
+                    <MenuItem Header="_Redo"/>
+                    <Separator/>
+                    <MenuItem Header="_Cut"/>
+                    <MenuItem Header="_Copy"/>
+                    <MenuItem Header="_Paste"/>
+                    <Separator/>
+                    <MenuItem Header="_Find"/>
+                    <MenuItem Header="_Replace"/>
+                    <MenuItem Header="_Go To Line"/>
+                </MenuItem>
+                <MenuItem Header="_Mod" Foreground="White">
+                    <MenuItem Header="_Change Name"/>
+                    <MenuItem Header="_Change Version"/>
+                    <MenuItem Header="_Change Developers"/>
+                    <Separator/>
+                    <MenuItem Header="_Create Harmony Patch"/>
+                    <MenuItem Header="_Create Config Item"/>
+                    <MenuItem Header="_Create Keybind"/>
+                    <MenuItem Header="_Create NPC Asset"/>
+                </MenuItem>
+                <MenuItem Header="_Build" Foreground="White">
+                    <MenuItem Header="_Build and Install"/>
+                    <MenuItem Header="_Generate Dotnet Files"/>
                 </MenuItem>
                 <MenuItem Header="_Version Control" Foreground="White">
                     <MenuItem Header="_Get from VCS">
@@ -83,9 +119,10 @@
                     </MenuItem>
                 </MenuItem>
             </Menu>
+            <Separator DockPanel.Dock="Top"/>
 
             <!-- Main -->
-            <Grid Margin="40,20">
+            <Grid Margin="10,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -93,11 +130,21 @@
                 </Grid.RowDefinitions>
     
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-
+                <TreeView Grid.Row="1" Grid.Column="0" Name="FileTree" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="400">
+                    <TreeView.ItemTemplate>
+                        <TreeDataTemplate DataType="{x:Type TreeViewItem}" >
+                            <TextBlock Text="{Binding Name}"/>
+                        </TreeDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+                
                 <!-- Text Editor -->
                 <avaloniaEdit:TextEditor Name="Editor"
+                                         Grid.Column="1"
                                          Grid.Row="1"
                                          ShowLineNumbers="True"
                                          SyntaxHighlighting="C#"
@@ -119,7 +166,7 @@
 
                 <!-- Status Bar -->
                 <StackPanel Grid.Row="2" Name="StatusBar" Background="Transparent" Height="25" Orientation="Horizontal">
-                    <TextBlock Name="StatusText" Text="Ready" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="12"/>
+                    <TextBlock Name="StatusText" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="12"/>
                 </StackPanel>
             </Grid>
 

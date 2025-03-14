@@ -1,21 +1,46 @@
 ﻿using System.IO;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace GMMLauncher;
 
-public class Mod(string modName, string modDescription, string modAuthors, string modVersion)
+public class Mod
 {
-    public string Name { get; init; } = modName;
-    public string NameNoSpaces { get; init; } = modName.Replace(" ", string.Empty);
-    public string Description { get; init; } = modDescription;
-    public string Authors { get; init; } = modAuthors;
-    public string Version { get; init; } = modVersion;
+    public Mod() { }
     
-    public void SaveFilesAsCS()
+    public Mod(string modName, string modDescription, string modAuthors, string gmmVersion)
+    {
+        Name = modName;
+        NameNoSpaces = modName.Replace(" ", string.Empty);
+        Description = modDescription;
+        Authors = modAuthors;
+        GMMVersion = gmmVersion;
+        Version = "1.0.0";
+    }
+
+    public string Name { get; init; }
+    public string NameNoSpaces { get; init; }
+    public string Description { get; init; }
+    public string Authors { get; init; }
+    public string GMMVersion { get; init; }
+    public string Version { get; init; } = "1.0.0";
+
+
+    public void SaveMod()
+    {
+        string filePath = Path.Combine(GetFolderPath(), NameNoSpaces + ".json");
+        string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true,  });
+        File.WriteAllText(filePath, json);
+    }
+    public void SaveFiles(string fileContent)
     {
         string currentDir = Directory.GetCurrentDirectory();
         string folderPath = Path.Combine(currentDir, "Mods", NameNoSpaces, "Files");
-        // TODO: FINISH THIS
+        // TODO: Add support for when tabs and an explorer is added
+        
+        File.WriteAllText(GetFilePath(), fileContent);
+        SaveMod();
     }
 
     public void CreateFile(string fileName, string fileContent = "")
@@ -33,6 +58,7 @@ public class Mod(string modName, string modDescription, string modAuthors, strin
 
     public void CreateMainFile()
     {
+        if (File.Exists(GetFilePath())) return;
         string currentDir = Directory.GetCurrentDirectory();
         string folderPath = Path.Combine(currentDir, "Mods", NameNoSpaces, "Files");
         Directory.CreateDirectory(folderPath);
@@ -47,7 +73,7 @@ using HarmonyLib;
 
 namespace {NameNoSpaces}
 {{
-    \t[BepInPlugin(GUID, Name, Version)]
+    [BepInPlugin(GUID, Name, Version)]
     [BepInDependency(""Isle Goblin"")]
     [BepInDependency(ConfigurationManager.ConfigurationManager.GUID, BepInDependency.DependencyFlags.HardDependency)]
 
@@ -79,12 +105,12 @@ namespace {NameNoSpaces}
         }}
     }}
 }}");
-
+        SaveMod();
     }
 
     public string GetFolderPath()
     {
         string currentDir = Directory.GetCurrentDirectory();
-        return Path.Combine(currentDir, "Mods", NameNoSpaces, "Files");
+        return Path.Combine(currentDir, "Mods", NameNoSpaces);
     }
 }
