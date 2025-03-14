@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
 using System.Windows.Input;
 using Avalonia.Threading;
 using AvaloniaEdit;
@@ -15,19 +17,31 @@ namespace GMMLauncher.ViewModels
         public ICommand OpenDocumentationCommand { get; }
         public ICommand QuitAppCommand { get; }
         public ICommand NewFileCommand { get; }
-        
-        public CodeEditorViewModel()
+        public ICommand SaveModCommand { get; }
+        private CodeEditor _editor;
+        public CodeEditorViewModel(CodeEditor editor)
         {
+            _editor = editor;
             OpenDocumentationCommand = new RelayCommand(OpenDocumentation);
             QuitAppCommand = new RelayCommand(QuitApp);
             NewFileCommand = new RelayCommand(NewFile);
+            SaveModCommand = new RelayCommand(SaveMod);
+            
+            
         }
+        
 
         #region MenuBarFunctions
             private void NewFile()
             {
                 // var window = new CodeEditor();
                 // window.Show();
+            }
+
+            private void SaveMod()
+            {
+                Mod mod = _editor.Mod;
+                mod.SaveFiles(_editor._editor.Text);
             }
             
             private void OpenDocumentation()

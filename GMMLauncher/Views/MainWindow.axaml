@@ -129,6 +129,7 @@
 
                     <Border Classes="card" Margin="10" Width="280" Height="160">
                         <Button Classes="action"
+                                Command="{Binding LoadModCommand}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch">
                             <StackPanel>
@@ -163,6 +164,7 @@
 
                     <Border Classes="card" Margin="10" Width="280" Height="160">
                         <Button Classes="action"
+                                Command="{Binding LoadModDialogCommand}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch">
                             <StackPanel>
