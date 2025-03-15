@@ -37,13 +37,12 @@
             <!-- Menu Bar -->
             <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
                 <MenuItem Header="_File" Foreground="White">
-                    <MenuItem Header="_Save Project"
-                              Command="{Binding SaveModCommand}">
+                    <MenuItem Header="_Save Project" InputGesture="Ctrl+S" Command="{Binding SaveModCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource folder_open_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_New Project">
+                    <MenuItem Header="_New Project" InputGesture="Ctrl+Shift+N" Command="{Binding NewModCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource document_add_regular}" />
                         </MenuItem.Icon>
@@ -52,62 +51,74 @@
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource folder_open_regular}" />
                         </MenuItem.Icon>
+                        <MenuItem Header="_Open Existing" InputGesture="Ctrl+O" Command="{Binding LoadExistingModCommand}"/>
+                        <MenuItem Header="_Open From File" InputGesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_New File">
+                    <MenuItem Header="_New File" InputGesture="Ctrl+N">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource document_new}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Exit" Command="{Binding QuitAppCommand}">
+                    <MenuItem Header="_Exit" InputGesture="Alt+F4" Command="{Binding QuitAppCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource dismiss_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Edit" Foreground="White">
-                    <MenuItem Header="_Undo"/>
-                    <MenuItem Header="_Redo"/>
+                    <MenuItem Header="_Undo" InputGesture="Ctrl+Z" Command="{Binding UndoCommand}"/>
+                    <MenuItem Header="_Redo" InputGesture="Ctrl+Y" Command="{Binding RedoCommand}"/>
                     <Separator/>
-                    <MenuItem Header="_Cut"/>
-                    <MenuItem Header="_Copy"/>
-                    <MenuItem Header="_Paste"/>
+                    <MenuItem Header="_Copy" 
+                              InputGesture="Ctrl+C"
+                              Command="{Binding CopyCommand}"/>
+                    <MenuItem Header="_Cut" 
+                              InputGesture="Ctrl+X"
+                              Command="{Binding CutCommand}"/>
+                    <MenuItem Header="_Paste" 
+                              InputGesture="Ctrl+V"
+                              Command="{Binding PasteCommand}"/>
+                    <MenuItem Header="_Select All" 
+                              InputGesture="Ctrl+A"
+                              Command="{Binding SelectAllCommand}"/>
+                
                     <Separator/>
-                    <MenuItem Header="_Find"/>
-                    <MenuItem Header="_Replace"/>
-                    <MenuItem Header="_Go To Line"/>
+                    <MenuItem Header="_Find" InputGesture="Ctrl+F" Command="{Binding FindCommand}"/>
+                    <MenuItem Header="_Replace" InputGesture="Ctrl+H" Command="{Binding ReplaceCommand}"/>
+                    <MenuItem Header="_Go To Line:colu" InputGesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Mod" Foreground="White">
-                    <MenuItem Header="_Change Name"/>
-                    <MenuItem Header="_Change Version"/>
-                    <MenuItem Header="_Change Developers"/>
+                    <MenuItem Header="_Change Name" InputGesture="Ctrl+Alt+N"/>
+                    <MenuItem Header="_Change Version" InputGesture="Ctrl+Alt+V"/>
+                    <MenuItem Header="_Change Developers" InputGesture="Ctrl+Alt+D"/>
                     <Separator/>
-                    <MenuItem Header="_Create Harmony Patch"/>
-                    <MenuItem Header="_Create Config Item"/>
-                    <MenuItem Header="_Create Keybind"/>
-                    <MenuItem Header="_Create NPC Asset"/>
+                    <MenuItem Header="_Create Harmony Patch" InputGesture="Ctrl+Alt+H"/>
+                    <MenuItem Header="_Create Config Item" InputGesture="Ctrl+Alt+C"/>
+                    <MenuItem Header="_Create Keybind" InputGesture="Ctrl+Alt+K"/>
+                    <MenuItem Header="_Create NPC Asset" InputGesture="Ctrl+Alt+A"/>
                 </MenuItem>
                 <MenuItem Header="_Build" Foreground="White">
-                    <MenuItem Header="_Build and Install"/>
+                    <MenuItem Header="_Build and Install" InputGesture="Ctrl+B"/>
                     <MenuItem Header="_Generate Dotnet Files"/>
                 </MenuItem>
                 <MenuItem Header="_Version Control" Foreground="White">
-                    <MenuItem Header="_Get from VCS">
+                    <MenuItem Header="_Get from VCS" InputGesture="Ctrl+Alt+Y">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource arrow_download_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Settings" Foreground="White" Command="{Binding OpenSettingsCommand}">
-                    <MenuItem Header="_Preferences">
+                <MenuItem Header="_Settings"  Foreground="White" Command="{Binding OpenSettingsCommand}">
+                    <MenuItem Header="_Preferences" InputGesture="Ctrl+,">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource settings_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Help" Foreground="White">
-                    <MenuItem Header="_Documentation">
+                    <MenuItem Header="_Documentation" InputGesture="F1" Command="{Binding OpenDocumentationCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource book_regular}" />
                         </MenuItem.Icon>
@@ -155,13 +166,47 @@
                                          VerticalScrollBarVisibility="Visible">
                     <avaloniaEdit:TextEditor.ContextFlyout>
                         <MenuFlyout>
-                            <MenuItem Header="Copy" InputGesture="ctrl+C" Command="{Binding CopyMouseCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
-                            <MenuItem Header="Cut" InputGesture="ctrl+X" Command="{Binding CutMouseCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
-                            <MenuItem Header="Paste" InputGesture="ctrl+V" Command="{Binding PasteMouseCommand}"  CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
+                            <MenuItem Header="Copy" InputGesture="Ctrl+C" Command="{Binding CopyCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
+                            <MenuItem Header="Cut" InputGesture="Ctrl+X" Command="{Binding CutCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
+                            <MenuItem Header="Paste" InputGesture="Ctrl+V" Command="{Binding PasteCommand}"  CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
                             <MenuItem Header="-"/>
-                            <MenuItem Header="Select All" InputGesture="ctrl+A" Command="{Binding SelectAllMouseCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
+                            <MenuItem Header="Select All" InputGesture="Ctrl+A" Command="{Binding SelectAllCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
                         </MenuFlyout>
                     </avaloniaEdit:TextEditor.ContextFlyout>
+                    
+                    <avaloniaEdit:TextEditor.KeyBindings>
+                        <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveModCommand}"/>
+                        <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewModCommand}"/>
+                        <KeyBinding Gesture="Ctrl+O" Command="{Binding LoadExistingModCommand}"/>
+                        <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
+                        <!-- <KeyBinding Gesture="Ctrl+N" Command="{Binding OpenDocumentationCommand}"/> -->
+                        <KeyBinding Gesture="Alt+F4" Command="{Binding QuitAppCommand}"/>
+                        
+                        <KeyBinding Gesture="Ctrl+C" Command="{Binding CopyCommand}"/>
+                        <KeyBinding Gesture="Ctrl+X" Command="{Binding CutCommand}"/>
+                        <KeyBinding Gesture="Ctrl+V" Command="{Binding PasteCommand}"/>
+                        <KeyBinding Gesture="Ctrl+A" Command="{Binding SelectAllCommand}"/>
+                        <KeyBinding Gesture="Ctrl+Z" Command="{Binding UndoCommand}"/>
+                        <KeyBinding Gesture="Ctrl+Y" Command="{Binding RedoCommand}"/>
+                        
+                        <KeyBinding Gesture="Ctrl+F" Command="{Binding FindCommand}"/>
+                        <KeyBinding Gesture="Ctrl+H" Command="{Binding ReplaceCommand}"/>
+                        <KeyBinding Gesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
+                        
+                        <!-- <KeyBinding Gesture="Ctrl+Alt+N" Command="{Binding ChangeName}"/> -->
+                        <!-- <KeyBinding Gesture="Ctrl+Alt+V" Command="{Binding ChangeVersion}"/> -->
+                        <!-- <KeyBinding Gesture="Ctrl+Alt+D" Command="{Binding ChangeDevelopers}"/> -->
+                        <!-- <KeyBinding Gesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatch}"/> -->
+                        <!-- <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding CreateConfigItem}"/> -->
+                        <!-- <KeyBinding Gesture="Ctrl+Alt+K" Command="{Binding CreateKeybind}"/> -->
+                        <!-- <KeyBinding Gesture="Ctrl+Alt+A" Command="{Binding CreateNPCAsset}"/> -->
+                        
+                        <!-- <KeyBinding Gesture="Ctrl+B" Command="{Binding Build}"/> -->
+                        <!-- <KeyBinding Gesture="Ctrl+Alt+Y" Command="{Binding VCS}"/> -->
+                        <KeyBinding Gesture="Ctrl+," Command="{Binding OpenSettingsCommand}"/>
+
+                        
+                    </avaloniaEdit:TextEditor.KeyBindings>
                 </avaloniaEdit:TextEditor>
 
                 <!-- Status Bar -->
@@ -169,10 +214,8 @@
                     <TextBlock Name="StatusText" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="12"/>
                 </StackPanel>
             </Grid>
-
         </DockPanel>
     </Panel>
-
     <Window.Styles>
         <Style Selector="Button.action">
             <Setter Property="Background" Value="Transparent"/>

@@ -108,7 +108,7 @@
                             Margin="0,40">
                     <Border Classes="card" Margin="10" Width="280" Height="160">
                         <Button Classes="action"
-                                Command="{Binding NewFile}"
+                                Command="{Binding NewModCommand}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch">
                             <StackPanel>
@@ -126,7 +126,7 @@
 
                     <Border Classes="card" Margin="10" Width="280" Height="160">
                         <Button Classes="action"
-                                Command="{Binding LoadModCommand}"
+                                Command="{Binding LoadExistingModCommand}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch">
                             <StackPanel>
@@ -144,7 +144,7 @@
 
                     <Border Classes="card" Margin="10" Width="280" Height="160">
                         <Button Classes="action"
-                                Command="{Binding SettingsCommand}"
+                                Command="{Binding OpenSettingsCommand}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch">
                             <StackPanel>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using GMMLauncher.ViewModels;
@@ -11,50 +12,56 @@ namespace GMMLauncher.Views;
 
 public partial class PromptWindow : Window
 {
-    public PromptWindow(string title, List<(Type promptType, string promptText)> prompts, Action<List<Control>, Window> done = null, Action<Window> cancel = null)
+    public List<Control> answers;
+    public PromptWindow(string title, List<(Type promptType, string promptText)> prompts = null, Action<List<Control>, Window> done = null, Action<Window> cancel = null, int baseHeight = 300)
     {
         InitializeComponent();
         DataContext = new PromptWindowViewModel();
-        Height = 300 + (prompts.Count * 65);
+        Height = baseHeight;
+        if (prompts != null)
+        {
+            Height += (prompts.Count * 65);
+        }
+        answers= new List<Control>();
         Title = title;
-        List<Control> answers = new();
     
         var promptsPanel = this.FindControl<StackPanel>("PromptsPanel")!;
-
-        foreach (var (promptType, promptText) in prompts)
+        if (prompts != null)
         {
-            promptsPanel.Children.Add(new TextBlock
+            foreach (var (promptType, promptText) in prompts)
             {
-                Text = promptText,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                FontSize = 14,
-            });
-
-            Control? inputField = null;
-
-            if (promptType != typeof(TextBlock))
-            {
-                try
+                promptsPanel.Children.Add(new TextBlock
                 {
-                        
-                    inputField = Activator.CreateInstance(promptType) as Control;
-                }
-                catch
+                    Text = promptText,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    FontSize = 14,
+                });
+    
+                Control? inputField = null;
+    
+                if (promptType != typeof(TextBlock))
                 {
-                    inputField = new TextBox();
+                    try
+                    {
+                        inputField = Activator.CreateInstance(promptType) as Control;
+                    }
+                    catch
+                    {
+                        inputField = new TextBox();
+                    }
                 }
-            }
-
-            if (inputField != null)
-            {
-                promptsPanel.Children.Add(inputField);
-                answers.Add(inputField);
-                inputField.HorizontalAlignment = HorizontalAlignment.Center;
-            }
-
-            if (promptText != prompts.Last().promptText)
-            {
-                promptsPanel.Children.Add(new Separator { HorizontalAlignment = HorizontalAlignment.Center });
+    
+                if (inputField != null)
+                {
+                    promptsPanel.Children.Add(inputField);
+                    answers.Add(inputField);
+                    inputField.HorizontalAlignment = HorizontalAlignment.Center;
+                }
+    
+                if (promptText != prompts.Last().promptText)
+                {
+                    promptsPanel.Children.Add(new Separator { HorizontalAlignment = HorizontalAlignment.Center });
+                }
             }
         }
     
@@ -76,7 +83,9 @@ public partial class PromptWindow : Window
                     Close();
             });
         });
+        
     }
+
     
     private void InitializeComponent()
     {
