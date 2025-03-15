@@ -32,9 +32,6 @@
                        Text="Goblin Mod Maker"/>
         </DockPanel>
         <DockPanel Margin="0,34,0,0">
-            <!-- Menu Bar -->
-            <!-- <Separator Background="#212121" -->
-            <!--            DockPanel.Dock="Top"/> -->
             <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
                 <MenuItem Header="_File" Foreground="White">
                     <MenuItem Header="_New Project">
@@ -147,6 +144,7 @@
 
                     <Border Classes="card" Margin="10" Width="280" Height="160">
                         <Button Classes="action"
+                                Command="{Binding SettingsCommand}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch">
                             <StackPanel>

@@ -99,7 +99,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Settings" Foreground="White">
+                <MenuItem Header="_Settings" Foreground="White" Command="{Binding OpenSettingsCommand}">
                     <MenuItem Header="_Preferences">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource settings_regular}" />

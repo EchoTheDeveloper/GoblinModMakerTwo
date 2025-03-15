@@ -15,6 +15,7 @@ namespace GMMLauncher.ViewModels
         private const string DocumentationUrl = "https://github.com/EchoTheDeveloper/Goblin-Mod-Maker/blob/main/DOCUMENTATION.md";
 
         public ICommand OpenDocumentationCommand { get; }
+        public ICommand OpenSettingsCommand { get; }
         public ICommand QuitAppCommand { get; }
         public ICommand NewFileCommand { get; }
         public ICommand SaveModCommand { get; }
@@ -23,11 +24,10 @@ namespace GMMLauncher.ViewModels
         {
             _editor = editor;
             OpenDocumentationCommand = new RelayCommand(OpenDocumentation);
+            OpenSettingsCommand = new RelayCommand(OpenSettings);
             QuitAppCommand = new RelayCommand(QuitApp);
             NewFileCommand = new RelayCommand(NewFile);
             SaveModCommand = new RelayCommand(SaveMod);
-            
-            
         }
         
 
@@ -61,6 +61,12 @@ namespace GMMLauncher.ViewModels
                         Console.WriteLine($"Error opening documentation: {ex.Message}");
                     }
                 });
+            }
+
+            private void OpenSettings()
+            {
+                var window = new SettingsWindow(_editor);
+                window.Show();
             }
 
             private void QuitApp()

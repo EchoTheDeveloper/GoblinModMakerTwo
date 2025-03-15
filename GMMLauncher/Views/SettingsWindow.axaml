@@ -1,0 +1,162 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:GMMLauncher.ViewModels"
+        x:Class="GMMLauncher.Views.SettingsWindow"
+        x:DataType="vm:SettingsWindowViewModel"
+        Icon="/Assets/goblin-mod-maker.ico"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        TransparencyLevelHint="AcrylicBlur"
+        Width="500"
+        Height="600"
+        CanResize="True">
+
+    <Design.DataContext>
+        <vm:SettingsWindowViewModel/>
+    </Design.DataContext>
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <DockPanel Margin="10,10,0,0">
+            <TextBlock Name="TitleText"
+                       Text="Settings"
+                       DockPanel.Dock="Top"/>
+        </DockPanel>
+        <DockPanel Margin="0,34,0,0">
+            <!-- Main -->
+            <Grid Margin="25,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto">
+                    <StackPanel  
+                                Spacing="25"
+                                HorizontalAlignment="Center"
+                                Margin="0,20"
+                                Name="PromptsPanel"
+                                Orientation="Vertical">
+                        <TextBlock Text="Steam Directory" 
+                                   HorizontalAlignment="Center"/>
+                        <Button HorizontalAlignment="Center"
+                                Command="{Binding AutoFindDirectoryCommand}">
+                            <TextBlock Text="Auto Find"/>
+                        </Button>
+                        <TextBox HorizontalAlignment="Stretch" 
+                                 Name="SteamDirectory"/>
+                        
+                        <Separator HorizontalAlignment="Stretch"/>
+                        
+                        <CheckBox HorizontalAlignment="Center"
+                                  Name="ShowLineNumbers">
+                            <TextBlock Text="Show Line Numbers"/>
+                        </CheckBox>
+                        
+                        <Separator HorizontalAlignment="Stretch"/>
+                        
+                        <TextBlock Text="Select Theme" 
+                                   HorizontalAlignment="Center"/>
+                        <ComboBox MaxDropDownHeight="200" 
+                                  HorizontalAlignment="Center" 
+                                  Name="SelectTheme">
+                            <ComboBoxItem><TextBlock Text="Abbys"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Dark"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Dark Plus"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Dimmed Monokai"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Kimbie Dark"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Light"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Light Plus"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Monokai"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Quiet Light"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Red"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Solarized Dark"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Solarized Light"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="Tomorrow Night Blue"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="High Contrast Light"/></ComboBoxItem>
+                            <ComboBoxItem><TextBlock Text="High Contrast Dark"/></ComboBoxItem>
+                        </ComboBox>
+                        
+                        <Separator HorizontalAlignment="Stretch"/>
+                        
+                        <Button HorizontalAlignment="Center" Command="{Binding InstallBepInExCommand}">
+                            <TextBlock Text="Install BepInEx"/>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+                
+                <!-- Footer -->
+                <StackPanel Grid.Row="2" 
+                          Spacing="10"
+                          Margin="0,20">
+                    <Button Name="Done"
+                            Command="{Binding SaveSettingsCommand}"
+                            HorizontalAlignment="Center"
+                            Content="Done"
+							IsEnabled="True"
+                            Foreground="#5EA7FF"/>
+                    <Button Name="Cancel"
+                            Command="{Binding CloseWindowCommand}"
+                            HorizontalAlignment="Center"
+                            Content="Cancel"
+                            IsEnabled="True"
+                            Foreground="#5EA7FF"/>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+    </Panel>
+
+    <Window.Styles>
+        <Style Selector="Button.action">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <ContentPresenter Name="PART_ContentPresenter"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Content="{TemplateBinding Content}"
+                                    Padding="{TemplateBinding Padding}"/>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="Button.action:pointerover">
+            <Setter Property="Background" Value="#20FFFFFF"/>
+        </Style>
+
+        <Style Selector="Button.link">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style Selector="Button.link:pointerover">
+            <Setter Property="Opacity" Value="0.8"/>
+        </Style>
+
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="#30FFFFFF"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="ClipToBounds" Value="True"/>
+        </Style>
+
+        <Style Selector="PathIcon">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Styles>
+</Window>

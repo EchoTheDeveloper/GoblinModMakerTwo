@@ -19,9 +19,9 @@ namespace GMMBackend
             }
         }
 
-        public static void Log(string message)
+        public static void Log<T>(T message)
         {
-            WriteLog("LOG:", message);
+            WriteLog("LOG:", message as string);
         }
 
         public static void LogError(string message)

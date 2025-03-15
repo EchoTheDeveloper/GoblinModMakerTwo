@@ -25,11 +25,11 @@ namespace GMMLauncher.Views;
 public partial class CodeEditor : Window
 {
     public readonly TextEditor _editor;
-    private readonly TextMate.Installation _textMateInstallation;
+    public TextMate.Installation _textMateInstallation;
     private CompletionWindow _completionWindow;
     private OverloadInsightWindow _insightWindow;
-    private RegistryOptions _registryOptions;
-    private int _currentTheme = (int)ThemeName.DarkPlus;
+    public RegistryOptions _registryOptions;
+    private int _currentTheme = (int)App.Settings.SelectedTheme;
     private TextBlock _statusTextBlock;
     private CustomMargin _margin;
 
@@ -61,7 +61,7 @@ public partial class CodeEditor : Window
         SetupFileTree(Path.Combine(mod.GetFolderPath(), "Files"));
 
         _editor.HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Visible;
-        _editor.ShowLineNumbers = true;
+        _editor.ShowLineNumbers = App.Settings.ShowLineNumbers;
         _editor.Options.ShowTabs = true;
         _editor.TextArea.RightClickMovesCaret = true;
         _editor.Options.HighlightCurrentLine = true;
@@ -85,6 +85,17 @@ public partial class CodeEditor : Window
         
         _textMateInstallation.SetGrammar(_registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
         DataContext = new CodeEditorViewModel(this);
+    }
+
+    public void UpdateVisuals()
+    {
+        Language csharpLanguage = _registryOptions.GetLanguageByExtension(".cs");
+        _currentTheme = (int)App.Settings.SelectedTheme;
+        _registryOptions = new RegistryOptions((ThemeName)_currentTheme);
+        _textMateInstallation = _editor.InstallTextMate(_registryOptions);
+        _textMateInstallation.AppliedTheme += TextMateInstallationOnAppliedTheme;
+        _editor.ShowLineNumbers = App.Settings.ShowLineNumbers;
+        _textMateInstallation.SetGrammar(_registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
     }
 
     private void SetupFileTree(string folderPath)
