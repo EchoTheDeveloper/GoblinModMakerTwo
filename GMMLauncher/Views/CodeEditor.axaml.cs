@@ -82,7 +82,6 @@ public partial class CodeEditor : Window
         _editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
         _editor.TextArea.LeftMargins.Insert(0, _margin);
         
-        
         _textMateInstallation.SetGrammar(_registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
         DataContext = new CodeEditorViewModel(this);
     }
