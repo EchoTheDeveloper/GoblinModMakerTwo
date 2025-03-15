@@ -32,3 +32,6 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/PromptWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/SettingsWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

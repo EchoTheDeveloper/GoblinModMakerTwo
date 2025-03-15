@@ -24,6 +24,8 @@ namespace GMMLauncher.ViewModels
         public ICommand NewFileCommand { get; }
         public ICommand LoadModCommand { get; }
         public ICommand LoadModDialogCommand { get; }
+        public ICommand SettingsCommand { get; }
+        
 
         MainWindow mainWindow;
         public MainWindowViewModel(MainWindow mainWindow)
@@ -34,6 +36,7 @@ namespace GMMLauncher.ViewModels
             NewFileCommand = new RelayCommand(NewFile);
             LoadModCommand = new RelayCommand(LoadExistingMod);
             LoadModDialogCommand = new RelayCommand(LoadMod);
+            SettingsCommand = new RelayCommand(OpenSettings);
         }
 
         public void NewFile()
@@ -130,28 +133,20 @@ namespace GMMLauncher.ViewModels
         
         public async void LoadMod()
         {
-            var selectedFiles = await mainWindow.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
+            var selectedFolders = await mainWindow.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
             {
                 Title = "Select a Mod",
                 AllowMultiple = false,
-                FileTypeFilter = 
-                [
-                    new FilePickerFileType("JSON Files")
-                    {
-                        Patterns = ["*.json"]
-                    }
-                ],
                 SuggestedStartLocation = await mainWindow.StorageProvider.TryGetFolderFromPathAsync(
                     Path.Combine(Directory.GetCurrentDirectory(), "Mods"))
             });
 
-            var selectedFile = selectedFiles.FirstOrDefault();
-            if (selectedFile != null)
+            var selectedFolder = selectedFolders.FirstOrDefault();
+            if (selectedFolder != null)
             {
-                LoadModFromFile(filePath: selectedFile.Path.ToString().Replace("file:///", ""));
+                LoadModFromFile(filePath: selectedFolder.Path.ToString().Replace("file:///", ""));
             }
         }
-
         
         public void LoadModFromFile(string folderName = "", string filePath = "")
         {
@@ -180,7 +175,12 @@ namespace GMMLauncher.ViewModels
             editor.Show();
         }
 
-        
+
+        public void OpenSettings()
+        {
+            var window = new SettingsWindow();
+            window.Show();
+        }
         
         private void OpenDocumentation()
         {

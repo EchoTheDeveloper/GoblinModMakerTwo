@@ -11,9 +11,12 @@ namespace GMMLauncher
 {
     public partial class App : Application
     {
+        public static Settings Settings { get; set; }
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            Settings = new Settings();
+            Settings.LoadSettings();
         }
         
 
