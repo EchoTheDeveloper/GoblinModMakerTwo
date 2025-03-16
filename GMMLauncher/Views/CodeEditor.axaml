@@ -88,7 +88,7 @@
                     <Separator/>
                     <MenuItem Header="_Find" InputGesture="Ctrl+F" Command="{Binding FindCommand}"/>
                     <MenuItem Header="_Replace" InputGesture="Ctrl+H" Command="{Binding ReplaceCommand}"/>
-                    <MenuItem Header="_Go To Line:colu" InputGesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
+                    <MenuItem Header="_Go To Line" InputGesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Mod" Foreground="White">
                     <MenuItem Header="_Change Name" InputGesture="Ctrl+Alt+N"/>
@@ -96,8 +96,8 @@
                     <MenuItem Header="_Change Developers" InputGesture="Ctrl+Alt+D"/>
                     <Separator/>
                     <MenuItem Header="_Create Harmony Patch" InputGesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatchCommand}"/>
-                    <MenuItem Header="_Create Config Item" InputGesture="Ctrl+Alt+C"/>
-                    <MenuItem Header="_Create Keybind" InputGesture="Ctrl+Alt+K"/>
+                    <MenuItem Header="_Create Config Item" InputGesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
+                    <MenuItem Header="_Create Keybind" InputGesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
                     <MenuItem Header="_Create NPC Asset" InputGesture="Ctrl+Alt+A"/>
                 </MenuItem>
                 <MenuItem Header="_Build" Foreground="White">
@@ -198,8 +198,8 @@
                         <!-- <KeyBinding Gesture="Ctrl+Alt+V" Command="{Binding ChangeVersion}"/> -->
                         <!-- <KeyBinding Gesture="Ctrl+Alt+D" Command="{Binding ChangeDevelopers}"/> -->
                         <KeyBinding Gesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatchCommand}"/>
-                        <!-- <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding CreateConfigItem}"/> -->
-                        <!-- <KeyBinding Gesture="Ctrl+Alt+K" Command="{Binding CreateKeybind}"/> -->
+                        <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
+                        <KeyBinding Gesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
                         <!-- <KeyBinding Gesture="Ctrl+Alt+A" Command="{Binding CreateNPCAsset}"/> -->
                         
                         <!-- <KeyBinding Gesture="Ctrl+B" Command="{Binding Build}"/> -->
