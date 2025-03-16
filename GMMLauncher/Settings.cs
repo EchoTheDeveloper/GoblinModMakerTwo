@@ -14,7 +14,7 @@ public class Settings
 
     public void LoadSettings()
     {
-        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "settings.json");
+        string filePath = Path.Combine(GMMBackend.Utils.GetAppDataPath(), "settings.json");
         if (!File.Exists(filePath))
         {
             File.Create(filePath).Close();
@@ -88,7 +88,7 @@ public class Settings
 
     public void SaveSettings()
     {
-        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "settings.json");
+        string filePath = Path.Combine(GMMBackend.Utils.GetAppDataPath(), "settings.json");
         string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true,  });
         File.WriteAllText(filePath, json);
     }
