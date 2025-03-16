@@ -84,7 +84,9 @@ namespace {NameNoSpaces}
         public const string Version = ""1.0.0"";
         
         public static ConfigEntry<bool> mEnabled;
+
         public ConfigDefinition mEnabledDef = new ConfigDefinition(pluginVersion, ""Enable/Disable Mod"");
+
 
         public {NameNoSpaces}()
         {{

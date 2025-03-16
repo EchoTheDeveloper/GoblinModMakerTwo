@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Windows.Input;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.Editing;
+using DynamicData;
 using GMMLauncher.Views;
 
 namespace GMMLauncher.ViewModels
@@ -86,9 +89,79 @@ namespace GMMLauncher.ViewModels
     
                 private void CreateHarmonyPatchDone(List<Control> answers, Window promptWindow)
                 {
-                    
+                    string functionName = (answers[0] as TextBox)?.Text ?? "";
+                    string functionClassName = (answers[1] as TextBox)?.Text ?? "";
+                    List<string> parameters = ((answers[2] as TextBox)?.Text.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>()).ToList();
+                    string patchType = (answers[3] as ComboBox)?.SelectedItem as string ?? "Prefix";
+                    string returnType = (answers[4] as TextBox)?.Text ?? "None";
+                    bool? hasInstance = (answers[5] as CheckBox)?.IsChecked;
+
+                    if (string.IsNullOrWhiteSpace(functionName) || string.IsNullOrWhiteSpace(functionClassName))
+                    {
+                        Console.WriteLine("Error: Function name or class name is missing.");
+                        return;
+                    }
+
+                    string signature = "private ";
+
+                    if (returnType != "None")
+                    {
+                        parameters.Insert(0, $"ref {returnType} __result");
+                    }
+
+                    if (hasInstance == true)
+                    {
+                        parameters.Insert(0, $"ref {functionClassName} __instance");
+                        signature += "static ";
+                    }
+
+                    signature += (patchType == "Prefix") ? "bool " : "void ";
+                    string joinedParameters = string.Join(", ", parameters);
+                    signature += $"{functionName.Replace(" ", "")}{patchType}Patch({joinedParameters})";
+
+                    string harmonyPatch = $"[HarmonyPatch(typeof({functionClassName}), \"{functionName}\")]";
+
+                    string patchCode = $@"
+        {harmonyPatch}
+        [{patchType}Patch]
+        {signature}
+        {{
+            if (mEnabled.Value)
+            {{
+                // Write code for patch here";
+
+                    if (returnType != "None")
+                    {
+                        patchCode += "\n                // __result = null;";
+                    }
+
+                    if (patchType == "Prefix")
+                    {
+                        patchCode += "\n                return false; // Cancels Original Function of Method";
+                    }
+
+                    patchCode += "\n            }";
+
+                    if (patchType == "Prefix")
+                    {
+                        patchCode += "\n            return true;";
+                    }
+                    patchCode += "\n        }";
+
+                    string code = _editor._editor.Text;
+                    int lastNamespaceBracket = code.LastIndexOf('}');
+                    int lastClassBracket = code.LastIndexOf('}', lastNamespaceBracket - 2);
+                    if (lastClassBracket != -1 && lastNamespaceBracket != -1)
+                    {
+                        _editor._editor.Text = code.Insert(lastClassBracket, patchCode + "\n    ");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: Could not find class end bracket."); // Todo: SAY SOMETHING IN THE PROMPT INSTEAD 
+                    }
                     promptWindow.Close();
                 }
+                
 
                 private void CreateConfigItem()
                 {
@@ -96,7 +169,7 @@ namespace GMMLauncher.ViewModels
                         new List<(Type, string, object?)>
                         {
                             (typeof(TextBox), "Variable Name:", ""),
-                            (typeof(TextBox), "Data Type (e.g. int):", ""),
+                            (typeof(ComboBox), "Data Type:", new List<string> { "int", "string" }),
                             (typeof(TextBox), "Default Value:", ""),
                             (typeof(TextBox), "Definition (name in mod's configuration):", ""),
                             (typeof(TextBox), "Description (info on hovered)", "")
@@ -109,6 +182,61 @@ namespace GMMLauncher.ViewModels
     
                 private void CreateConfigItemDone(List<Control> answers, Window promptWindow)
                 {
+                    string variableName = (answers[0] as TextBox)?.Text ?? "";
+                    string dateType = (answers[1] as TextBox)?.Text ?? "";
+                    string defaultValue = (answers[2] as TextBox)?.Text ?? "";
+                    string definition = (answers[3] as TextBox)?.Text ?? "";
+                    string description = (answers[4] as TextBox)?.Text ?? "";
+
+                    string configEntry = $"        public static ConfigEntry<{dateType}> {variableName};";
+                    string configDefinition = $"        public ConfigDefinition {variableName}Def = new ConfigDefinition(pluginVersion, \"{definition}\");";
+                    string constructorContent = $"            {variableName} = Config.Bind({variableName}, {defaultValue},new ConfigDescription(\n" +
+                                                $"                \"{description}\", null, \n" +
+                                                $"                new ConfigurationManagerAttributes {{ Order = 0 }}\n" +
+                                                $"            ));";
+                    
+                    string code = _editor._editor.Text;
+                    
+                    int configEntryIndex = code.IndexOf("ConfigEntry<");
+                    if (configEntryIndex != -1)
+                    {
+                        int insertIndex = code.IndexOf('\n', configEntryIndex) + 1;
+                        code = code.Insert(insertIndex, configEntry + "\n");
+                    }
+                    else
+                    {
+                        int lastConst = code.IndexOf("const ");
+                        if (lastConst != -1)
+                            code = code.Insert(lastConst, configEntry + "\n");
+                    }
+
+                    int configDefinitionIndex = code.LastIndexOf("public ConfigDefinition");
+                    if (configDefinitionIndex != -1)
+                    {
+                        int insertIndex = code.IndexOf('\n', configDefinitionIndex) + 1;
+                        code = code.Insert(insertIndex, configDefinition + "\n");
+                    }
+                    else
+                    {
+                        int lastConfigEntry = code.LastIndexOf("ConfigEntry<");
+                        if (lastConfigEntry != -1)
+                        {
+                            int insertIndex = code.IndexOf('\n', lastConfigEntry) + 2;
+                            code = code.Insert(insertIndex, configDefinition + "\n");
+                        }
+                    }
+
+                    int constructorIndex = code.IndexOf($"public {_editor.Mod.NameNoSpaces}");
+                    if (constructorIndex != -1)
+                    {
+                        int bracketIndex = code.IndexOf('{', constructorIndex);
+                        if (bracketIndex != -1)
+                        {
+                            code = code.Insert(bracketIndex + 1, "\n" + constructorContent);
+                        }
+                    }
+                    
+                    _editor._editor.Text = code;
                     
                     promptWindow.Close();
                 }
@@ -140,6 +268,73 @@ namespace GMMLauncher.ViewModels
     
                 private void CreateKeybindDone(List<Control> answers, Window promptWindow)
                 {
+                    string variableName = (answers[0] as TextBox)?.Text ?? "";
+                    string keycode = (answers[2] as TextBox)?.Text ?? "";
+                    
+                    CreateConfigItemDone([
+                        answers[0],
+                        new TextBox { Text = "BepInEx.Configuration.KeyboardShortcut" },
+                        new TextBox
+                        {
+                            Text = $"new BepInEx.Configuration.KeyboardShortcut(UnityEngine.KeyCode.{keycode})"
+                        },
+                        answers[3],
+                        answers[4]
+                    ], promptWindow);
+                    
+                    string code = _editor._editor.Text;
+                    
+                    string logic = $@"
+            // Keybind logic for {variableName}
+            {variableName}JustPressed = {variableName}.Value.IsDown();
+            if ({variableName}.Value.IsDown())
+            {{
+                {variableName}Down = true;
+                if (mEnabled.Value)
+                {{
+                    // Code For When Key Is Pressed
+                }}
+            }}
+            if ({variableName}.Value.IsUp())
+            {{
+                {variableName}Down = false;
+                if (mEnabled.Value)
+                {{
+                    // Code For When Key Is Released
+                }}
+            }}";
+                    
+                    int updateIndex = code.IndexOf("void Update()");
+                    if (updateIndex != -1)
+                    {
+                        int bracketIndex = code.IndexOf('{', updateIndex);
+                        if (bracketIndex != -1)
+                        {
+                            code = code.Insert(bracketIndex + 1, "\n" + logic);
+                        }
+                    }
+                    void DeclareVariable(string nameModifier = "Down")
+                    {
+                        string declaration = $"        public static bool {variableName}{nameModifier} = false;";
+                        int lastBoolIndex = code.IndexOf("public static bool ");
+                        if (lastBoolIndex != -1)
+                        {
+                            int insertIndex = code.IndexOf('\n', lastBoolIndex) + 1;
+                            code = code.Insert(insertIndex, declaration + "\n");
+                        }
+                        else
+                        {
+                            int lastConfigEntryIndex = code.LastIndexOf("ConfigDefinition");
+                            if (lastConfigEntryIndex != -1)
+                            {
+                                int insertIndex = code.IndexOf('\n', lastConfigEntryIndex) + 2;
+                                code = code.Insert(insertIndex, declaration + "\n");
+                            }
+                        }
+                    }
+                    DeclareVariable(); 
+                    DeclareVariable("JustPressed");
+                    _editor._editor.Text = code;
                     
                     promptWindow.Close();
                 }

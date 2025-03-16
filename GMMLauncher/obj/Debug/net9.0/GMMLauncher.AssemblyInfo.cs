@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GMMLauncher")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe45ad68814d3ff3fbd3c747d12d3152ba68a584")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a631d60648012f66d8a04d5773b25018c21ab440")]
 [assembly: System.Reflection.AssemblyProductAttribute("GMMLauncher")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GMMLauncher")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
