@@ -10,3 +10,9 @@ C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Dev
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\obj\Debug\GMMBackend.csproj.CoreCompileInputs.cache
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\obj\Debug\GMMBackend.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\obj\Debug\GMMBackend.pdb
+C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMBackend\bin\Debug\GMMBackend.dll
+C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMBackend\bin\Debug\GMMBackend.pdb
+C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMBackend\obj\Debug\GMMBackend.csproj.AssemblyReference.cache
+C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMBackend\obj\Debug\GMMBackend.csproj.CoreCompileInputs.cache
+C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMBackend\obj\Debug\GMMBackend.dll
+C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMBackend\obj\Debug\GMMBackend.pdb

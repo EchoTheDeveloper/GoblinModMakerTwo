@@ -17,7 +17,19 @@
           "AvaloniaEdit.TextMate": "11.1.0",
           "CommunityToolkit.Mvvm": "8.2.1",
           "GMMBackend": "1.0.0",
-          "ReactiveUI": "20.1.63"
+          "ReactiveUI": "20.1.63",
+          "0Harmony": "2.9.0.0",
+          "0Harmony20": "2.0.0.0",
+          "BepInEx": "5.4.23.2",
+          "BepInEx.Harmony": "2.0.0.0",
+          "BepInEx.Preloader": "5.4.23.2",
+          "HarmonyXInterop": "1.0.0.0",
+          "Mono.Cecil": "0.10.4.0",
+          "Mono.Cecil.Mdb": "0.10.4.0",
+          "Mono.Cecil.Pdb": "0.10.4.0",
+          "Mono.Cecil.Rocks": "0.10.4.0",
+          "MonoMod.RuntimeDetour": "22.1.29.1",
+          "MonoMod.Utils": "22.1.29.1"
         },
         "runtime": {
           "GMMLauncher.dll": {}
@@ -550,6 +562,102 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "0Harmony/2.9.0.0": {
+        "runtime": {
+          "0Harmony.dll": {
+            "assemblyVersion": "2.9.0.0",
+            "fileVersion": "2.9.0.0"
+          }
+        }
+      },
+      "0Harmony20/2.0.0.0": {
+        "runtime": {
+          "0Harmony20.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
+      "BepInEx/5.4.23.2": {
+        "runtime": {
+          "BepInEx.dll": {
+            "assemblyVersion": "5.4.23.2",
+            "fileVersion": "5.4.23.2"
+          }
+        }
+      },
+      "BepInEx.Harmony/2.0.0.0": {
+        "runtime": {
+          "BepInEx.Harmony.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
+      "BepInEx.Preloader/5.4.23.2": {
+        "runtime": {
+          "BepInEx.Preloader.dll": {
+            "assemblyVersion": "5.4.23.2",
+            "fileVersion": "5.4.23.2"
+          }
+        }
+      },
+      "HarmonyXInterop/1.0.0.0": {
+        "runtime": {
+          "HarmonyXInterop.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Mono.Cecil/0.10.4.0": {
+        "runtime": {
+          "Mono.Cecil.dll": {
+            "assemblyVersion": "0.10.4.0",
+            "fileVersion": "0.10.4.0"
+          }
+        }
+      },
+      "Mono.Cecil.Mdb/0.10.4.0": {
+        "runtime": {
+          "Mono.Cecil.Mdb.dll": {
+            "assemblyVersion": "0.10.4.0",
+            "fileVersion": "0.10.4.0"
+          }
+        }
+      },
+      "Mono.Cecil.Pdb/0.10.4.0": {
+        "runtime": {
+          "Mono.Cecil.Pdb.dll": {
+            "assemblyVersion": "0.10.4.0",
+            "fileVersion": "0.10.4.0"
+          }
+        }
+      },
+      "Mono.Cecil.Rocks/0.10.4.0": {
+        "runtime": {
+          "Mono.Cecil.Rocks.dll": {
+            "assemblyVersion": "0.10.4.0",
+            "fileVersion": "0.10.4.0"
+          }
+        }
+      },
+      "MonoMod.RuntimeDetour/22.1.29.1": {
+        "runtime": {
+          "MonoMod.RuntimeDetour.dll": {
+            "assemblyVersion": "22.1.29.1",
+            "fileVersion": "22.1.29.1"
+          }
+        }
+      },
+      "MonoMod.Utils/22.1.29.1": {
+        "runtime": {
+          "MonoMod.Utils.dll": {
+            "assemblyVersion": "22.1.29.1",
+            "fileVersion": "22.1.29.1"
+          }
+        }
       }
     }
   },
@@ -848,6 +956,66 @@
     },
     "GMMBackend/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "0Harmony/2.9.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "0Harmony20/2.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BepInEx/5.4.23.2": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BepInEx.Harmony/2.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BepInEx.Preloader/5.4.23.2": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HarmonyXInterop/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Mono.Cecil/0.10.4.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Mono.Cecil.Mdb/0.10.4.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Mono.Cecil.Pdb/0.10.4.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Mono.Cecil.Rocks/0.10.4.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoMod.RuntimeDetour/22.1.29.1": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MonoMod.Utils/22.1.29.1": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }
