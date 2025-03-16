@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B85265E-FBD9-4932-A3BE-550D7FD3A3D6}|GMMBackend\\GMMBackend.csproj|C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\gmmbackend\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5B85265E-FBD9-4932-A3BE-550D7FD3A3D6}|GMMBackend\\GMMBackend.csproj|solutionrelative:gmmbackend\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\views\\promptwindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\views\\promptwindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\views\\codeeditor.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\views\\codeeditor.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\views\\createharmonypatchwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\views\\createharmonypatchwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\viewmodels\\codeeditorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -43,20 +51,8 @@
       "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\viewmodels\\promptwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\viewmodels\\createharmonypatchviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\viewmodels\\createharmonypatchviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\views\\codeeditor.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
       "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\views\\codeeditor.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\views\\createharmonypatchwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\views\\createharmonypatchwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\views\\mainwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
@@ -75,10 +71,6 @@
       "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\views\\promptwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\views\\createharmonypatchwindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\views\\createharmonypatchwindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\views\\mainwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\views\\mainwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
@@ -91,10 +83,6 @@
       "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\views\\custommargin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5B85265E-FBD9-4932-A3BE-550D7FD3A3D6}|GMMBackend\\GMMBackend.csproj|C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\gmmbackend\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5B85265E-FBD9-4932-A3BE-550D7FD3A3D6}|GMMBackend\\GMMBackend.csproj|solutionrelative:gmmbackend\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\views\\mainwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|Form",
       "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\views\\mainwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|Form"
     },
@@ -105,6 +93,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|c:\\users\\arda\\riderprojects\\goblinmodmakertwo\\gmmlauncher\\viewlocator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CCFCA277-3DD7-4CB7-A707-9984F05A3B39}|GMMLauncher\\GMMLauncher.csproj|solutionrelative:gmmlauncher\\viewlocator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\ViewModels\\CreateHarmonyPatchViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GMMLauncher\\ViewModels\\CreateHarmonyPatchViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -123,12 +127,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Settings.cs",
+              "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Settings.cs",
+              "RelativeDocumentMoniker": "GMMLauncher\\Settings.cs",
+              "ToolTip": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Settings.cs",
+              "RelativeToolTip": "GMMLauncher\\Settings.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAA9wFEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T20:12:48.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "PromptWindow.axaml.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\PromptWindow.axaml.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\PromptWindow.axaml.cs",
               "ToolTip": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\PromptWindow.axaml.cs",
               "RelativeToolTip": "GMMLauncher\\Views\\PromptWindow.axaml.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAIAwwCEAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAIAwwCEAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-16T00:08:00.027Z",
               "EditorCaption": ""
@@ -142,48 +159,44 @@
               "ToolTip": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\CodeEditor.axaml",
               "RelativeToolTip": "GMMLauncher\\Views\\CodeEditor.axaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-15T23:59:56.624Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:59:56.624Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 23,
               "Title": "CreateHarmonyPatchWindow.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml",
               "ToolTip": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml",
               "RelativeToolTip": "GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-15T23:59:55.577Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:59:55.577Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 15,
               "Title": "SettingsWindow.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\SettingsWindow.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\SettingsWindow.axaml",
               "ToolTip": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\SettingsWindow.axaml",
               "RelativeToolTip": "GMMLauncher\\Views\\SettingsWindow.axaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-15T23:56:14.415Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:56:14.415Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 14,
               "Title": "PromptWindow.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\PromptWindow.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\PromptWindow.axaml",
               "ToolTip": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\PromptWindow.axaml",
               "RelativeToolTip": "GMMLauncher\\Views\\PromptWindow.axaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-15T23:56:12.178Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:56:12.178Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "PromptWindowViewModel.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\ViewModels\\PromptWindowViewModel.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\ViewModels\\PromptWindowViewModel.cs",
@@ -191,12 +204,11 @@
               "RelativeToolTip": "GMMLauncher\\ViewModels\\PromptWindowViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T23:52:21.677Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:52:21.677Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "MenuCommands.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\MenuCommands.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\MenuCommands.cs",
@@ -204,12 +216,11 @@
               "RelativeToolTip": "GMMLauncher\\MenuCommands.cs",
               "ViewState": "AgIAAE4AAAAAAAAAAAD4v2EAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T23:34:51.919Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:34:51.919Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 24,
               "Title": "CreateHarmonyPatchWindow.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml",
@@ -217,12 +228,11 @@
               "RelativeToolTip": "GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAawA4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-15T23:30:56.55Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:30:56.55Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 25,
               "Title": "CreateHarmonyPatchWindow.axaml.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\CreateHarmonyPatchWindow.axaml.cs",
@@ -234,7 +244,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "SettingsWindowViewModel.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\ViewModels\\SettingsWindowViewModel.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\ViewModels\\SettingsWindowViewModel.cs",
@@ -242,12 +252,11 @@
               "RelativeToolTip": "GMMLauncher\\ViewModels\\SettingsWindowViewModel.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAmwBIAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T23:26:22.058Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:26:22.058Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 26,
               "Title": "CreateHarmonyPatchViewModel.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\ViewModels\\CreateHarmonyPatchViewModel.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\ViewModels\\CreateHarmonyPatchViewModel.cs",
@@ -255,12 +264,11 @@
               "RelativeToolTip": "GMMLauncher\\ViewModels\\CreateHarmonyPatchViewModel.cs",
               "ViewState": "AgIAAHoAAAAAAAAAAAA/wIAAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T23:26:13.507Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:26:13.507Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "CodeEditor.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\CodeEditor.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\CodeEditor.axaml",
@@ -268,12 +276,11 @@
               "RelativeToolTip": "GMMLauncher\\Views\\CodeEditor.axaml",
               "ViewState": "AgIAAAMAAAAAAAAAAAA2wBIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-15T23:20:26.716Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:20:26.716Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 19,
               "Title": "CustomMargin.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\CustomMargin.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\CustomMargin.cs",
@@ -285,7 +292,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "SettingsWindow.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\SettingsWindow.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\SettingsWindow.axaml",
@@ -293,12 +300,11 @@
               "RelativeToolTip": "GMMLauncher\\Views\\SettingsWindow.axaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-15T23:22:25.336Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:22:25.336Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "PromptWindow.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\PromptWindow.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\PromptWindow.axaml",
@@ -306,12 +312,11 @@
               "RelativeToolTip": "GMMLauncher\\Views\\PromptWindow.axaml",
               "ViewState": "AgIAADAAAAAAAAAAAAAAAD4AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-15T23:22:23.622Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:22:23.622Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "CodeEditorViewModel.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\ViewModels\\CodeEditorViewModel.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\ViewModels\\CodeEditorViewModel.cs",
@@ -319,12 +324,11 @@
               "RelativeToolTip": "GMMLauncher\\ViewModels\\CodeEditorViewModel.cs",
               "ViewState": "AgIAAGUAAAAAAAAAAAD4v2sAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T23:16:08.371Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T23:16:08.371Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "ViewModelBase.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\ViewModels\\ViewModelBase.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\ViewModels\\ViewModelBase.cs",
@@ -332,12 +336,11 @@
               "RelativeToolTip": "GMMLauncher\\ViewModels\\ViewModelBase.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAgwAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-22T15:01:03.486Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-22T15:01:03.486Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 21,
               "Title": "App.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\App.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\App.axaml",
@@ -348,7 +351,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 18,
               "Title": "App.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\App.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\App.axaml",
@@ -359,7 +362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "MainWindowViewModel.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\ViewModels\\MainWindowViewModel.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\ViewModels\\MainWindowViewModel.cs",
@@ -367,24 +370,22 @@
               "RelativeToolTip": "GMMLauncher\\ViewModels\\MainWindowViewModel.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAA+wBcAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-22T14:43:12.901Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-22T14:43:12.901Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 13,
               "Title": "MainWindow.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\MainWindow.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\MainWindow.axaml",
               "ToolTip": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\MainWindow.axaml",
               "RelativeToolTip": "GMMLauncher\\Views\\MainWindow.axaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-22T14:39:25.071Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-22T14:39:25.071Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 17,
               "Title": "MainWindow.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\MainWindow.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\MainWindow.axaml",
@@ -395,7 +396,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Program.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\Program.cs",
@@ -408,7 +409,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 20,
               "Title": "MainWindow.axaml",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\Views\\MainWindow.axaml",
               "RelativeDocumentMoniker": "GMMLauncher\\Views\\MainWindow.axaml",
@@ -419,19 +420,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 2,
               "Title": "Logger.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMBackend\\Logger.cs",
               "RelativeDocumentMoniker": "GMMBackend\\Logger.cs",
               "ToolTip": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMBackend\\Logger.cs",
               "RelativeToolTip": "GMMBackend\\Logger.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-22T23:19:56.26Z"
+              "WhenOpened": "2024-12-22T23:19:56.26Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 22,
               "Title": "ViewLocator.cs",
               "DocumentMoniker": "C:\\Users\\arda\\RiderProjects\\GoblinModMakerTwo\\GMMLauncher\\ViewLocator.cs",
               "RelativeDocumentMoniker": "GMMLauncher\\ViewLocator.cs",

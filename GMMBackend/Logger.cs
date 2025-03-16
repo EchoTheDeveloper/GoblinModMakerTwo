@@ -3,6 +3,17 @@ using System.IO;
 
 namespace GMMBackend
 {
+    public static class Utils
+    {
+        public static string GetAppDataPath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Goblin Mod Maker");
+        }
+        public static string GetAppDataPath(string fileName)
+        {
+            return Path.Combine(GetAppDataPath(), fileName);
+        }
+    }
     public static class Logger
     {
         private static readonly string logDirectory = Path.Combine(
