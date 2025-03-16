@@ -35,6 +35,8 @@ namespace GMMLauncher.ViewModels
         public ICommand GoToLineCommand => new RelayCommand(GoToLine);
 
         public ICommand CreateHarmonyPatchCommand => new RelayCommand(CreateHarmonyPatch);
+        public ICommand CreateConfigItemCommand => new RelayCommand(CreateConfigItem);
+        public ICommand CreateKeybindCommand => new RelayCommand(CreateKeybind);
         
         
         private readonly CodeEditor _editor;
@@ -117,8 +119,7 @@ namespace GMMLauncher.ViewModels
                         new List<(Type, string, object?)>
                         {
                             (typeof(TextBox), "Variable Name:", ""),
-                            (typeof(TextBox), "Keycode:", ""),
-                            (typeof(Button), "Open Keycode List", () =>
+                            (typeof(Button), "Keycode:", () =>
                             {
                                 var url = "https://docs.unity3d.com/ScriptReference/KeyCode.html";
                                 Process.Start(new ProcessStartInfo 
@@ -127,6 +128,7 @@ namespace GMMLauncher.ViewModels
                                     UseShellExecute = true 
                                 });
                             }),
+                            (typeof(TextBox), "", ""),
                             (typeof(TextBox), "Definition (name in mod's configuration):", ""),
                             (typeof(TextBox), "Description (info on hovered)", "")
                         },

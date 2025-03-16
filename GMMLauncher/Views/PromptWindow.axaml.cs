@@ -32,12 +32,15 @@ public partial class PromptWindow : Window
         {
             foreach (var (promptType, promptText, defaultValue) in prompts)
             {
-                promptsPanel.Children.Add(new TextBlock
+                if (promptType != typeof(Button) && promptText != "")
                 {
-                    Text = promptText,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    FontSize = 14,
-                });
+                    promptsPanel.Children.Add(new TextBlock
+                    {
+                        Text = promptText,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        FontSize = 14,
+                    });
+                }
 
                 Control? inputField = null;
 
@@ -89,13 +92,15 @@ public partial class PromptWindow : Window
                             {
                                 button.Command = new RelayCommand(defaultValue as Action);
                             }
+                            button.HorizontalAlignment = HorizontalAlignment.Center;
+                            button.Content = promptText;
                             break;
                     }
                     promptsPanel.Children.Add(inputField);
                     answers.Add(inputField);
                 }
 
-                if (promptText != prompts.Last().promptText)
+                if (promptText != prompts.Last().promptText && promptType != typeof(Button))
                 {
                     promptsPanel.Children.Add(new Separator { HorizontalAlignment = HorizontalAlignment.Stretch });
                 }
