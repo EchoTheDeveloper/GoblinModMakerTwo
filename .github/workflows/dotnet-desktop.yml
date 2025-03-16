@@ -1,0 +1,69 @@
+name: Build GoblinModMaker
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: GoblinModMaker.sln
+      Backend_Project: GMMBackend/GMMBackend.csproj
+      Launcher_Project: GMMLauncher/GMMLauncher.csproj
+      Backend_Dll_Path: GMMBackend/bin/${{ matrix.configuration }}/net9.0/GMMBackend.dll
+      Launcher_Bin_Path: GMMLauncher/bin/${{ matrix.configuration }}/net9.0/
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET 9
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore dependencies
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    - name: Build GMMBackend
+      run: msbuild $env:Backend_Project /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    - name: Move GMMBackend.dll to GMMLauncher bin
+      run: |
+        mkdir -p $env:Launcher_Bin_Path
+        mv $env:Backend_Dll_Path $env:Launcher_Bin_Path
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    - name: Build GMMLauncher
+      run: msbuild $env:Launcher_Project /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    - name: Publish GMMLauncher EXE
+      run: dotnet publish $env:Launcher_Project --configuration $env:Configuration --output PublishedApp --self-contained true -r win-x64
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: PublishedApp
+        path: PublishedApp/
