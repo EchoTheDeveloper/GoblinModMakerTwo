@@ -15,8 +15,7 @@ namespace GMMLauncher.ViewModels
     public partial class CodeEditorViewModel : ViewModelBase
     {
         public ICommand OpenDocumentationCommand => MenuCommands.OpenDocumentationCommand;
-        public ICommand OpenSettingsCommand => MenuCommands.OpenSettingsCommand;
-        public ICommand OpenHarmonyPatchCommand => MenuCommands.OpenHarmonyPatchCommand;
+        public ICommand OpenSettingsCommand => new RelayCommand(OpenSettings);
         public ICommand QuitAppCommand => MenuCommands.QuitAppCommand;
         public ICommand NewModCommand => MenuCommands.NewModCommand;
         public ICommand LoadExistingModCommand => MenuCommands.LoadExistingModCommand;
@@ -35,6 +34,8 @@ namespace GMMLauncher.ViewModels
         public ICommand ReplaceCommand => new RelayCommand(Replace);
         public ICommand GoToLineCommand => new RelayCommand(GoToLine);
 
+        public ICommand CreateHarmonyPatchCommand => new RelayCommand(CreateHarmonyPatch);
+        
         
         private readonly CodeEditor _editor;
         
@@ -44,10 +45,112 @@ namespace GMMLauncher.ViewModels
         }
 
         #region MenuBarFunctions
-        
+            private void NewFile()
+            {
+                var window = new PromptWindow("New File",
+                    new List<(Type, string, object?)>
+                    {
+                        (typeof(TextBox), "File Name:", "")
+                    },
+                    NewFileDone
+                );
+
+                window.Show();
+            }
+            private void NewFileDone(List<Control> answers, Window promptWindow)
+            {
+                string fileName = (answers[0] as TextBlock).Text;
+                promptWindow.Close();
+            }
+
+            #region CreateFunctions
+                private void CreateHarmonyPatch()
+                {
+                    var window = new PromptWindow("Create Harmony Patch",
+                        new List<(Type, string, object?)>
+                        {
+                            (typeof(TextBox), "Function Name:", ""),
+                            (typeof(TextBox), "Function's Class:", ""),
+                            (typeof(TextBox), "Parameters (Separate by comma):", ""),
+                            (typeof(ComboBox), "Patch Type (Prefix, Postfix):", new List<string> { "Prefix", "Postfix"}),
+                            (typeof(TextBox), "Return Type:", "None"),
+                            (typeof(CheckBox), "Have Instance:", false),
+                        },
+                        CreateHarmonyPatchDone
+                    );
+    
+                    window.Show();
+                }
+    
+                private void CreateHarmonyPatchDone(List<Control> answers, Window promptWindow)
+                {
+                    
+                    promptWindow.Close();
+                }
+
+                private void CreateConfigItem()
+                {
+                    var window = new PromptWindow("Create Config Item",
+                        new List<(Type, string, object?)>
+                        {
+                            (typeof(TextBox), "Variable Name:", ""),
+                            (typeof(TextBox), "Data Type (e.g. int):", ""),
+                            (typeof(TextBox), "Default Value:", ""),
+                            (typeof(TextBox), "Definition (name in mod's configuration):", ""),
+                            (typeof(TextBox), "Description (info on hovered)", "")
+                        },
+                        CreateConfigItemDone
+                    );
+    
+                    window.Show();
+                }
+    
+                private void CreateConfigItemDone(List<Control> answers, Window promptWindow)
+                {
+                    
+                    promptWindow.Close();
+                }
+                
+                private void CreateKeybind()
+                {
+                    var window = new PromptWindow("Create Keybind",
+                        new List<(Type, string, object?)>
+                        {
+                            (typeof(TextBox), "Variable Name:", ""),
+                            (typeof(TextBox), "Keycode:", ""),
+                            (typeof(Button), "Open Keycode List", () =>
+                            {
+                                var url = "https://docs.unity3d.com/ScriptReference/KeyCode.html";
+                                Process.Start(new ProcessStartInfo 
+                                { 
+                                    FileName = url, 
+                                    UseShellExecute = true 
+                                });
+                            }),
+                            (typeof(TextBox), "Definition (name in mod's configuration):", ""),
+                            (typeof(TextBox), "Description (info on hovered)", "")
+                        },
+                        CreateKeybindDone
+                    );
+    
+                    window.Show();
+                }
+    
+                private void CreateKeybindDone(List<Control> answers, Window promptWindow)
+                {
+                    
+                    promptWindow.Close();
+                }
+            #endregion
+            
             private void LoadModDialog()
             {
                 MenuCommands.LoadModDialogCommand.Execute(_editor);
+            }
+
+            private void OpenSettings()
+            {
+                MenuCommands.OpenSettingsInEditorCommand.Execute(_editor);
             }
             
             private void SaveMod()
@@ -55,6 +158,9 @@ namespace GMMLauncher.ViewModels
                 Mod mod = _editor.Mod;
                 mod.SaveFiles(_editor._editor.Text);
             }
+        
+        #endregion
+        #region MenuCommands
 
             private void Undo()
             {
@@ -98,7 +204,7 @@ namespace GMMLauncher.ViewModels
             private void GoToLine()
             {
                 var window = new PromptWindow("Go to Line:Column",
-                    new List<(Type, string, string)>
+                    new List<(Type, string, object?)>
                     {
                         (typeof(TextBlock), "Line:Column", "")
                     },

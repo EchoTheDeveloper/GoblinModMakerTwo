@@ -9,7 +9,7 @@
         TransparencyLevelHint="AcrylicBlur"
         Width="400"
         Height="400"
-        CanResize="False">
+        CanResize="True">
 
     <Design.DataContext>
         <vm:PromptWindowViewModel/>

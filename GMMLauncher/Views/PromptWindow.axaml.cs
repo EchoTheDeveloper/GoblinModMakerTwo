@@ -14,14 +14,15 @@ public partial class PromptWindow : Window
 {
     public List<Control> answers;
 
-    public PromptWindow(string title, List<(Type promptType, string promptText, string defaultValue)> prompts = null, Action<List<Control>, Window> done = null, Action<Window> cancel = null, int baseHeight = 300)
+    public PromptWindow(string title, List<(Type promptType, string promptText, object? defaultValue)> prompts = null, Action<List<Control>, Window> done = null, Action<Window> cancel = null, int baseHeight = 300)
     {
         InitializeComponent();
         DataContext = new PromptWindowViewModel();
         Height = baseHeight;
+        MaxHeight = 800;
         if (prompts != null)
         {
-            Height += (prompts.Count * 65);
+            Height += (prompts.Count * 55);
         }
         answers = new List<Control>();
         Title = title;
@@ -52,21 +53,51 @@ public partial class PromptWindow : Window
                     }
                 }
 
-                if (inputField is TextBox textBox)
-                {
-                    textBox.Text = defaultValue;
-                }
 
                 if (inputField != null)
                 {
+                    inputField.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    switch (inputField)
+                    {
+                        case TextBox textBox:
+                            textBox.Width = Math.Max(Width - 200, 150);
+                            
+                            Resized += (sender, args) =>
+                            {
+                                textBox.Width = Math.Max(Width - 200, 150);
+                            };
+
+                            textBox.Text = defaultValue as string;
+                            break;
+                        case CheckBox checkBox:
+                            checkBox.HorizontalAlignment = HorizontalAlignment.Center;
+                            checkBox.VerticalAlignment = VerticalAlignment.Center;
+                            checkBox.IsChecked = defaultValue as bool?;
+                            break;
+                        case ComboBox comboBox:
+                            if (defaultValue is IEnumerable<string> items)
+                            {
+                                foreach (var item in items)
+                                {
+                                    comboBox.Items.Add(item);
+                                }
+                                comboBox.SelectedIndex = 0;
+                            }
+                            break;
+                        case Button button:
+                            if (defaultValue is Action)
+                            {
+                                button.Command = new RelayCommand(defaultValue as Action);
+                            }
+                            break;
+                    }
                     promptsPanel.Children.Add(inputField);
                     answers.Add(inputField);
-                    inputField.HorizontalAlignment = HorizontalAlignment.Center;
                 }
 
                 if (promptText != prompts.Last().promptText)
                 {
-                    promptsPanel.Children.Add(new Separator { HorizontalAlignment = HorizontalAlignment.Center });
+                    promptsPanel.Children.Add(new Separator { HorizontalAlignment = HorizontalAlignment.Stretch });
                 }
             }
         }

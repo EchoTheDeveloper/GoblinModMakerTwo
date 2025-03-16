@@ -18,7 +18,7 @@ namespace GMMLauncher.ViewModels
     public partial class MainWindowViewModel : ViewModelBase
     {
         public ICommand OpenDocumentationCommand => MenuCommands.OpenDocumentationCommand;
-        public ICommand OpenSettingsCommand => MenuCommands.OpenSettingsCommand;
+        public ICommand OpenSettingsCommand => new RelayCommand(OpenSettings);
         public ICommand QuitAppCommand => MenuCommands.QuitAppCommand;
         public ICommand NewModCommand => MenuCommands.NewModCommand;
         public ICommand LoadExistingModCommand => MenuCommands.LoadExistingModCommand;
@@ -34,6 +34,11 @@ namespace GMMLauncher.ViewModels
         public void LoadModDialog()
         {
             MenuCommands.LoadModDialogCommand.Execute(mainWindow);
+        }
+        private void OpenSettings()
+        {
+            Console.WriteLine("BF");
+            MenuCommands.OpenSettingsCommand.Execute(null);
         }
     }
 }
