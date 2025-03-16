@@ -22,15 +22,16 @@ public static class MenuCommands
     public static ICommand OpenDocumentationCommand { get; } = new RelayCommand(OpenDocumentation);
     public static ICommand QuitAppCommand { get; } = new RelayCommand(QuitApp);
     public static ICommand NewModCommand { get; } = new RelayCommand(NewMod);
+    public static ICommand OpenSettingsInEditorCommand { get; } = new RelayCommand<CodeEditor>(OpenSettingsInEditor);
     public static ICommand OpenSettingsCommand { get; } = new RelayCommand(OpenSettings);
-    public static ICommand OpenHarmonyPatchCommand { get; } = new RelayCommand(OpenHarmonyPatch);
+
     public static ICommand LoadExistingModCommand { get; } = new RelayCommand(LoadExistingMod);
     public static ICommand LoadModDialogCommand { get; } = new RelayCommand<Window>(LoadMod);
     
     public static void NewMod()
     {
         var window = new PromptWindow("New Mod",
-            new List<(Type, string, string)>
+            new List<(Type, string, object?)>
             {
                 (typeof(TextBox), "Mod Name:", ""),
                 (typeof(TextBox), "Description:", ""),
@@ -63,7 +64,7 @@ public static class MenuCommands
         if (availableMods != null && availableMods.Length > 0)
         {
             var window = new PromptWindow("Load Mod",
-                new List<(Type, string, string)>
+                new List<(Type, string, object?)>
                 {
                     (typeof(TextBox), "Mod Name:", ""),
                     (typeof(TextBlock), "OR", ""),
@@ -73,7 +74,7 @@ public static class MenuCommands
             );
             
             var promptsPanel = window.FindControl<StackPanel>("PromptsPanel")!;
-            
+            window.Height += availableMods.Length * 24;
             foreach (var modName in availableMods)
             {
                 string modNameFixed = modName.Replace(@"Mods\", "");
@@ -96,7 +97,7 @@ public static class MenuCommands
         else
         {
             var window = new PromptWindow("Load Mod",
-                new List<(Type, string, string)>
+                new List<(Type, string, object?)>
                 {
                     (typeof(TextBlock), "No Mods Found!", ""),
                 }
@@ -124,6 +125,13 @@ public static class MenuCommands
         {
             Title = "Select a Mod",
             AllowMultiple = false,
+            FileTypeFilter = 
+            [
+                new FilePickerFileType("JSON Files")
+                {
+                    Patterns = ["*.json"]
+                }
+            ],
             SuggestedStartLocation = await window.StorageProvider.TryGetFolderFromPathAsync(
                 Path.Combine(Directory.GetCurrentDirectory(), "Mods"))
         });
@@ -162,26 +170,14 @@ public static class MenuCommands
         editor.Show();
     }
     
+    public static void OpenSettingsInEditor(CodeEditor editor = null)
+    {
+        var window = new SettingsWindow(editor);
+        window.Show();
+    }
     public static void OpenSettings()
     {
         var window = new SettingsWindow();
-        window.Show();
-    }
-
-    public static void OpenHarmonyPatch()
-    {
-        var window = new PromptWindow("Create Harmony Patch",
-        new List<(Type, string, string)>
-        {
-            (typeof(TextBox), "Function Name:", ""),
-            (typeof(TextBox), "Function's Class", ""),
-            (typeof(TextBox), "Parameters (Separate by comma):", ""),
-            (typeof(TextBox), "Patch Type (Prefix, Postfix):", "Prefix"),
-            (typeof(TextBox), "Return Type:", "None"),
-            (typeof(TextBox), "Have Instance:", "False"),
-        }
-);
-
         window.Show();
     }
 

@@ -58,67 +58,19 @@ namespace GMMLauncher.ViewModels
 
         private void AutoFindSteamDirectory()
         {
-            string directory = FindSteamDirectory();
+            string directory = App.Settings.FindSteamDirectory();
+            if (directory == null)
+            {
+                string customPath = PromptForCustomSteamDirectory().Result;
+                if (!string.IsNullOrEmpty(customPath) && Directory.Exists(Path.Combine(customPath, "steamapps", "common", "Isle Goblin Playtest")))
+                {
+                    directory = Path.Combine(customPath, "steamapps", "common", "Isle Goblin Playtest");
+                }
+            }
             settingsWindow.FindControl<TextBox>("SteamDirectory").Text = directory;
         }
 
-        private string FindSteamDirectory()
-        {
-            string folderName = "Isle Goblin Playtest";
-            string steamPath = TryGetSteamDirectory();
-            if (!string.IsNullOrEmpty(steamPath))
-            {
-                string steamCommonPath = Path.Combine(steamPath, "steamapps", "common", folderName);
-                if (Directory.Exists(Path.Combine(steamCommonPath))) // TODO: WHEN MAKING ALL AROUND MOD MAKER MAKE THIS ADJUSTABLE
-                {
-                    return steamCommonPath;
-                }
-            }
-            string[] commonDrives = { "C:", "D:", "E:", "F:", "Z:" };
-            foreach (string drive in commonDrives)
-            {
-                string possiblePath = Path.Combine(drive, "SteamLibrary", "steamapps", "common", folderName);
-                if (Directory.Exists(Path.Combine(possiblePath)))
-                {
-                    return possiblePath;
-                }
-
-                string programFilesPath = Path.Combine(drive, "Program Files", "Steam", "steamapps", "common", folderName);
-                if (Directory.Exists(programFilesPath))
-                {
-                    return programFilesPath;
-                }
-
-                string programFilesX86Path = Path.Combine(drive, "Program Files (x86)", "Steam", "steamapps", "common", folderName);
-                if (Directory.Exists(programFilesX86Path))
-                {
-                    return programFilesX86Path;
-                }
-            }
-
-            string customPath = PromptForCustomSteamDirectory().Result;
-            if (!string.IsNullOrEmpty(customPath) && Directory.Exists(Path.Combine(customPath, "steamapps", "common", folderName)))
-            {
-                return Path.Combine(customPath, "steamapps", "common", folderName);
-            }
-
-            return null;
-        }
-
-        private string TryGetSteamDirectory()
-        {
-            try
-            {
-                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Valve\Steam"))
-                {
-                    return key?.GetValue("InstallPath") as string;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        
 
         private async Task<string> PromptForCustomSteamDirectory()
         {
