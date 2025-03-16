@@ -13,7 +13,8 @@ namespace GMMLauncher.Views;
 public partial class PromptWindow : Window
 {
     public List<Control> answers;
-    public PromptWindow(string title, List<(Type promptType, string promptText)> prompts = null, Action<List<Control>, Window> done = null, Action<Window> cancel = null, int baseHeight = 300)
+
+    public PromptWindow(string title, List<(Type promptType, string promptText, string defaultValue)> prompts = null, Action<List<Control>, Window> done = null, Action<Window> cancel = null, int baseHeight = 300)
     {
         InitializeComponent();
         DataContext = new PromptWindowViewModel();
@@ -22,13 +23,13 @@ public partial class PromptWindow : Window
         {
             Height += (prompts.Count * 65);
         }
-        answers= new List<Control>();
+        answers = new List<Control>();
         Title = title;
-    
+
         var promptsPanel = this.FindControl<StackPanel>("PromptsPanel")!;
         if (prompts != null)
         {
-            foreach (var (promptType, promptText) in prompts)
+            foreach (var (promptType, promptText, defaultValue) in prompts)
             {
                 promptsPanel.Children.Add(new TextBlock
                 {
@@ -36,9 +37,9 @@ public partial class PromptWindow : Window
                     HorizontalAlignment = HorizontalAlignment.Center,
                     FontSize = 14,
                 });
-    
+
                 Control? inputField = null;
-    
+
                 if (promptType != typeof(TextBlock))
                 {
                     try
@@ -50,43 +51,42 @@ public partial class PromptWindow : Window
                         inputField = new TextBox();
                     }
                 }
-    
+
+                if (inputField is TextBox textBox)
+                {
+                    textBox.Text = defaultValue;
+                }
+
                 if (inputField != null)
                 {
                     promptsPanel.Children.Add(inputField);
                     answers.Add(inputField);
                     inputField.HorizontalAlignment = HorizontalAlignment.Center;
                 }
-    
+
                 if (promptText != prompts.Last().promptText)
                 {
                     promptsPanel.Children.Add(new Separator { HorizontalAlignment = HorizontalAlignment.Center });
                 }
             }
         }
-    
+
         this.FindControl<TextBlock>("TitleText")!.Text = title;
         Dispatcher.UIThread.Post(() =>
         {
             this.FindControl<Button>("Done")!.Command = new RelayCommand(() =>
             {
-                if (done != null)
-                    done?.Invoke(answers, this);
-                else
-                    Close();
+                done?.Invoke(answers, this);
+                Close();
             });
             this.FindControl<Button>("Cancel")!.Command = new RelayCommand(() =>
             {
-                if (cancel != null)
-                    cancel.Invoke(this);
-                else
-                    Close();
+                cancel?.Invoke(this);
+                Close();
             });
         });
-        
     }
 
-    
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);

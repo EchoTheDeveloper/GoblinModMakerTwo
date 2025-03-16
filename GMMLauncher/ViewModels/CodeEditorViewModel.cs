@@ -16,6 +16,7 @@ namespace GMMLauncher.ViewModels
     {
         public ICommand OpenDocumentationCommand => MenuCommands.OpenDocumentationCommand;
         public ICommand OpenSettingsCommand => MenuCommands.OpenSettingsCommand;
+        public ICommand OpenHarmonyPatchCommand => MenuCommands.OpenHarmonyPatchCommand;
         public ICommand QuitAppCommand => MenuCommands.QuitAppCommand;
         public ICommand NewModCommand => MenuCommands.NewModCommand;
         public ICommand LoadExistingModCommand => MenuCommands.LoadExistingModCommand;
@@ -97,9 +98,9 @@ namespace GMMLauncher.ViewModels
             private void GoToLine()
             {
                 var window = new PromptWindow("Go to Line:Column",
-                    new List<(Type, string)>
+                    new List<(Type, string, string)>
                     {
-                        (typeof(TextBlock), "Line:Column")
+                        (typeof(TextBlock), "Line:Column", "")
                     },
                     GoToLineDone, 
                     baseHeight:220);

@@ -37,6 +37,45 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Reference Include="0Harmony">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\0Harmony.dll</HintPath>
+      </Reference>
+      <Reference Include="0Harmony20">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\0Harmony20.dll</HintPath>
+      </Reference>
+      <Reference Include="BepInEx">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\BepInEx.dll</HintPath>
+      </Reference>
+      <Reference Include="BepInEx.Harmony">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\BepInEx.Harmony.dll</HintPath>
+      </Reference>
+      <Reference Include="BepInEx.Preloader">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\BepInEx.Preloader.dll</HintPath>
+      </Reference>
+      <Reference Include="HarmonyXInterop">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\HarmonyXInterop.dll</HintPath>
+      </Reference>
+      <Reference Include="Mono.Cecil">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\Mono.Cecil.dll</HintPath>
+      </Reference>
+      <Reference Include="Mono.Cecil.Mdb">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\Mono.Cecil.Mdb.dll</HintPath>
+      </Reference>
+      <Reference Include="Mono.Cecil.Pdb">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\Mono.Cecil.Pdb.dll</HintPath>
+      </Reference>
+      <Reference Include="Mono.Cecil.Rocks">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\Mono.Cecil.Rocks.dll</HintPath>
+      </Reference>
+      <Reference Include="MonoMod.RuntimeDetour">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\MonoMod.RuntimeDetour.dll</HintPath>
+      </Reference>
+      <Reference Include="MonoMod.Utils">
+        <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Isle Goblin Playtest\BepInEx\core\MonoMod.Utils.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
       <Compile Update="Views\CodeEditor.axaml.cs">
         <DependentUpon>CodeEditor.axaml</DependentUpon>
         <SubType>Code</SubType>
@@ -44,6 +83,9 @@
       <Compile Update="Views\PromptWindow.axaml.cs">
         <DependentUpon>PromptWindow.axaml</DependentUpon>
         <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\CreateHarmonyPatchWindow.axaml.cs">
+        <DependentUpon>CreateHarmonyPatchWindow.axaml</DependentUpon>
       </Compile>
       <Compile Update="Views\SettingsWindow.axaml.cs">
         <DependentUpon>SettingsWindow.axaml</DependentUpon>

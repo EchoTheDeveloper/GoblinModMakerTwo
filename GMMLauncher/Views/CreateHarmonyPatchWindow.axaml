@@ -1,8 +1,8 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:GMMLauncher.ViewModels"
-        x:Class="GMMLauncher.Views.SettingsWindow"
-        x:DataType="vm:SettingsWindowViewModel"
+        x:Class="GMMLauncher.Views.CreateHarmonyPatch"
+        x:DataType="vm:CreateHarmonyPatchViewModel"
         Icon="/Assets/goblin-mod-maker.ico"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
@@ -12,7 +12,7 @@
         CanResize="True">
 
     <Design.DataContext>
-        <vm:SettingsWindowViewModel/>
+        <vm:CreateHarmonyPatchViewModel/>
     </Design.DataContext>
     <Panel>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
