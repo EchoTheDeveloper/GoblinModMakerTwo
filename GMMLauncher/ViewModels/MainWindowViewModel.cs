@@ -37,7 +37,6 @@ namespace GMMLauncher.ViewModels
         }
         private void OpenSettings()
         {
-            Console.WriteLine("BF");
             MenuCommands.OpenSettingsCommand.Execute(null);
         }
     }

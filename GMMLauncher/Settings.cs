@@ -1,5 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using GMMLauncher.Views;
 using Microsoft.Win32;
 using TextMateSharp.Grammars;
 using TextMateSharp.Themes;
@@ -92,4 +99,171 @@ public class Settings
         string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true,  });
         File.WriteAllText(filePath, json);
     }
+    #region BepInEx Installation
+    public async Task InstallBepInEx()
+    {
+        if (Directory.Exists(Path.Combine(SteamDirectory, "BepInEx")))
+        {
+            new InfoWindow("Already Installed", InfoWindowType.YesNo, "BepInEx is already installed. Are you trying to reinstall?", true, 
+                () =>
+                {
+                    Directory.Delete(Path.Combine(SteamDirectory, "BepInEx"), true);
+                    File.Delete(Path.Combine(SteamDirectory, "doorstop_config.ini"));
+                    File.Delete(Path.Combine(SteamDirectory, "winhttp.dll"));
+                    File.Delete(Path.Combine(SteamDirectory, "changelog.txt"));
+                    InstallBepInEx();
+                },
+                fontSize:18).Show();
+        }
+        else
+        {
+            string version = await GetDefaultStableVersionAsync();
+            string link = await GetBepInExDownloadLink(version);
+            if (string.IsNullOrEmpty(link)) return;
+            
+    
+            if (Directory.Exists(SteamDirectory))
+            {
+                string src = Path.Combine(Directory.GetCurrentDirectory(), "resources\\BepInEx.zip");
+                await DownloadFileAsync(link, src);
+                ZipFile.ExtractToDirectory(src, SteamDirectory);
+                File.Delete(Path.Combine(SteamDirectory, ".doorstop_version"));
+            }
+            new InfoWindow("BepInEx Installed", InfoWindowType.Ok, "BepInEx was successfully installed! Please run Isle Goblin once, then exit. ", true, fontSize:20).Show();
+        }
+    }
+    
+    public async Task<string> GetDefaultStableVersionAsync()
+    {
+        HttpClient httpClient = new();
+        List<string> releases = new List<string>();
+        string url = "https://api.github.com/repos/BepInEx/BepInEx/releases";
+
+        while (url != null)
+        {
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "Settings");
+
+                HttpResponseMessage response = await httpClient.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    var releasesData = JsonSerializer.Deserialize<List<Release>>(json);
+                    foreach (var release in releasesData)
+                    {
+                        releases.Add(release.tag_name);
+                    }
+
+                    if (response.Headers.Contains("Link"))
+                    {
+                        string nextUrl = GetNextPageUrl(response.Headers.GetValues("Link"));
+                        url = nextUrl;
+                    }
+                    else
+                    {
+                        url = null;
+                    }
+                }
+            
+        }
+
+        var stableVersions = releases.FindAll(version => !version.Contains("pre") && !version.Contains("RC"));
+
+        return stableVersions.Count > 0 ? stableVersions[0] : releases[0];
+        string GetNextPageUrl(IEnumerable<string> linkHeader)
+        {
+            foreach (var link in linkHeader)
+            {
+                if (link.Contains("rel=\"next\""))
+                {
+                    var url = link.Split(';')[0].Trim('<', '>');
+                    return url;
+                }
+            }
+            return null;
+        }
+    }
+    
+
+    public static async Task DownloadFileAsync(string url, string destinationPath)
+    {
+        HttpClient httpClient = new();
+        try
+        {
+            using HttpResponseMessage response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+            response.EnsureSuccessStatusCode();
+
+            await using FileStream fileStream = new(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None);
+            await using Stream contentStream = await response.Content.ReadAsStreamAsync();
+            await contentStream.CopyToAsync(fileStream);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error downloading file: {ex.Message}");
+        }
+    }
+    
+    private async Task<string> GetBepInExDownloadLink(string version)
+    {
+        string baseUrl = $"https://github.com/BepInEx/BepInEx/releases/download/{version}/BepInEx";
+        string os = System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier.Split("-")[0];
+        string arch = GetSystemArch();
+        if (os == "osx") os = "macos";
+
+        string[] urls = PossibleUrls();
+        
+        foreach (string url in urls)
+        {
+            if (await UrlExistsAsync(url))
+            {
+                return url;
+            }
+        }
+
+        var infoWindow = new InfoWindow("Error Getting Url", InfoWindowType.Error, "Error while getting BepInEx URL.", true); // TODO: EVENTUALLY MAKE SOMETHING BETTER FOR THIS
+        infoWindow.Show();
+        return null;
+
+        string[] PossibleUrls()
+        {
+            string nov = version.Replace("v", "");
+            return 
+            [
+                $"{baseUrl}_{os}_{arch}_{nov}.zip",
+                $"{baseUrl}_{os}_{arch}_{nov}.0.zip",
+                $"{baseUrl}_{os}_{arch}_{nov}.0.0.zip",
+                $"{baseUrl}_{arch}_{nov}.zip",
+                $"{baseUrl}_{arch}_{nov}.0.zip",
+                $"{baseUrl}_{arch}_{nov}.0.0.zip",
+                $"{baseUrl}_{nov}.zip",
+            ];
+        }
+        string GetSystemArch()
+        {
+            string arch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString();
+            if (arch.Contains("64"))
+            {
+                return "X64";
+            }
+            return "X86";
+        }
+    }
+    private static async Task<bool> UrlExistsAsync(string url)
+    {
+        HttpClient httpClient = new();
+        try
+        {
+            using HttpResponseMessage response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, url));
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+    
+    #endregion
+}
+public class Release
+{
+    public string tag_name { get; set; }
 }
