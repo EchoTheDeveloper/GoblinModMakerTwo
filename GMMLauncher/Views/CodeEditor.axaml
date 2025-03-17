@@ -101,7 +101,7 @@
                     <MenuItem Header="_Create NPC Asset" InputGesture="Ctrl+Alt+A"/>
                 </MenuItem>
                 <MenuItem Header="_Build" Foreground="White">
-                    <MenuItem Header="_Build and Install" InputGesture="Ctrl+B"/>
+                    <MenuItem Header="_Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
                     <MenuItem Header="_Generate Dotnet Files"/>
                 </MenuItem>
                 <MenuItem Header="_Version Control" Foreground="White">
@@ -202,7 +202,7 @@
                         <KeyBinding Gesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
                         <!-- <KeyBinding Gesture="Ctrl+Alt+A" Command="{Binding CreateNPCAsset}"/> -->
                         
-                        <!-- <KeyBinding Gesture="Ctrl+B" Command="{Binding Build}"/> -->
+                        <KeyBinding Gesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
                         <!-- <KeyBinding Gesture="Ctrl+Alt+Y" Command="{Binding VCS}"/> -->
                         <KeyBinding Gesture="Ctrl+," Command="{Binding OpenSettingsCommand}"/>
 

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Windows.Input;
 using Avalonia.Controls;
+using Avalonia.Layout;
 using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.Editing;
@@ -41,6 +42,7 @@ namespace GMMLauncher.ViewModels
         public ICommand CreateConfigItemCommand => new RelayCommand(CreateConfigItem);
         public ICommand CreateKeybindCommand => new RelayCommand(CreateKeybind);
         
+        public ICommand BuildModCommand => new RelayCommand(BuildMod);
         
         private readonly CodeEditor _editor;
         
@@ -339,6 +341,13 @@ namespace GMMLauncher.ViewModels
                     promptWindow.Close();
                 }
             #endregion
+
+            private void BuildMod()
+            {
+                var infoWindow = new InfoWindow("Building Mod", InfoWindowType.Info, "Running Dotnet Build...");
+                infoWindow.Show();
+                _editor.Mod.InstallMod(infoWindow, _editor);
+            }
             
             private void LoadModDialog()
             {

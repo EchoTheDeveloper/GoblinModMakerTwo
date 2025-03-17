@@ -93,7 +93,7 @@ namespace GMMLauncher.ViewModels
 
         private void InstallBepInEx()
         {
-            
+            App.Settings.InstallBepInEx();
         }
     }
 }
