@@ -3,10 +3,6 @@
         xmlns:vm="using:GMMLauncher.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:avaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
-        xmlns:editing="using:AvaloniaEdit.Editing"
-        xmlns:views="clr-namespace:GMMLauncher.Views"
-        xmlns:controls="clr-namespace:Tabalonia.Controls;assembly=Tabalonia"
 
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="GMMLauncher.Views.CodeEditor"
@@ -110,7 +106,7 @@
                 </MenuItem>
                 <MenuItem Header="_Build" Foreground="White">
                     <MenuItem Header="_Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
-                    <MenuItem Header="_Generate Dotnet Files"/>
+                    <MenuItem Header="_Generate Mod Files"/>
                 </MenuItem>
                 <MenuItem Header="_Version Control" Foreground="White">
                     <MenuItem Header="_Get from VCS" InputGesture="Ctrl+Alt+Y">
