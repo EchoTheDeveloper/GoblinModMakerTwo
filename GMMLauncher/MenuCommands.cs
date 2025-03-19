@@ -31,17 +31,17 @@ public static class MenuCommands
     public static void NewMod()
     {
         var window = new PromptWindow("New Mod",
-            new List<(Type, string, object?)>
+            new List<(Type, string, object?, bool)>
             {
-                (typeof(TextBox), "Mod Name:", ""),
-                (typeof(TextBox), "Description:", ""),
-                (typeof(TextBox), "Developers (Separate by comma):", "")
+                (typeof(TextBox), "Mod Name:", "", true),
+                (typeof(TextBox), "Description:", "", true),
+                (typeof(TextBox), "Developers (Separate by comma):", "", true)
             }, 
-            NewFileDone
+            NewModDone
         );
         window.Show();
     }
-    private static void NewFileDone(List<Control> answers, Window promptWindow)
+    private static void NewModDone(List<Control> answers, Window promptWindow)
     {
         string modName = (answers[0] as TextBox)?.Text ?? string.Empty;
         string description = (answers[1] as TextBox)?.Text ?? string.Empty;
@@ -64,11 +64,11 @@ public static class MenuCommands
         if (availableMods != null && availableMods.Length > 0)
         {
             var window = new PromptWindow("Load Mod",
-                new List<(Type, string, object?)>
+                new List<(Type, string, object?, bool)>
                 {
-                    (typeof(TextBox), "Mod Name:", ""),
-                    (typeof(TextBlock), "OR", ""),
-                    (typeof(StackPanel), "Select a Mod:", ""),
+                    (typeof(TextBox), "Mod Name:", "", false),
+                    (typeof(TextBlock), "OR", "", false),
+                    (typeof(StackPanel), "Select a Mod:", "", false),
                 }, 
                 LoadExistingModDone
             );
@@ -96,13 +96,7 @@ public static class MenuCommands
         }
         else
         {
-            var window = new PromptWindow("Load Mod",
-                new List<(Type, string, object?)>
-                {
-                    (typeof(TextBlock), "No Mods Found!", ""),
-                }
-            );
-            window.Show();
+            new InfoWindow("Error Loading Mods", InfoWindowType.Error, "No Mods Found!", true, fontSize:20).Show();
         }
     }
 
@@ -115,6 +109,11 @@ public static class MenuCommands
     public static void LoadExistingModDone(List<Control> answers, Window promptWindow)
     {
         string modName = (answers[0] as TextBox)?.Text ?? string.Empty;
+        if (string.IsNullOrEmpty(modName))
+        {
+            new InfoWindow("Field Empty", InfoWindowType.Error, "Mod Name field is empty, enter a mod name or select a mod", true, fontSize: 20).Show();
+            return;
+        }
         LoadModFromFile(modName.Replace(" ", ""));
         promptWindow.Close();
     }
@@ -195,7 +194,7 @@ public static class MenuCommands
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error opening documentation: {ex.Message}");
+                new InfoWindow("Couldn't Open Documentation", InfoWindowType.Error, ex.Message, true, fontSize:16).Show();
             }
         });
     }

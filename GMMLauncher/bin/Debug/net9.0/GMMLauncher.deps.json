@@ -17,7 +17,8 @@
           "AvaloniaEdit.TextMate": "11.1.0",
           "CommunityToolkit.Mvvm": "8.2.1",
           "GMMBackend": "1.0.0",
-          "ReactiveUI": "20.1.63"
+          "ReactiveUI": "20.1.63",
+          "Tabalonia": "0.10.5"
         },
         "runtime": {
           "GMMLauncher.dll": {}
@@ -487,6 +488,17 @@
           "System.Text.Encodings.Web": "8.0.0"
         }
       },
+      "Tabalonia/0.10.5": {
+        "dependencies": {
+          "Avalonia": "11.2.1"
+        },
+        "runtime": {
+          "lib/net8.0/Tabalonia.dll": {
+            "assemblyVersion": "0.10.5.0",
+            "fileVersion": "0.10.5.0"
+          }
+        }
+      },
       "TextMateSharp/1.0.59": {
         "dependencies": {
           "System.Text.Json": "8.0.4"
@@ -824,6 +836,13 @@
       "sha512": "sha512-bAkhgDJ88XTsqczoxEMliSrpijKZHhbJQldhAmObj/RbrN3sU5dcokuXmWJWsdQAhiMJ9bTayWsL1C9fbbCRhw==",
       "path": "system.text.json/8.0.4",
       "hashPath": "system.text.json.8.0.4.nupkg.sha512"
+    },
+    "Tabalonia/0.10.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QMdwqJWta15PFZSNjUVUQ/Ce5ZpJMTS6+A7ur619O6zFtE5hbMoJtuYHV12eN0YgE+XqD3BlZ1vX4utWqn1uUg==",
+      "path": "tabalonia/0.10.5",
+      "hashPath": "tabalonia.0.10.5.nupkg.sha512"
     },
     "TextMateSharp/1.0.59": {
       "type": "package",

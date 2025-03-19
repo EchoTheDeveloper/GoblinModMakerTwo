@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
         xmlns:editing="using:AvaloniaEdit.Editing"
+        xmlns:views="clr-namespace:GMMLauncher.Views"
+        xmlns:controls="clr-namespace:Tabalonia.Controls;assembly=Tabalonia"
+
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="GMMLauncher.Views.CodeEditor"
         x:DataType="vm:CodeEditorViewModel"
@@ -38,7 +41,7 @@
             <!-- Menu Bar -->
             <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
                 <MenuItem Header="_File" Foreground="White">
-                    <MenuItem Header="_Save Project" InputGesture="Ctrl+S" Command="{Binding SaveModCommand}">
+                    <MenuItem Header="_Save Project" InputGesture="Ctrl+Shift+S" Command="{Binding SaveModCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource folder_open_regular}" />
                         </MenuItem.Icon>
@@ -56,9 +59,14 @@
                         <MenuItem Header="_Open From File" InputGesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_New File" InputGesture="Ctrl+N">
+                    <MenuItem Header="_New File" InputGesture="Ctrl+N" Command="{Binding NewFileCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource document_new}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Save File" InputGesture="Ctrl+S" Command="{Binding SaveFileCommand}">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource folder_open_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
@@ -134,7 +142,7 @@
             <Separator DockPanel.Dock="Top"/>
 
             <!-- Main -->
-            <Grid Margin="10,20">
+            <Grid Margin="10,4">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -155,61 +163,30 @@
                 </TreeView>
                 
                 <!-- Text Editor -->
-                <avaloniaEdit:TextEditor Name="Editor"
-                                         Grid.Column="1"
-                                         Grid.Row="1"
-                                         ShowLineNumbers="True"
-                                         SyntaxHighlighting="C#"
-                                         FontSize="14"
-                                         Background="Black"
-                                         Foreground="White"
-                                         HorizontalScrollBarVisibility="Auto"
-                                         VerticalScrollBarVisibility="Visible">
-                    <avaloniaEdit:TextEditor.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuItem Header="Copy" InputGesture="Ctrl+C" Command="{Binding CopyCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
-                            <MenuItem Header="Cut" InputGesture="Ctrl+X" Command="{Binding CutCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
-                            <MenuItem Header="Paste" InputGesture="Ctrl+V" Command="{Binding PasteCommand}"  CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
-                            <MenuItem Header="-"/>
-                            <MenuItem Header="Select All" InputGesture="Ctrl+A" Command="{Binding SelectAllCommand}" CommandParameter="{Binding #Editor.TextArea}"></MenuItem>
-                        </MenuFlyout>
-                    </avaloniaEdit:TextEditor.ContextFlyout>
-                    
-                    <avaloniaEdit:TextEditor.KeyBindings>
-                        <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveModCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewModCommand}"/>
-                        <KeyBinding Gesture="Ctrl+O" Command="{Binding LoadExistingModCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
-                        <!-- <KeyBinding Gesture="Ctrl+N" Command="{Binding NewFile}"/> -->
-                        <KeyBinding Gesture="Alt+F4" Command="{Binding QuitAppCommand}"/>
-                        
-                        <KeyBinding Gesture="Ctrl+C" Command="{Binding CopyCommand}"/>
-                        <KeyBinding Gesture="Ctrl+X" Command="{Binding CutCommand}"/>
-                        <KeyBinding Gesture="Ctrl+V" Command="{Binding PasteCommand}"/>
-                        <KeyBinding Gesture="Ctrl+A" Command="{Binding SelectAllCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Z" Command="{Binding UndoCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Y" Command="{Binding RedoCommand}"/>
-                        
-                        <KeyBinding Gesture="Ctrl+F" Command="{Binding FindCommand}"/>
-                        <KeyBinding Gesture="Ctrl+H" Command="{Binding ReplaceCommand}"/>
-                        <KeyBinding Gesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
-                        
-                        <!-- <KeyBinding Gesture="Ctrl+Alt+N" Command="{Binding ChangeName}"/> -->
-                        <!-- <KeyBinding Gesture="Ctrl+Alt+V" Command="{Binding ChangeVersion}"/> -->
-                        <!-- <KeyBinding Gesture="Ctrl+Alt+D" Command="{Binding ChangeDevelopers}"/> -->
-                        <KeyBinding Gesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatchCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
-                        <!-- <KeyBinding Gesture="Ctrl+Alt+A" Command="{Binding CreateNPCAsset}"/> -->
-                        
-                        <KeyBinding Gesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
-                        <!-- <KeyBinding Gesture="Ctrl+Alt+Y" Command="{Binding VCS}"/> -->
-                        <KeyBinding Gesture="Ctrl+," Command="{Binding OpenSettingsCommand}"/>
+                <TabControl Grid.Column="1"
+                            Grid.Row="1"
+                            Name="TabControl">
+                    <TabControl.ContextMenu>
+                        <ContextMenu Closed="OnTabMenuClosed">
+                            <ContextMenu.KeyBindings>
+                                <KeyBinding Gesture="Ctrl+W" Command="{Binding CloseTabCommand}" />
+                            </ContextMenu.KeyBindings>
+                            <MenuItem Header="Close Tab" InputGesture="Ctrl+W" Command="{Binding CloseTabCommand}"/>
+                            <MenuItem Header="Close All Tabs" Command="{Binding CloseAllTabsCommand}"/>
+                            <MenuItem Header="Close Other Tabs" Command="{Binding CloseOtherTabsCommand}"/>
+                        </ContextMenu>
+                    </TabControl.ContextMenu>
+                </TabControl>
 
-                        
-                    </avaloniaEdit:TextEditor.KeyBindings>
-                </avaloniaEdit:TextEditor>
-
+                    <!-- <TabControl.ItemTemplate> -->
+                    <!--     <DataTemplate DataType="views:CodeEditor"> -->
+                    <!--         <StackPanel Orientation="Horizontal"> -->
+                    <!--             <TextBlock Text="{Binding Name}" Margin="0,0,5,0"/> -->
+                    <!--             <TextBlock Text="*" Margin="0,0,5,0"/> -->
+                    <!--         </StackPanel> -->
+                    <!--     </DataTemplate> -->
+                    <!-- </TabControl.ItemTemplate> -->
+                
                 <!-- Status Bar -->
                 <StackPanel Grid.Row="2" Name="StatusBar" Background="Transparent" Height="25" Orientation="Horizontal">
                     <TextBlock Name="StatusText" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="12"/>

@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avalonia.Controls;
 using Avalonia.Layout;
+using AvaloniaEdit;
 using GMMLauncher.Views;
 
 
@@ -42,13 +43,17 @@ public class Mod
         string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true,  });
         File.WriteAllText(filePath, json);
     }
-    public void SaveFiles(string fileContent)
+    public void SaveFiles(CodeEditor editor)
     {
         string currentDir = Directory.GetCurrentDirectory();
         string folderPath = Path.Combine(currentDir, "Mods", NameNoSpaces, "Files");
-        // TODO: Add support for when tabs and an explorer is added
-        
-        File.WriteAllText(GetFilePath(), fileContent);
+        foreach (var tab in editor._tabs)
+        {
+            string filePath = Path.Combine(GetFolderPath(), "Files", tab.Header.ToString()); // TODO: MIGHT HAVE TO ADD + ".cs
+            TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
+            string code = textEditor.Text;
+            File.WriteAllText(filePath, code);
+        }
         SaveMod();
     }
 
@@ -127,14 +132,13 @@ namespace {NameNoSpaces}
     
     
     #region Install/Building Mod
-    public void InstallMod(InfoWindow infoWindow, CodeEditor editor)
+        public void InstallMod(InfoWindow infoWindow, CodeEditor editor)
         {
-            SaveFiles(editor._editor.Text);
+            SaveFiles(editor);
             
             string path = CreateModFiles(editor);
             if (!BuildMod(path, out string errorMessage))
             {
-                Console.WriteLine(errorMessage);
                 infoWindow.ChangeWindowType("Build Failed",InfoWindowType.Error, errorMessage, true, height:400, width:600);
                 return;
             }
@@ -196,16 +200,11 @@ namespace {NameNoSpaces}
         }
         catch (DirectoryNotFoundException e)
         {
-            Console.WriteLine(e.Message);
-            Console.WriteLine("ERROR: Could not create mod files, make sure Isle Goblin is installed with BepInEx");
-            // MessageBox.Show($"Couldn't Create Mod File, Make sure {mod.Game} is installed with BepInEx",
-            //     "Could Not Create Mod Files", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            var infoWindow = new InfoWindow("Error While Making Mod Files", InfoWindowType.YesNo, "Could not create mod files, this is because BepInEx is not installed. Would you Like to install it now?.", true,
+            new InfoWindow("Error While Making Mod Files", InfoWindowType.YesNo, "Could not create mod files, this is because BepInEx is not installed. Would you Like to install it now?.", true,
                 () =>
                 {
                     App.Settings.InstallBepInEx();
-                });
-            infoWindow.Show();
+                }).Show();
             return null;
         }
 
@@ -256,7 +255,6 @@ namespace {NameNoSpaces}
             errorMessage += $"\nTime Elapsed {process.ExitTime - process.StartTime:hh\\:mm\\:ss\\:ff}\n";
             errorMessage += "=====================";
 
-            Console.WriteLine(errorMessage);
             return errorCount == 0;
         }
     }

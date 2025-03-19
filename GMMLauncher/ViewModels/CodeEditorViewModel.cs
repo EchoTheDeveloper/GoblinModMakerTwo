@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text.Json;
 using System.Windows.Input;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.Editing;
+using AvaloniaEdit.Highlighting;
 using DynamicData;
 using GMMLauncher.Views;
 
@@ -18,14 +22,17 @@ namespace GMMLauncher.ViewModels
 {
     public partial class CodeEditorViewModel : ViewModelBase
     {
+        #region Commands
         public ICommand OpenDocumentationCommand => MenuCommands.OpenDocumentationCommand;
         public ICommand OpenSettingsCommand => new RelayCommand(OpenSettings);
         public ICommand QuitAppCommand => MenuCommands.QuitAppCommand;
         public ICommand NewModCommand => MenuCommands.NewModCommand;
         public ICommand LoadExistingModCommand => MenuCommands.LoadExistingModCommand;
         public ICommand LoadModDialogCommand => new RelayCommand(LoadModDialog);
+        public ICommand NewFileCommand => new RelayCommand(NewFile);
 
         public ICommand SaveModCommand => new RelayCommand(SaveMod);
+        public ICommand SaveFileCommand => new RelayCommand(SaveFile);
         public ICommand UndoCommand => new RelayCommand(Undo);
         public ICommand RedoCommand => new RelayCommand(Redo);
 
@@ -44,6 +51,11 @@ namespace GMMLauncher.ViewModels
         
         public ICommand BuildModCommand => new RelayCommand(BuildMod);
         
+        public ICommand CloseTabCommand => new RelayCommand(CloseTab);
+        public ICommand CloseAllTabsCommand => new RelayCommand(CloseAllTabs);
+        public ICommand CloseOtherTabsCommand => new RelayCommand(CloseOtherTabs);
+        #endregion
+        
         private readonly CodeEditor _editor;
         
         public CodeEditorViewModel(CodeEditor editor)
@@ -55,9 +67,9 @@ namespace GMMLauncher.ViewModels
             private void NewFile()
             {
                 var window = new PromptWindow("New File",
-                    new List<(Type, string, object?)>
+                    new List<(Type, string, object?, bool)>
                     {
-                        (typeof(TextBox), "File Name:", "")
+                        (typeof(TextBox), "File Name:", "", true)
                     },
                     NewFileDone
                 );
@@ -66,7 +78,40 @@ namespace GMMLauncher.ViewModels
             }
             private void NewFileDone(List<Control> answers, Window promptWindow)
             {
-                string fileName = (answers[0] as TextBlock).Text;
+                string fileName = (answers[0] as TextBox).Text;
+                string nameNoSpace = string.Concat(fileName.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+                nameNoSpace = char.ToUpper(nameNoSpace[0]) + nameNoSpace[1..];
+
+                // Ensure filename has .cs extension
+                if (Path.GetExtension(nameNoSpace) == "")
+                {
+                    nameNoSpace += ".cs";
+                }
+                
+                string fileFolder = Path.Combine(_editor.Mod.GetFolderPath(), "Files");
+                string filePath = Path.Combine(fileFolder, nameNoSpace);
+
+                // Generate class name (capitalize each word, remove spaces)
+                string className = string.Concat(Path.GetFileNameWithoutExtension(fileName)
+                    .Split(' ', StringSplitOptions.RemoveEmptyEntries));
+                className = char.ToUpper(className[0]) + className[1..];
+                 // File.Create(fileName);
+                string newFileContent = $@"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace {_editor.Mod.NameNoSpaces}
+{{
+    public class {className}
+    {{
+        // Write code here
+    }}
+}}";
+                File.WriteAllText(filePath, newFileContent);
+                // _editor.UpdateVisuals();
+                _editor.UpdateFileTree(fileFolder);
                 promptWindow.Close();
             }
 
@@ -74,14 +119,14 @@ namespace GMMLauncher.ViewModels
                 private void CreateHarmonyPatch()
                 {
                     var window = new PromptWindow("Create Harmony Patch",
-                        new List<(Type, string, object?)>
+                        new List<(Type, string, object?, bool)>
                         {
-                            (typeof(TextBox), "Function Name:", ""),
-                            (typeof(TextBox), "Function's Class:", ""),
-                            (typeof(TextBox), "Parameters (Separate by comma):", ""),
-                            (typeof(ComboBox), "Patch Type (Prefix, Postfix):", new List<string> { "Prefix", "Postfix"}),
-                            (typeof(TextBox), "Return Type:", "None"),
-                            (typeof(CheckBox), "Have Instance:", false),
+                            (typeof(TextBox), "Function Name:", "", true),
+                            (typeof(TextBox), "Function's Class:", "", true),
+                            (typeof(TextBox), "Parameters (Separate by comma):", "", false),
+                            (typeof(ComboBox), "Patch Type (Prefix, Postfix):", new List<string> { "Prefix", "Postfix"}, false),
+                            (typeof(TextBox), "Return Type:", "None", true),
+                            (typeof(CheckBox), "Have Instance:", false, false),
                         },
                         CreateHarmonyPatchDone
                     );
@@ -150,16 +195,17 @@ namespace GMMLauncher.ViewModels
                     }
                     patchCode += "\n        }";
 
-                    string code = _editor._editor.Text;
+                    string code = _editor.GetCurrentTextEditor().Text;
                     int lastNamespaceBracket = code.LastIndexOf('}');
                     int lastClassBracket = code.LastIndexOf('}', lastNamespaceBracket - 2);
                     if (lastClassBracket != -1 && lastNamespaceBracket != -1)
                     {
-                        _editor._editor.Text = code.Insert(lastClassBracket, patchCode + "\n    ");
+                        _editor.GetCurrentTextEditor().Text = code.Insert(lastClassBracket, patchCode + "\n    ");
                     }
                     else
                     {
-                        Console.WriteLine("Error: Could not find class end bracket."); // Todo: SAY SOMETHING IN THE PROMPT INSTEAD 
+                        new InfoWindow("Error", InfoWindowType.Error, "Couldn't find class end bracket.", true, fontSize:20).Show();
+
                     }
                     promptWindow.Close();
                 }
@@ -168,13 +214,13 @@ namespace GMMLauncher.ViewModels
                 private void CreateConfigItem()
                 {
                     var window = new PromptWindow("Create Config Item",
-                        new List<(Type, string, object?)>
+                        new List<(Type, string, object?, bool)>
                         {
-                            (typeof(TextBox), "Variable Name:", ""),
-                            (typeof(ComboBox), "Data Type:", new List<string> { "int", "string" }),
-                            (typeof(TextBox), "Default Value:", ""),
-                            (typeof(TextBox), "Definition (name in mod's configuration):", ""),
-                            (typeof(TextBox), "Description (info on hovered)", "")
+                            (typeof(TextBox), "Variable Name:", "", true),
+                            (typeof(ComboBox), "Data Type:", new List<string> { "int", "string" }, false),
+                            (typeof(TextBox), "Default Value:", "", true),
+                            (typeof(TextBox), "Definition (name in mod's configuration):", "", true),
+                            (typeof(TextBox), "Description (info on hovered)", "", true)
                         },
                         CreateConfigItemDone
                     );
@@ -197,7 +243,7 @@ namespace GMMLauncher.ViewModels
                                                 $"                new ConfigurationManagerAttributes {{ Order = 0 }}\n" +
                                                 $"            ));";
                     
-                    string code = _editor._editor.Text;
+                    string code = _editor.GetCurrentTextEditor().Text;
                     
                     int configEntryIndex = code.IndexOf("ConfigEntry<");
                     if (configEntryIndex != -1)
@@ -238,7 +284,7 @@ namespace GMMLauncher.ViewModels
                         }
                     }
                     
-                    _editor._editor.Text = code;
+                    _editor.GetCurrentTextEditor().Text = code;
                     
                     promptWindow.Close();
                 }
@@ -246,9 +292,9 @@ namespace GMMLauncher.ViewModels
                 private void CreateKeybind()
                 {
                     var window = new PromptWindow("Create Keybind",
-                        new List<(Type, string, object?)>
+                        new List<(Type, string, object?, bool)>
                         {
-                            (typeof(TextBox), "Variable Name:", ""),
+                            (typeof(TextBox), "Variable Name:", "", true),
                             (typeof(Button), "Keycode:", () =>
                             {
                                 var url = "https://docs.unity3d.com/ScriptReference/KeyCode.html";
@@ -257,10 +303,10 @@ namespace GMMLauncher.ViewModels
                                     FileName = url, 
                                     UseShellExecute = true 
                                 });
-                            }),
-                            (typeof(TextBox), "", ""),
-                            (typeof(TextBox), "Definition (name in mod's configuration):", ""),
-                            (typeof(TextBox), "Description (info on hovered)", "")
+                            }, false),
+                            (typeof(TextBox), "", "", true),
+                            (typeof(TextBox), "Definition (name in mod's configuration):", "", true),
+                            (typeof(TextBox), "Description (info on hovered)", "", true)
                         },
                         CreateKeybindDone
                     );
@@ -284,7 +330,7 @@ namespace GMMLauncher.ViewModels
                         answers[4]
                     ], promptWindow);
                     
-                    string code = _editor._editor.Text;
+                    string code = _editor.GetCurrentTextEditor().Text;
                     
                     string logic = $@"
             // Keybind logic for {variableName}
@@ -336,7 +382,7 @@ namespace GMMLauncher.ViewModels
                     }
                     DeclareVariable(); 
                     DeclareVariable("JustPressed");
-                    _editor._editor.Text = code;
+                    _editor.GetCurrentTextEditor().Text = code;
                     
                     promptWindow.Close();
                 }
@@ -362,7 +408,16 @@ namespace GMMLauncher.ViewModels
             private void SaveMod()
             {
                 Mod mod = _editor.Mod;
-                mod.SaveFiles(_editor._editor.Text);
+                mod.SaveFiles(_editor);
+            }
+
+            private void SaveFile()
+            {
+                var tab = _editor._tabControl.SelectedItem as TabItem;
+                string filePath = Path.Combine(_editor.Mod.GetFolderPath(), "Files", tab.Header.ToString());
+                TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
+                string code = textEditor.Text;
+                File.WriteAllText(filePath, code);
             }
         
         #endregion
@@ -370,49 +425,49 @@ namespace GMMLauncher.ViewModels
 
             private void Undo()
             {
-                ApplicationCommands.Undo.Execute(null, _editor._editor.TextArea);
+                ApplicationCommands.Undo.Execute(null, _editor.GetCurrentTextEditor().TextArea);
             }
 
             private void Redo()
             {
-                ApplicationCommands.Redo.Execute(null, _editor._editor.TextArea);
+                ApplicationCommands.Redo.Execute(null, _editor.GetCurrentTextEditor().TextArea);
             }
             private void CopyMouse()
             {
-                ApplicationCommands.Copy.Execute(null, _editor._editor.TextArea);
+                ApplicationCommands.Copy.Execute(null, _editor.GetCurrentTextEditor().TextArea);
             }
 
             private void CutMouse()
             {
-                ApplicationCommands.Cut.Execute(null, _editor._editor.TextArea);
+                ApplicationCommands.Cut.Execute(null, _editor.GetCurrentTextEditor().TextArea);
             }
         
             private void PasteMouse()
             {
-                ApplicationCommands.Paste.Execute(null, _editor._editor.TextArea);
+                ApplicationCommands.Paste.Execute(null, _editor.GetCurrentTextEditor().TextArea);
             }
 
             private void SelectAllMouse()
             {
-                ApplicationCommands.SelectAll.Execute(null, _editor._editor.TextArea);
+                ApplicationCommands.SelectAll.Execute(null, _editor.GetCurrentTextEditor().TextArea);
             }
 
             private void Find()
             {
-                ApplicationCommands.Find.Execute(null, _editor._editor.TextArea);
+                ApplicationCommands.Find.Execute(null, _editor.GetCurrentTextEditor().TextArea);
             }
 
             private void Replace()
             {
-                ApplicationCommands.Replace.Execute(null, _editor._editor.TextArea);
+                ApplicationCommands.Replace.Execute(null, _editor.GetCurrentTextEditor().TextArea);
             }
 
             private void GoToLine()
             {
                 var window = new PromptWindow("Go to Line:Column",
-                    new List<(Type, string, object?)>
+                    new List<(Type, string, object?, bool)>
                     {
-                        (typeof(TextBlock), "Line:Column", "")
+                        (typeof(TextBox), "Line:Column", "", true)
                     },
                     GoToLineDone, 
                     baseHeight:220);
@@ -421,7 +476,7 @@ namespace GMMLauncher.ViewModels
                 
                 var lineControl = new TextBox()
                 {
-                    Text = _editor._editor.TextArea.Caret.Line + ":" + _editor._editor.TextArea.Caret.Column,
+                    Text = _editor.GetCurrentTextEditor().TextArea.Caret.Line + ":" + _editor.GetCurrentTextEditor().TextArea.Caret.Column,
                 };
             
                 promptsPanel.Children.Add(lineControl);
@@ -435,8 +490,8 @@ namespace GMMLauncher.ViewModels
             
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    _editor._editor.TextArea.Caret.Line = 1;
-                    _editor._editor.TextArea.Caret.Column = 1;
+                    _editor.GetCurrentTextEditor().TextArea.Caret.Line = 1;
+                    _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
                 }
                 else
                 {
@@ -446,38 +501,67 @@ namespace GMMLauncher.ViewModels
                     {
                         if (int.TryParse(parts[0], out int line))
                         {
-                            _editor._editor.TextArea.Caret.Line = line;
-                            _editor._editor.TextArea.Caret.Column = 1;
+                            _editor.GetCurrentTextEditor().TextArea.Caret.Line = line;
+                            _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
                         }
                         else
                         {
-                            _editor._editor.TextArea.Caret.Line = 1;
-                            _editor._editor.TextArea.Caret.Column = 1;
+                            _editor.GetCurrentTextEditor().TextArea.Caret.Line = 1;
+                            _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
                         }
                     }
                     else if (parts.Length == 2)
                     {
                         if (int.TryParse(parts[0], out int line) && int.TryParse(parts[1], out int column))
                         {
-                            _editor._editor.TextArea.Caret.Line = line;
-                            _editor._editor.TextArea.Caret.Column = column;
+                            _editor.GetCurrentTextEditor().TextArea.Caret.Line = line;
+                            _editor.GetCurrentTextEditor().TextArea.Caret.Column = column;
                         }
                         else
                         {
-                            _editor._editor.TextArea.Caret.Line = 1;
-                            _editor._editor.TextArea.Caret.Column = 1;
+                            _editor.GetCurrentTextEditor().TextArea.Caret.Line = 1;
+                            _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
                         }
                     }
                     else
                     {
-                        _editor._editor.TextArea.Caret.Line = 1;
-                        _editor._editor.TextArea.Caret.Column = 1;
+                        _editor.GetCurrentTextEditor().TextArea.Caret.Line = 1;
+                        _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
                     }
                 }
             
                 promptWindow.Close();
             }
 
+            #region Tab Commands
+
+            private void CloseTab()
+            {
+                if (_editor.rightClickedTab != null)
+                {
+                    _editor.CloseTab(_editor.rightClickedTab);
+                    _editor.rightClickedTab = null;
+                }
+                else
+                {
+                    _editor.CloseTab(_editor._tabControl.SelectedItem as TabItem);
+                }
+            }
+
+            private void CloseAllTabs()
+            {
+                _editor._tabs.Clear();
+                _editor.rightClickedTab = null;
+            }
+
+            private void CloseOtherTabs()
+            {
+                _editor._tabs = new ObservableCollection<TabItem> { _editor.rightClickedTab };
+                _editor.ResetTabControl();
+            }
+            
+
+            #endregion
 
         #endregion
     }

@@ -104,6 +104,10 @@
             "ReactiveUI": {
               "target": "Package",
               "version": "[20.1.63, )"
+            },
+            "Tabalonia": {
+              "target": "Package",
+              "version": "[0.10.5, )"
             }
           },
           "imports": [
