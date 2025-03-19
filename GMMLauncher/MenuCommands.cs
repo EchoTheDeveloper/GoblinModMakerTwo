@@ -19,15 +19,16 @@ public static class MenuCommands
 {
     private const string DocumentationUrl = "https://github.com/EchoTheDeveloper/Goblin-Mod-Maker/blob/main/DOCUMENTATION.md";
 
-    public static ICommand OpenDocumentationCommand { get; } = new RelayCommand(OpenDocumentation);
-    public static ICommand QuitAppCommand { get; } = new RelayCommand(QuitApp);
     public static ICommand NewModCommand { get; } = new RelayCommand(NewMod);
-    public static ICommand OpenSettingsInEditorCommand { get; } = new RelayCommand<CodeEditor>(OpenSettingsInEditor);
-    public static ICommand OpenSettingsCommand { get; } = new RelayCommand(OpenSettings);
-
     public static ICommand LoadExistingModCommand { get; } = new RelayCommand(LoadExistingMod);
     public static ICommand LoadModDialogCommand { get; } = new RelayCommand<Window>(LoadMod);
+    public static ICommand QuitAppCommand { get; } = new RelayCommand(QuitApp);
+    public static ICommand OpenSettingsInEditorCommand { get; } = new RelayCommand<CodeEditor>(OpenSettingsInEditor);
+    public static ICommand OpenSettingsCommand { get; } = new RelayCommand(OpenSettings);
+    public static ICommand OpenDocumentationCommand { get; } = new RelayCommand(OpenDocumentation);
+
     
+    #region Mods
     public static void NewMod()
     {
         var window = new PromptWindow("New Mod",
@@ -168,6 +169,7 @@ public static class MenuCommands
         var editor = new CodeEditor(mod);
         editor.Show();
     }
+    #endregion
     
     public static void OpenSettingsInEditor(CodeEditor editor = null)
     {

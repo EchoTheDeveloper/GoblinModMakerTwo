@@ -89,7 +89,7 @@ public partial class CodeEditor : Window
 
             if (clickedTab is TabItem tabItem)
             {
-                _tabs.Remove(tabItem);
+                CloseTab(tabItem);
                 e.Handled = true;
             }
         }
@@ -110,7 +110,24 @@ public partial class CodeEditor : Window
     }
     public void CloseTab(TabItem tab)
     {
-        _tabs.Remove(tab);
+        TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
+        if (textEditor.IsModified)
+        {
+            new InfoWindow("File Not Saved", InfoWindowType.YesNo, "File is not saved, would you like to save now?", true,
+                () =>
+                {
+                    Mod.SaveFile(tab);
+                    _tabs.Remove(tab);
+                },
+                () =>
+                {
+                    _tabs.Remove(tab);
+                }).Show();
+        }
+        else
+        {
+            _tabs.Remove(tab);
+        }
     }
     
     private void AddNewTab(string fileName)
@@ -207,7 +224,6 @@ public partial class CodeEditor : Window
                     {
                         if (tab.Header.ToString() == selectedItem.Header.ToString())
                         {
-                            
                             _tabControl.SelectedItem = tab;
                             return;
                         }
@@ -523,6 +539,7 @@ public partial class CodeEditor : Window
 }
 public class TextCodeEditor : UserControl
 {
+    
     public TextCodeEditor(string filePath)
     {
         IHighlightingDefinition syntax = HighlightingManager.Instance.GetDefinition("C#");

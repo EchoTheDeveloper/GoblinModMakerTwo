@@ -57,6 +57,14 @@ public class Mod
         SaveMod();
     }
 
+    public void SaveFile(TabItem tab)
+    {
+        string filePath = Path.Combine(GetFolderPath(), "Files", tab.Header.ToString());
+        TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
+        string code = textEditor.Text;
+        File.WriteAllText(filePath, code);
+    }
+
     public void CreateFile(string fileName, string fileContent = "")
     {
         string currentDir = Directory.GetCurrentDirectory();

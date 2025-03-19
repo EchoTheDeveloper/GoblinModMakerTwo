@@ -4,18 +4,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Text.Json;
 using System.Windows.Input;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Layout;
-using Avalonia.Threading;
 using AvaloniaEdit;
-using AvaloniaEdit.Editing;
-using AvaloniaEdit.Highlighting;
-using DynamicData;
 using GMMLauncher.Views;
 
 namespace GMMLauncher.ViewModels
@@ -23,16 +14,20 @@ namespace GMMLauncher.ViewModels
     public partial class CodeEditorViewModel : ViewModelBase
     {
         #region Commands
-        public ICommand OpenDocumentationCommand => MenuCommands.OpenDocumentationCommand;
-        public ICommand OpenSettingsCommand => new RelayCommand(OpenSettings);
-        public ICommand QuitAppCommand => MenuCommands.QuitAppCommand;
-        public ICommand NewModCommand => MenuCommands.NewModCommand;
-        public ICommand LoadExistingModCommand => MenuCommands.LoadExistingModCommand;
+        #region File
         public ICommand LoadModDialogCommand => new RelayCommand(LoadModDialog);
-        public ICommand NewFileCommand => new RelayCommand(NewFile);
-
+        public ICommand LoadExistingModCommand => MenuCommands.LoadExistingModCommand;
+        
+        public ICommand NewModCommand => MenuCommands.NewModCommand;
         public ICommand SaveModCommand => new RelayCommand(SaveMod);
+        
+        public ICommand NewFileCommand => new RelayCommand(NewFile);
         public ICommand SaveFileCommand => new RelayCommand(SaveFile);
+        
+        public ICommand QuitAppCommand => MenuCommands.QuitAppCommand;
+        #endregion
+        
+        #region Edit
         public ICommand UndoCommand => new RelayCommand(Undo);
         public ICommand RedoCommand => new RelayCommand(Redo);
 
@@ -44,16 +39,27 @@ namespace GMMLauncher.ViewModels
         public ICommand FindCommand => new RelayCommand(Find);
         public ICommand ReplaceCommand => new RelayCommand(Replace);
         public ICommand GoToLineCommand => new RelayCommand(GoToLine);
-
+        #endregion
+        
+        #region Mod
         public ICommand CreateHarmonyPatchCommand => new RelayCommand(CreateHarmonyPatch);
         public ICommand CreateConfigItemCommand => new RelayCommand(CreateConfigItem);
         public ICommand CreateKeybindCommand => new RelayCommand(CreateKeybind);
+        #endregion
         
+        #region Build
         public ICommand BuildModCommand => new RelayCommand(BuildMod);
+        #endregion
+        
+        #region Extra
+        public ICommand OpenDocumentationCommand => MenuCommands.OpenDocumentationCommand; 
+        
+        public ICommand OpenSettingsCommand => new RelayCommand(OpenSettings);
         
         public ICommand CloseTabCommand => new RelayCommand(CloseTab);
         public ICommand CloseAllTabsCommand => new RelayCommand(CloseAllTabs);
         public ICommand CloseOtherTabsCommand => new RelayCommand(CloseOtherTabs);
+        #endregion
         #endregion
         
         private readonly CodeEditor _editor;
@@ -82,7 +88,6 @@ namespace GMMLauncher.ViewModels
                 string nameNoSpace = string.Concat(fileName.Split(' ', StringSplitOptions.RemoveEmptyEntries));
                 nameNoSpace = char.ToUpper(nameNoSpace[0]) + nameNoSpace[1..];
 
-                // Ensure filename has .cs extension
                 if (Path.GetExtension(nameNoSpace) == "")
                 {
                     nameNoSpace += ".cs";
@@ -91,11 +96,9 @@ namespace GMMLauncher.ViewModels
                 string fileFolder = Path.Combine(_editor.Mod.GetFolderPath(), "Files");
                 string filePath = Path.Combine(fileFolder, nameNoSpace);
 
-                // Generate class name (capitalize each word, remove spaces)
                 string className = string.Concat(Path.GetFileNameWithoutExtension(fileName)
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries));
                 className = char.ToUpper(className[0]) + className[1..];
-                 // File.Create(fileName);
                 string newFileContent = $@"using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,7 +113,6 @@ namespace {_editor.Mod.NameNoSpaces}
     }}
 }}";
                 File.WriteAllText(filePath, newFileContent);
-                // _editor.UpdateVisuals();
                 _editor.UpdateFileTree(fileFolder);
                 promptWindow.Close();
             }
@@ -414,10 +416,7 @@ namespace {_editor.Mod.NameNoSpaces}
             private void SaveFile()
             {
                 var tab = _editor._tabControl.SelectedItem as TabItem;
-                string filePath = Path.Combine(_editor.Mod.GetFolderPath(), "Files", tab.Header.ToString());
-                TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
-                string code = textEditor.Text;
-                File.WriteAllText(filePath, code);
+                _editor.Mod.SaveFile(tab);
             }
         
         #endregion
@@ -550,14 +549,59 @@ namespace {_editor.Mod.NameNoSpaces}
 
             private void CloseAllTabs()
             {
-                _editor._tabs.Clear();
-                _editor.rightClickedTab = null;
+                var tabs = _editor._tabControl.Items.Cast<TabItem>().ToList();
+                foreach (var tab in tabs)
+                {
+                    if (((tab.Content as TextCodeEditor).Content as TextEditor).IsModified)
+                    {
+                        new InfoWindow("File Not Saved", InfoWindowType.YesNo, $"{tab.Header.ToString()} is not saved, would you like to save now?", true,
+                            () =>
+                            {
+                                _editor.Mod.SaveFile(tab);
+                                _editor._tabs.Clear();
+                                _editor.rightClickedTab = null;
+                            },
+                            () =>
+                            {
+                                _editor._tabs.Clear();
+                                _editor.rightClickedTab = null;
+                            }).Show();
+                    }
+                    else
+                    {
+                        _editor._tabs.Clear();
+                        _editor.rightClickedTab = null;
+                    }
+                }
+                
             }
 
             private void CloseOtherTabs()
             {
-                _editor._tabs = new ObservableCollection<TabItem> { _editor.rightClickedTab };
-                _editor.ResetTabControl();
+                var tabs = _editor._tabControl.Items.Cast<TabItem>().ToList();
+                foreach (var tab in tabs)
+                {
+                    if (((tab.Content as TextCodeEditor).Content as TextEditor).IsModified)
+                    {
+                        new InfoWindow("File Not Saved", InfoWindowType.YesNo, $"{tab.Header.ToString()} is not saved, would you like to save now?", true,
+                            () =>
+                            {
+                                _editor.Mod.SaveFile(tab);
+                                _editor._tabs = new ObservableCollection<TabItem> { _editor.rightClickedTab };
+                                _editor.ResetTabControl();
+                            },
+                            () =>
+                            {
+                                _editor._tabs = new ObservableCollection<TabItem> { _editor.rightClickedTab };
+                                _editor.ResetTabControl();
+                            }).Show();
+                    }
+                    else
+                    {
+                        _editor._tabs = new ObservableCollection<TabItem> { _editor.rightClickedTab };
+                        _editor.ResetTabControl();
+                    }
+                }
             }
             
 
