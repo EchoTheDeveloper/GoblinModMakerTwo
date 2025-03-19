@@ -718,6 +718,18 @@
           "buildTransitive/net6.0/System.Text.Json.targets": {}
         }
       },
+      "Tabalonia/0.10.5": {
+        "type": "package",
+        "dependencies": {
+          "Avalonia": "11.0.0"
+        },
+        "compile": {
+          "lib/net8.0/Tabalonia.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Tabalonia.dll": {}
+        }
+      },
       "TextMateSharp/1.0.59": {
         "type": "package",
         "dependencies": {
@@ -1984,6 +1996,23 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Tabalonia/0.10.5": {
+      "sha512": "QMdwqJWta15PFZSNjUVUQ/Ce5ZpJMTS6+A7ur619O6zFtE5hbMoJtuYHV12eN0YgE+XqD3BlZ1vX4utWqn1uUg==",
+      "type": "package",
+      "path": "tabalonia/0.10.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE",
+        "README.md",
+        "lib/net6.0/Tabalonia.dll",
+        "lib/net7.0/Tabalonia.dll",
+        "lib/net8.0/Tabalonia.dll",
+        "tabalonia.0.10.5.nupkg.sha512",
+        "tabalonia.nuspec"
+      ]
+    },
     "TextMateSharp/1.0.59": {
       "sha512": "ODHnoARRFAnlqWiBw5Ya0gz04BCYAjQndGVjWhvW+fCz2Pv2bcFw60MBJ4ivdMGpFJlvdJWElwRTN/uXDYrqxQ==",
       "type": "package",
@@ -2045,7 +2074,8 @@
       "AvaloniaEdit.TextMate >= 11.1.0",
       "CommunityToolkit.Mvvm >= 8.2.1",
       "GMMBackend >= 1.0.0",
-      "ReactiveUI >= 20.1.63"
+      "ReactiveUI >= 20.1.63",
+      "Tabalonia >= 0.10.5"
     ]
   },
   "packageFolders": {
@@ -2137,6 +2167,10 @@
           "ReactiveUI": {
             "target": "Package",
             "version": "[20.1.63, )"
+          },
+          "Tabalonia": {
+            "target": "Package",
+            "version": "[0.10.5, )"
           }
         },
         "imports": [

@@ -5,9 +5,12 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using AvaloniaEdit.CodeCompletion;
@@ -15,6 +18,7 @@ using AvaloniaEdit.Document;
 using AvaloniaEdit.Editing;
 using AvaloniaEdit;
 using AvaloniaEdit.Folding;
+using AvaloniaEdit.Highlighting;
 using AvaloniaEdit.TextMate;
 using TextMateSharp.Grammars;
 using AvaloniaEdit.Indentation.CSharp;
@@ -24,28 +28,34 @@ namespace GMMLauncher.Views;
 
 public partial class CodeEditor : Window
 {
-    public readonly TextEditor _editor;
-    public TextMate.Installation _textMateInstallation;
+    private TextMate.Installation _textMateInstallation;
     private CompletionWindow _completionWindow;
     private OverloadInsightWindow _insightWindow;
-    public RegistryOptions _registryOptions;
+    private RegistryOptions _registryOptions;
     private int _currentTheme = (int)App.Settings.SelectedTheme;
     private TextBlock _statusTextBlock;
     private CustomMargin _margin;
+    
 
+    public TabControl _tabControl { get; private set; }
+    public ObservableCollection<TabItem> _tabs = new();
+    public TabItem rightClickedTab { get; set; }
+    
     public Mod Mod;
     
     public CodeEditor(Mod mod)
     {
+        DataContext = new CodeEditorViewModel(this);
         this.Mod = mod;
         InitializeComponent();
-
-        _editor = this.FindControl<TextEditor>("Editor");
+        
         _registryOptions = new RegistryOptions((ThemeName)_currentTheme);
-        _textMateInstallation = _editor.InstallTextMate(_registryOptions);
-        _textMateInstallation.AppliedTheme += TextMateInstallationOnAppliedTheme;
-
-        Language csharpLanguage = _registryOptions.GetLanguageByExtension(".cs");
+        _statusTextBlock = this.Find<TextBlock>("StatusText");
+        _tabControl = this.FindControl<TabControl>("TabControl");
+        
+        _tabControl.ItemsSource = _tabs;
+        _tabControl.PointerPressed += TabControl_PointerPressed;
+        
 
         string filePath = mod.GetFilePath();
         if (!File.Exists(filePath))
@@ -53,50 +63,126 @@ public partial class CodeEditor : Window
             mod.CreateMainFile();
         }
 
-        string content = File.ReadAllText(filePath);
-        _editor.Document = new TextDocument(content);
-        _editor.FontFamily = new FontFamily("Cascadia Code");
-        _editor.FontSize = 14;
-
         SetupFileTree(Path.Combine(mod.GetFolderPath(), "Files"));
-
-        _editor.HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Visible;
-        _editor.ShowLineNumbers = App.Settings.ShowLineNumbers;
-        _editor.Options.ShowTabs = true;
-        _editor.TextArea.RightClickMovesCaret = true;
-        _editor.Options.HighlightCurrentLine = true;
-        _editor.Options.EnableHyperlinks = true;
-        _editor.Options.CutCopyWholeLine = true;
-        _editor.Options.AllowToggleOverstrikeMode = true;
-        _editor.Options.EnableTextDragDrop = true;
-        _editor.Options.ShowBoxForControlCharacters = true;
-        _editor.Options.ConvertTabsToSpaces = true;
-        _editor.Options.IndentationSize = 4;
-        _editor.TextArea.Background = this.Background;
         
-        _statusTextBlock = this.Find<TextBlock>("StatusText");
-        
-        _editor.TextArea.TextEntered += textEditor_TextArea_TextEntered;
-        _editor.TextArea.TextEntering += textEditor_TextArea_TextEntering;
-        _editor.TextArea.IndentationStrategy = new CSharpIndentationStrategy(_editor.Options);
-        _editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
-        _editor.TextArea.LeftMargins.Insert(0, _margin);
-        
-        _textMateInstallation.SetGrammar(_registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
-        DataContext = new CodeEditorViewModel(this);
+        AddNewTab(Path.Combine(mod.NameNoSpaces + ".cs"));
     }
+    
+    
+    #region Tabs
 
-    public void UpdateVisuals()
+    public void ResetTabControl()
     {
-        Language csharpLanguage = _registryOptions.GetLanguageByExtension(".cs");
-        _currentTheme = (int)App.Settings.SelectedTheme;
-        _registryOptions = new RegistryOptions((ThemeName)_currentTheme);
-        _textMateInstallation = _editor.InstallTextMate(_registryOptions);
-        _textMateInstallation.AppliedTheme += TextMateInstallationOnAppliedTheme;
-        _editor.ShowLineNumbers = App.Settings.ShowLineNumbers;
-        _textMateInstallation.SetGrammar(_registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
+        _tabControl.ItemsSource = _tabs;
     }
+    private void TabControl_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        var pointerPoint = e.GetCurrentPoint(_tabControl);
 
+        if (pointerPoint.Properties.IsMiddleButtonPressed)
+        {
+            var clickedTab = e.Source as Control;
+            while (clickedTab != null && clickedTab is not TabItem)
+            {
+                clickedTab = (Control)clickedTab.Parent;
+            }
+
+            if (clickedTab is TabItem tabItem)
+            {
+                _tabs.Remove(tabItem);
+                e.Handled = true;
+            }
+        }
+        else if (pointerPoint.Properties.IsRightButtonPressed) 
+        {
+            var clickedTab = e.Source as Control;
+            while (clickedTab != null && clickedTab is not TabItem)
+            {
+                clickedTab = (Control)clickedTab.Parent;
+            }
+        
+            if (clickedTab is TabItem tabItem && clickedTab is not TextEditor)
+            {
+                rightClickedTab = tabItem;
+                e.Handled = true;
+            }
+        }
+    }
+    public void CloseTab(TabItem tab)
+    {
+        _tabs.Remove(tab);
+    }
+    
+    private void AddNewTab(string fileName)
+    {
+        string filePath = Path.Combine(Mod.GetFolderPath(), "Files", fileName);
+        var tab = new TabItem
+        {
+            Header = fileName,
+            Content = new TextCodeEditor(filePath)
+            
+        };
+        TextEditor editor = (tab.Content as TextCodeEditor).Content as TextEditor;
+        _textMateInstallation =  editor.InstallTextMate(_registryOptions);
+        _textMateInstallation.AppliedTheme += (o, installation) => TextMateInstallationOnAppliedTheme(o, installation, editor);
+        editor.TextArea.TextEntered += (o, args) => textEditor_TextArea_TextEntered(o, args, editor);
+        editor.TextArea.TextEntering += textEditor_TextArea_TextEntering;
+        editor.TextArea.IndentationStrategy = new CSharpIndentationStrategy(editor.Options);
+        editor.TextArea.Caret.PositionChanged += (o, args) => Caret_PositionChanged(o, args, editor);
+        editor.TextArea.LeftMargins.Insert(0, _margin);
+        Language csharpLanguage = _registryOptions.GetLanguageByExtension(".cs");
+        _textMateInstallation.SetGrammar(_registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
+        
+        var contextMenu = new ContextMenu
+        {
+            ItemsSource = new List<MenuItem>
+            {
+                new MenuItem { Header = "Copy", Command = ((CodeEditorViewModel)DataContext).CopyCommand, CommandParameter = editor.TextArea },
+                new MenuItem { Header = "Cut", Command = ((CodeEditorViewModel)DataContext).CutCommand, CommandParameter = editor.TextArea },
+                new MenuItem { Header = "Paste", Command = ((CodeEditorViewModel)DataContext).PasteCommand, CommandParameter = editor.TextArea },
+                new MenuItem { Header = "-" },
+                new MenuItem { Header = "Select All", Command = ((CodeEditorViewModel)DataContext).SelectAllCommand, CommandParameter = editor.TextArea }
+            }
+        };
+    
+        editor.ContextMenu = contextMenu;
+    
+        // Add key bindings
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.S, KeyModifiers.Control | KeyModifiers.Shift), Command = ((CodeEditorViewModel)DataContext).SaveModCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.S, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).SaveFileCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.N, KeyModifiers.Control | KeyModifiers.Shift), Command = ((CodeEditorViewModel)DataContext).NewModCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.O, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).LoadExistingModCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.O, KeyModifiers.Control | KeyModifiers.Shift), Command = ((CodeEditorViewModel)DataContext).LoadModDialogCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.N, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).NewFileCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.F4, KeyModifiers.Alt), Command = ((CodeEditorViewModel)DataContext).QuitAppCommand });
+    
+        // Editing 
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.C, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).CopyCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.X, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).CutCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.V, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).PasteCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.A, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).SelectAllCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.Z, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).UndoCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.Y, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).RedoCommand });
+    
+        // Search
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.F, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).FindCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.H, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).ReplaceCommand });
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.G, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).GoToLineCommand });
+        
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.W, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).CloseTabCommand});
+        
+        
+        _tabs.Add(tab);
+        _tabControl.SelectedItem = tab;
+
+    }
+    private void OnTabMenuClosed(object? sender, RoutedEventArgs e)
+    {
+        rightClickedTab = null;
+    }
+    #endregion
+    
+    #region File Tree
     private void SetupFileTree(string folderPath)
     {
         var fileTree = this.FindControl<TreeView>("FileTree");
@@ -117,8 +203,17 @@ public partial class CodeEditor : Window
             {
                 if (File.Exists(filePath))
                 {
-                    string content = File.ReadAllText(filePath);
-                    _editor.Document = new TextDocument(content);
+                    foreach (var tab in _tabs)
+                    {
+                        if (tab.Header.ToString() == selectedItem.Header.ToString())
+                        {
+                            
+                            _tabControl.SelectedItem = tab;
+                            return;
+                        }
+                    }
+                    AddNewTab(selectedItem.Header.ToString());
+                    
                 }
             }
         };
@@ -156,7 +251,7 @@ public partial class CodeEditor : Window
         }
     }
     
-    private void UpdateFileTree(string folderPath)
+    public void UpdateFileTree(string folderPath)
     {
         var fileTree = this.FindControl<TreeView>("FileTree");
         if (fileTree == null) return;
@@ -175,16 +270,38 @@ public partial class CodeEditor : Window
 
         fileTree.Items.Add(rootItem);
     }
+    #endregion
 
-
+    #region Text Editor
+    public TextEditor GetCurrentTextEditor()
+    {
+        return (_tabControl.SelectedContent as TextCodeEditor).Content as TextEditor;
+    }
     
-    private void Caret_PositionChanged(object sender, EventArgs e)
+    #region Visuals
+    public void UpdateVisuals()
+        {
+            Language csharpLanguage = _registryOptions.GetLanguageByExtension(".cs");
+            _currentTheme = (int)App.Settings.SelectedTheme;
+            _registryOptions = new RegistryOptions((ThemeName)_currentTheme);
+            foreach (var tab in _tabs)
+            {
+                TextEditor editor = (tab.Content as TextCodeEditor).Content as TextEditor;
+                _textMateInstallation = editor.InstallTextMate(_registryOptions);
+                _textMateInstallation.AppliedTheme +=
+                    (o, installation) => TextMateInstallationOnAppliedTheme(o, installation, editor);
+                editor.ShowLineNumbers = App.Settings.ShowLineNumbers;
+                _textMateInstallation.SetGrammar(_registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
+            }
+        }
+    
+    private void Caret_PositionChanged(object sender, EventArgs e, TextEditor textEditor)
     {
         _statusTextBlock.Text = string.Format("Line {0} Column {1}",
-            _editor.TextArea.Caret.Line,
-            _editor.TextArea.Caret.Column);
+            textEditor.TextArea.Caret.Line,
+            textEditor.TextArea.Caret.Column);
     }
-    private void TextMateInstallationOnAppliedTheme(object sender, TextMate.Installation e)
+    private void TextMateInstallationOnAppliedTheme(object sender, TextMate.Installation e, TextEditor textEditor)
     {
         ApplyThemeColorsToEditor(e);
         ApplyThemeColorsToWindow(e);
@@ -192,35 +309,39 @@ public partial class CodeEditor : Window
 
         void ApplyThemeColorsToEditor(TextMate.Installation e)
         {
-            ApplyBrushAction(e, "editor.background",brush => _editor.Background = brush);
-            ApplyBrushAction(e, "editor.foreground",brush => _editor.Foreground = brush);
-
-            if (!ApplyBrushAction(e, "editor.selectionBackground",
-                    brush => _editor.TextArea.SelectionBrush = brush))
+            foreach (var tab in _tabs)
             {
-                if (Application.Current!.TryGetResource("TextAreaSelectionBrush", out var resourceObject))
+                TextEditor _editor = (tab.Content as TextCodeEditor).Content as TextEditor;
+                ApplyBrushAction(e, "editor.background",brush => _editor.Background = brush);
+                ApplyBrushAction(e, "editor.foreground",brush => _editor.Foreground = brush);
+    
+                if (!ApplyBrushAction(e, "editor.selectionBackground",
+                        brush => _editor.TextArea.SelectionBrush = brush))
                 {
-                    if (resourceObject is IBrush brush)
+                    if (Application.Current!.TryGetResource("TextAreaSelectionBrush", out var resourceObject))
                     {
-                        _editor.TextArea.SelectionBrush = brush;
+                        if (resourceObject is IBrush brush)
+                        {
+                            _editor.TextArea.SelectionBrush = brush;
+                        }
                     }
                 }
-            }
-
-            if (!ApplyBrushAction(e, "editor.lineHighlightBackground",
-                    brush =>
-                    {
-                        _editor.TextArea.TextView.CurrentLineBackground = brush;
-                        _editor.TextArea.TextView.CurrentLineBorder = new Pen(brush); 
-                    }))
-            {
-                _editor.TextArea.TextView.SetDefaultHighlightLineColors();
-            }
-
-            if (!ApplyBrushAction(e, "editorLineNumber.foreground",
-                    brush => _editor.LineNumbersForeground = brush))
-            {
-                _editor.LineNumbersForeground = _editor.Foreground;
+    
+                if (!ApplyBrushAction(e, "editor.lineHighlightBackground",
+                        brush =>
+                        {
+                            _editor.TextArea.TextView.CurrentLineBackground = brush;
+                            _editor.TextArea.TextView.CurrentLineBorder = new Pen(brush); 
+                        }))
+                {
+                    _editor.TextArea.TextView.SetDefaultHighlightLineColors();
+                }
+    
+                if (!ApplyBrushAction(e, "editorLineNumber.foreground",
+                        brush => _editor.LineNumbersForeground = brush))
+                {
+                    _editor.LineNumbersForeground = _editor.Foreground;
+                }
             }
         }
 
@@ -264,12 +385,12 @@ public partial class CodeEditor : Window
             applyColorAction(colorBrush);
             return true;
         }
-    private void textEditor_TextArea_TextEntered(object sender, TextInputEventArgs e)
+    private void textEditor_TextArea_TextEntered(object sender, TextInputEventArgs e, TextEditor textEditor)
     {
         if (e.Text == ".")
         {
 
-            _completionWindow = new CompletionWindow(_editor.TextArea);
+            _completionWindow = new CompletionWindow(textEditor.TextArea);
             _completionWindow.Closed += (o, args) => _completionWindow = null;
 
             var data = _completionWindow.CompletionList.CompletionData;
@@ -285,7 +406,7 @@ public partial class CodeEditor : Window
         }
         else if (e.Text == "(")
         {
-            _insightWindow = new OverloadInsightWindow(_editor.TextArea);
+            _insightWindow = new OverloadInsightWindow(textEditor.TextArea);
             _insightWindow.Closed += (o, args) => _insightWindow = null;
 
             _insightWindow.Provider = new MyOverloadProvider(new[]
@@ -316,7 +437,9 @@ public partial class CodeEditor : Window
         // Do not set e.Handled=true.
         // We still want to insert the character that was typed.
     }
-    
+    #endregion
+    #endregion
+
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
@@ -396,4 +519,36 @@ public partial class CodeEditor : Window
             Control _contentControl;
         }
 
+        
+}
+public class TextCodeEditor : UserControl
+{
+    public TextCodeEditor(string filePath)
+    {
+        IHighlightingDefinition syntax = HighlightingManager.Instance.GetDefinition("C#");
+        string code = File.ReadAllText(filePath);
+        TextEditorOptions options = new TextEditorOptions
+        {
+            HighlightCurrentLine = true,
+            EnableHyperlinks = true,
+            CutCopyWholeLine = true,
+            AllowToggleOverstrikeMode = true,
+            ShowBoxForControlCharacters = true,
+            ConvertTabsToSpaces = true,
+        };
+        Content = new TextEditor
+        {
+            ShowLineNumbers = App.Settings.ShowLineNumbers,
+            FontSize = 14,
+            FontFamily = new FontFamily("Cascadia Code"),
+            SyntaxHighlighting = syntax,
+            Background = Brushes.Black,
+            Foreground = Brushes.White,
+            HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+            VerticalScrollBarVisibility = ScrollBarVisibility.Visible,
+            Options = options,
+            Document = new TextDocument(code)
+        };
+        
+    }
 }

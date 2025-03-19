@@ -198,7 +198,8 @@ public class Settings
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error downloading file: {ex.Message}");
+            new InfoWindow("Error Downloading BepInEx", InfoWindowType.Error, ex.Message, true, fontSize:20).Show();
+
         }
     }
     

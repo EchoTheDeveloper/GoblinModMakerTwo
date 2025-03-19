@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "t3FyblLiKb0=",
+  "dgSpecHash": "XQThkB3zUbo=",
   "success": true,
   "projectFilePath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMLauncher\\GMMLauncher.csproj",
   "expectedPackageFiles": [
@@ -42,6 +42,7 @@
     "C:\\Users\\Nick\\.nuget\\packages\\system.reactive\\6.0.1\\system.reactive.6.0.1.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\system.text.json\\8.0.4\\system.text.json.8.0.4.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\tabalonia\\0.10.5\\tabalonia.0.10.5.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\textmatesharp\\1.0.59\\textmatesharp.1.0.59.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\textmatesharp.grammars\\1.0.59\\textmatesharp.grammars.1.0.59.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\tmds.dbus.protocol\\0.20.0\\tmds.dbus.protocol.0.20.0.nupkg.sha512"

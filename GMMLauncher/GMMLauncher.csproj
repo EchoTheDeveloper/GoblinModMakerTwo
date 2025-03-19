@@ -30,6 +30,7 @@
         <PackageReference Include="AvaloniaEdit.TextMate" Version="11.1.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
         <PackageReference Include="ReactiveUI" Version="20.1.63" />
+        <PackageReference Include="Tabalonia" Version="0.10.5" />
     </ItemGroup>
 
     <ItemGroup>
