@@ -536,15 +536,8 @@ namespace {_editor.Mod.NameNoSpaces}
 
             private void CloseTab()
             {
-                if (_editor.rightClickedTab != null)
-                {
-                    _editor.CloseTab(_editor.rightClickedTab);
-                    _editor.rightClickedTab = null;
-                }
-                else
-                {
-                    _editor.CloseTab(_editor._tabControl.SelectedItem as TabItem);
-                }
+                _editor.CloseTab(_editor?.rightClickedTab ?? _editor._tabControl.SelectedItem as TabItem);
+                _editor.rightClickedTab = null;
             }
 
             private void CloseAllTabs()
@@ -552,58 +545,23 @@ namespace {_editor.Mod.NameNoSpaces}
                 var tabs = _editor._tabControl.Items.Cast<TabItem>().ToList();
                 foreach (var tab in tabs)
                 {
-                    if (((tab.Content as TextCodeEditor).Content as TextEditor).IsModified)
-                    {
-                        new InfoWindow("File Not Saved", InfoWindowType.YesNo, $"{tab.Header.ToString()} is not saved, would you like to save now?", true,
-                            () =>
-                            {
-                                _editor.Mod.SaveFile(tab);
-                                _editor._tabs.Clear();
-                                _editor.rightClickedTab = null;
-                            },
-                            () =>
-                            {
-                                _editor._tabs.Clear();
-                                _editor.rightClickedTab = null;
-                            }).Show();
-                    }
-                    else
-                    {
-                        _editor._tabs.Clear();
-                        _editor.rightClickedTab = null;
-                    }
+                    _editor.CloseTab(tab);
+                    _editor.rightClickedTab = null;
                 }
-                
             }
 
             private void CloseOtherTabs()
             {
                 var tabs = _editor._tabControl.Items.Cast<TabItem>().ToList();
+                bool waitingForPrompt = false;
                 foreach (var tab in tabs)
                 {
-                    if (((tab.Content as TextCodeEditor).Content as TextEditor).IsModified)
+                    if (tab != _editor.rightClickedTab)
                     {
-                        new InfoWindow("File Not Saved", InfoWindowType.YesNo, $"{tab.Header.ToString()} is not saved, would you like to save now?", true,
-                            () =>
-                            {
-                                _editor.Mod.SaveFile(tab);
-                                _editor._tabs = new ObservableCollection<TabItem> { _editor.rightClickedTab };
-                                _editor.ResetTabControl();
-                            },
-                            () =>
-                            {
-                                _editor._tabs = new ObservableCollection<TabItem> { _editor.rightClickedTab };
-                                _editor.ResetTabControl();
-                            }).Show();
-                    }
-                    else
-                    {
-                        _editor._tabs = new ObservableCollection<TabItem> { _editor.rightClickedTab };
-                        _editor.ResetTabControl();
+                        _editor.CloseTab(tab);
                     }
                 }
             }
-            
 
             #endregion
 

@@ -113,7 +113,7 @@ public partial class CodeEditor : Window
         TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
         if (textEditor.IsModified)
         {
-            new InfoWindow("File Not Saved", InfoWindowType.YesNo, "File is not saved, would you like to save now?", true,
+            new InfoWindow("File Not Saved", InfoWindowType.YesNo, $"{tab.Header.ToString()} is not saved, would you like to save now?", true,
                 () =>
                 {
                     Mod.SaveFile(tab);

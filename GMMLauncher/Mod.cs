@@ -61,6 +61,7 @@ public class Mod
     {
         string filePath = Path.Combine(GetFolderPath(), "Files", tab.Header.ToString());
         TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
+        textEditor.IsModified = false;
         string code = textEditor.Text;
         File.WriteAllText(filePath, code);
     }
