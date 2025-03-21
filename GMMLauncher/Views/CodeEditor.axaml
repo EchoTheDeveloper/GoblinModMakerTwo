@@ -106,7 +106,7 @@
                 </MenuItem>
                 <MenuItem Header="_Build" Foreground="White">
                     <MenuItem Header="_Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
-                    <MenuItem Header="_Generate Mod Files"/>
+                    <MenuItem Header="_Generate Mod Files" Command="{Binding CreateModFilesCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Version Control" Foreground="White">
                     <MenuItem Header="_Get from VCS" InputGesture="Ctrl+Alt+Y">

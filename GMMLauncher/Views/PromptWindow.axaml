@@ -60,7 +60,6 @@
                             Foreground="#5EA7FF"/>
                     <Button Name="Cancel"
                             HorizontalAlignment="Center"
-                            Content="Cancel"
                             IsEnabled="True"
                             Foreground="#5EA7FF"/>
                 </StackPanel>

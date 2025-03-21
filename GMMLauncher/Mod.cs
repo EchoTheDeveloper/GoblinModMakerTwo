@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using AvaloniaEdit;
@@ -141,17 +142,16 @@ namespace {NameNoSpaces}
     
     
     #region Install/Building Mod
-        public void InstallMod(InfoWindow infoWindow, CodeEditor editor)
+        public async Task InstallMod(InfoWindow infoWindow, CodeEditor editor)
         {
             SaveFiles(editor);
             
-            string path = CreateModFiles(editor);
+            string path = await CreateModFiles(infoWindow);
             if (!BuildMod(path, out string errorMessage))
             {
                 infoWindow.ChangeWindowType("Build Failed",InfoWindowType.Error, errorMessage, true, height:400, width:600);
                 return;
             }
-    
             string modFolderName = $"{Name}_{Version}";
             string installPath = Path.Combine(App.Settings.SteamDirectory, "BepInEx", "plugins", modFolderName);
             Directory.CreateDirectory(installPath);
@@ -165,10 +165,18 @@ namespace {NameNoSpaces}
     
             if (infoWindow.windowType != InfoWindowType.Error)
             {
-                infoWindow.ChangeWindowType("Build Successful", InfoWindowType.Ok,"Mod Successfully Installed.", true);
+                infoWindow.ChangeWindowType("Build Successful", InfoWindowType.Ok,"Mod Successfully Installed. On clicking Ok the mod folder path will open.", true,
+                    () =>
+                    {
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = installPath,
+                            UseShellExecute = true
+                        });
+                    });
             }
         }
-    public string CreateModFiles(Window window)
+    public async Task<string> CreateModFiles(InfoWindow infoWindow = null)
     {
         string currentDirectory = Directory.GetCurrentDirectory();
         string projectRoot = Path.Combine(currentDirectory, "Mods", NameNoSpaces);
@@ -195,8 +203,8 @@ namespace {NameNoSpaces}
         File.WriteAllText(Path.Combine(projectRoot, "README.md"), readme);
 
         string changelogPath = Path.Combine(projectRoot, "CHANGELOG.md");
-        string changelogEntry = $"## v{Version} - {DateTime.Now:yyyy-MM-dd}\n- [ADD CHANGES].\n";
-        File.AppendAllText(changelogPath, changelogEntry);
+
+        await ShowChangelogPrompt(changelogPath);
         
         try
         {
@@ -207,9 +215,10 @@ namespace {NameNoSpaces}
             CopyDirectory(Path.Combine(App.Settings.SteamDirectory, "BepInEx/core"), librariesPath);
             CopyDirectory(Path.Combine(Directory.GetCurrentDirectory(), "resources/Default Libraries"), librariesPath);
         }
-        catch (DirectoryNotFoundException e)
+        catch (DirectoryNotFoundException)
         {
-            new InfoWindow("Error While Making Mod Files", InfoWindowType.YesNo, "Could not create mod files, this is because BepInEx is not installed. Would you Like to install it now?.", true,
+            new InfoWindow("Error While Making Mod Files", InfoWindowType.YesNo, 
+                "Could not create mod files, this is because BepInEx is not installed. Would you like to install it now?", true,
                 () =>
                 {
                     App.Settings.InstallBepInEx();
@@ -217,9 +226,44 @@ namespace {NameNoSpaces}
             return null;
         }
 
-
         return projectRoot;
+        
+        Task ShowChangelogPrompt(string changelogPath)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            var window = new PromptWindow("Changelog Entry", new List<(Type, string, object?, bool)>
+            {
+                (typeof(TextBox), "Enter Changelog Entry", "", true)
+            }, (list, window) =>
+            {
+                string entry = (list[0] as TextBox).Text;
+                string changelogEntry = $"## v{Version} - {DateTime.Now:yyyy-MM-dd}\n- {entry}.\n";
+                File.AppendAllText(changelogPath, changelogEntry);
+                if (infoWindow != null)
+                {
+                    infoWindow.UpdateInfoText("Running Dotnet Build...");
+                }
+                window.Close();
+                tcs.SetResult(true);
+            }, (window) =>
+            {
+                string changelogEntry = $"## v{Version} - {DateTime.Now:yyyy-MM-dd}\n- [ADD CHANGES].\n";
+                File.AppendAllText(changelogPath, changelogEntry);
+                if (infoWindow != null)
+                {
+                    infoWindow.UpdateInfoText("Running Dotnet Build...");
+                }
+                window.Close();
+                tcs.SetResult(true);
+            }, cancelText: "Skip");
+            window.Topmost = true;
+            window.Show();
+            
+            return tcs.Task;
+        }
     }
+
     
     public bool BuildMod(string path, out string errorMessage)
     {
@@ -231,7 +275,7 @@ namespace {NameNoSpaces}
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
-            CreateNoWindow = false
+            CreateNoWindow = true
         };
 
         using (Process process = Process.Start(psi))

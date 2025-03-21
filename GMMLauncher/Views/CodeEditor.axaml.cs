@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
@@ -17,12 +15,17 @@ using AvaloniaEdit.CodeCompletion;
 using AvaloniaEdit.Document;
 using AvaloniaEdit.Editing;
 using AvaloniaEdit;
-using AvaloniaEdit.Folding;
 using AvaloniaEdit.Highlighting;
 using AvaloniaEdit.TextMate;
 using TextMateSharp.Grammars;
 using AvaloniaEdit.Indentation.CSharp;
 using GMMLauncher.ViewModels;
+using System.Diagnostics;
+using System.IO.Pipelines;
+using System.Text;
+using System.Threading.Tasks;
+using AvaloniaEdit.Folding;
+using StreamJsonRpc;
 
 namespace GMMLauncher.Views;
 
@@ -56,7 +59,6 @@ public partial class CodeEditor : Window
         _tabControl.ItemsSource = _tabs;
         _tabControl.PointerPressed += TabControl_PointerPressed;
         
-
         string filePath = mod.GetFilePath();
         if (!File.Exists(filePath))
         {
@@ -70,11 +72,6 @@ public partial class CodeEditor : Window
     
     
     #region Tabs
-
-    public void ResetTabControl()
-    {
-        _tabControl.ItemsSource = _tabs;
-    }
     private void TabControl_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         var pointerPoint = e.GetCurrentPoint(_tabControl);
@@ -539,7 +536,6 @@ public partial class CodeEditor : Window
 }
 public class TextCodeEditor : UserControl
 {
-    
     public TextCodeEditor(string filePath)
     {
         IHighlightingDefinition syntax = HighlightingManager.Instance.GetDefinition("C#");
@@ -566,6 +562,5 @@ public class TextCodeEditor : UserControl
             Options = options,
             Document = new TextDocument(code)
         };
-        
     }
 }
