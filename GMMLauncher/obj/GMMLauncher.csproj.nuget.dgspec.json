@@ -105,9 +105,9 @@
               "target": "Package",
               "version": "[20.1.63, )"
             },
-            "Tabalonia": {
+            "StreamJsonRpc": {
               "target": "Package",
-              "version": "[0.10.5, )"
+              "version": "[2.22.3-alpha, )"
             }
           },
           "imports": [

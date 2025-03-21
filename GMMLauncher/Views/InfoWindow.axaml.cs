@@ -29,7 +29,6 @@ public partial class InfoWindow : Window
         Height = height;
         Width = width;
         Title = title;
-        Topmost = true;
         titleText.Text = title;
         infoText.Text = newText;
         infoText.FontSize = fontSize;
@@ -99,6 +98,7 @@ public partial class InfoWindow : Window
                 SystemSoundPlayer.PlayInfoSound();
             }
         }
+        Topmost = true;
     }
     public void UpdateInfoText(string text)
     {

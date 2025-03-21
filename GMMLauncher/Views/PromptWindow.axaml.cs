@@ -14,12 +14,17 @@ public partial class PromptWindow : Window
 {
     public List<Control> answers;
 
-    public PromptWindow(string title, List<(Type promptType, string promptText, object? defaultValue, bool required)> prompts = null, Action<List<Control>, Window> done = null, Action<Window> cancel = null, int baseHeight = 300)
+    public PromptWindow(string title, List<(Type promptType, string promptText, object? defaultValue, bool required)> prompts = null, Action<List<Control>, Window> done = null, Action<Window> cancel = null, int baseHeight = 300, string cancelText = "Cancel", PixelPoint? postion = null)
     {
         InitializeComponent();
         DataContext = new PromptWindowViewModel();
         Height = baseHeight;
         MaxHeight = 800;
+        this.FindControl<Button>("Cancel").Content = cancelText;
+        if (postion.HasValue)
+        {
+            Position = postion.Value;
+        }
         if (prompts != null)
         {
             Height += (prompts.Count * 55);

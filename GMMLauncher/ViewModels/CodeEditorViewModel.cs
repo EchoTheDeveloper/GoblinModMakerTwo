@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Controls;
 using AvaloniaEdit;
@@ -49,6 +50,7 @@ namespace GMMLauncher.ViewModels
         
         #region Build
         public ICommand BuildModCommand => new RelayCommand(BuildMod);
+        public ICommand CreateModFilesCommand => new RelayCommand(() => CreateModFiles());
         #endregion
         
         #region Extra
@@ -233,7 +235,7 @@ namespace {_editor.Mod.NameNoSpaces}
                 private void CreateConfigItemDone(List<Control> answers, Window promptWindow)
                 {
                     string variableName = (answers[0] as TextBox)?.Text ?? "";
-                    string dateType = (answers[1] as TextBox)?.Text ?? "";
+                    string dateType = (answers[1] as ComboBox)?.SelectedItem as string ?? (answers[1] as TextBox)?.Text ?? "";
                     string defaultValue = (answers[2] as TextBox)?.Text ?? "";
                     string definition = (answers[3] as TextBox)?.Text ?? "";
                     string description = (answers[4] as TextBox)?.Text ?? "";
@@ -257,13 +259,28 @@ namespace {_editor.Mod.NameNoSpaces}
                     {
                         int lastConst = code.IndexOf("const ");
                         if (lastConst != -1)
+                        {
                             code = code.Insert(lastConst, configEntry + "\n");
+                        }
+                        else
+                        {
+                            int classIndex = code.IndexOf("public class");
+                            if (classIndex != -1)
+                            {
+                                int bracketIndex = code.IndexOf('{', classIndex);
+                                if (bracketIndex != -1)
+                                {
+                                    Console.WriteLine(code.Substring(classIndex, bracketIndex - classIndex));
+                                    code = code.Insert(bracketIndex + 1, "\n"+ configEntry);
+                                }
+                            }
+                        }
                     }
 
                     int configDefinitionIndex = code.LastIndexOf("public ConfigDefinition");
                     if (configDefinitionIndex != -1)
                     {
-                        int insertIndex = code.IndexOf('\n', configDefinitionIndex) + 1;
+                        int insertIndex = code.IndexOf('\n', configDefinitionIndex);
                         code = code.Insert(insertIndex, configDefinition + "\n");
                     }
                     else
@@ -271,12 +288,12 @@ namespace {_editor.Mod.NameNoSpaces}
                         int lastConfigEntry = code.LastIndexOf("ConfigEntry<");
                         if (lastConfigEntry != -1)
                         {
-                            int insertIndex = code.IndexOf('\n', lastConfigEntry) + 2;
-                            code = code.Insert(insertIndex, configDefinition + "\n");
+                            int insertIndex = code.IndexOf('\n', lastConfigEntry);
+                            code = code.Insert(insertIndex,  "\n\n" + configDefinition + "\n");
                         }
                     }
 
-                    int constructorIndex = code.IndexOf($"public {_editor.Mod.NameNoSpaces}");
+                    int constructorIndex = code.IndexOf($"public {_editor.Mod.NameNoSpaces}"); // TODO: THIS FOR OTHER SCRIPTS
                     if (constructorIndex != -1)
                     {
                         int bracketIndex = code.IndexOf('{', constructorIndex);
@@ -290,6 +307,7 @@ namespace {_editor.Mod.NameNoSpaces}
                     
                     promptWindow.Close();
                 }
+                
                 
                 private void CreateKeybind()
                 {
@@ -355,14 +373,34 @@ namespace {_editor.Mod.NameNoSpaces}
             }}";
                     
                     int updateIndex = code.IndexOf("void Update()");
-                    if (updateIndex != -1)
+                    if (updateIndex == -1)
                     {
-                        int bracketIndex = code.IndexOf('{', updateIndex);
-                        if (bracketIndex != -1)
+                        string updateCode = @"        void Update()
+        {
+
+        }";
+                        int lastNamespaceBracket = code.LastIndexOf('}');
+                        int lastClassBracket = code.LastIndexOf('}', lastNamespaceBracket-2);
+                        if (lastClassBracket != -1 && lastNamespaceBracket != -1)
                         {
-                            code = code.Insert(bracketIndex + 1, "\n" + logic);
+                            code = code.Insert(lastClassBracket, "\n" + updateCode + "\n    ");
+                            
+                        }
+                        else
+                        {
+                            new InfoWindow("Error", InfoWindowType.Error, "Couldn't find class end bracket.", true, fontSize:20).Show();
+
                         }
                     }
+                    updateIndex = code.IndexOf("void Update()");
+
+                    
+                    int bracketIndex = code.IndexOf('{', updateIndex);
+                    if (bracketIndex != -1)
+                    {
+                        code = code.Insert(bracketIndex + 1, "\n" + logic);
+                    }
+                    
                     void DeclareVariable(string nameModifier = "Down")
                     {
                         string declaration = $"        public static bool {variableName}{nameModifier} = false;";
@@ -392,7 +430,7 @@ namespace {_editor.Mod.NameNoSpaces}
 
             private void BuildMod()
             {
-                var infoWindow = new InfoWindow("Building Mod", InfoWindowType.Info, "Running Dotnet Build...");
+                var infoWindow = new InfoWindow("Building Mod", InfoWindowType.Info, "Waiting for changelog entry...");
                 infoWindow.Show();
                 _editor.Mod.InstallMod(infoWindow, _editor);
             }
@@ -418,7 +456,14 @@ namespace {_editor.Mod.NameNoSpaces}
                 var tab = _editor._tabControl.SelectedItem as TabItem;
                 _editor.Mod.SaveFile(tab);
             }
-        
+
+            private async Task CreateModFiles()
+            {
+                if (await _editor.Mod.CreateModFiles() != null)
+                {
+                    new InfoWindow("Created Files Successfully", InfoWindowType.Ok, "Mod files were created successfully", true, fontSize:20).Show();
+                }
+            }
         #endregion
         #region MenuCommands
 
