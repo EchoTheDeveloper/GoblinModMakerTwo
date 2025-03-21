@@ -25,7 +25,6 @@ using System.IO.Pipelines;
 using System.Text;
 using System.Threading.Tasks;
 using AvaloniaEdit.Folding;
-using StreamJsonRpc;
 
 namespace GMMLauncher.Views;
 
