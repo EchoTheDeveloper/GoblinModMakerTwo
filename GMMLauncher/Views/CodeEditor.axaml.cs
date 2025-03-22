@@ -39,7 +39,7 @@ public partial class CodeEditor : Window
     private CustomMargin _margin;
     
 
-    public TabControl _tabControl { get; private set; }
+    public TabControl _tabControl { get; set; }
     public ObservableCollection<TabItem> _tabs = new();
     public TabItem rightClickedTab { get; set; }
     
@@ -184,6 +184,9 @@ public partial class CodeEditor : Window
         
         editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.W, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).CloseTabCommand});
         
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.N, KeyModifiers.Control | KeyModifiers.Alt), Command = ((CodeEditorViewModel)DataContext).ConfigureModCommand });
+
+        
         
         _tabs.Add(tab);
         _tabControl.SelectedItem = tab;
@@ -281,6 +284,15 @@ public partial class CodeEditor : Window
         PopulateTreeView(rootDirectory, rootItem);
 
         fileTree.Items.Add(rootItem);
+    }
+    
+    public void ClearFileTree()
+    {
+        var fileTree = this.FindControl<TreeView>("FileTree");
+        if (fileTree != null)
+        {
+            fileTree.Items.Clear();
+        }
     }
     #endregion
 

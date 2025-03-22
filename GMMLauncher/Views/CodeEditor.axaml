@@ -95,14 +95,12 @@
                     <MenuItem Header="_Go To Line" InputGesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Mod" Foreground="White">
-                    <MenuItem Header="_Change Name" InputGesture="Ctrl+Alt+N"/>
-                    <MenuItem Header="_Change Version" InputGesture="Ctrl+Alt+V"/>
-                    <MenuItem Header="_Change Developers" InputGesture="Ctrl+Alt+D"/>
+                    <MenuItem Header="_Configure Mod" InputGesture="Ctrl+Alt+M" Command="{Binding ConfigureModCommand}"/>
                     <Separator/>
                     <MenuItem Header="_Create Harmony Patch" InputGesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatchCommand}"/>
                     <MenuItem Header="_Create Config Item" InputGesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
                     <MenuItem Header="_Create Keybind" InputGesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
-                    <MenuItem Header="_Create NPC Asset" InputGesture="Ctrl+Alt+A"/>
+                    <MenuItem Header="_Create NPC Asset" InputGesture="Ctrl+Alt+N"/>
                 </MenuItem>
                 <MenuItem Header="_Build" Foreground="White">
                     <MenuItem Header="_Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildModCommand}"/>

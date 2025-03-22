@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Controls;
@@ -46,6 +47,8 @@ namespace GMMLauncher.ViewModels
         public ICommand CreateHarmonyPatchCommand => new RelayCommand(CreateHarmonyPatch);
         public ICommand CreateConfigItemCommand => new RelayCommand(CreateConfigItem);
         public ICommand CreateKeybindCommand => new RelayCommand(CreateKeybind);
+
+        public ICommand ConfigureModCommand => new RelayCommand(ConfigureMod);
         #endregion
         
         #region Build
@@ -118,7 +121,24 @@ namespace {_editor.Mod.NameNoSpaces}
                 _editor.UpdateFileTree(fileFolder);
                 promptWindow.Close();
             }
+            
+            private void SaveFile()
+            {
+                var tab = _editor._tabControl.SelectedItem as TabItem;
+                _editor.Mod.SaveFile(tab);
+            }
+            
+            private void OpenSettings()
+            {
+                MenuCommands.OpenSettingsInEditorCommand.Execute(_editor);
+            }
+                        
+            #region ModFunctions
 
+            private void ConfigureMod()
+            {
+                _editor.Mod.ConfigureMod(_editor);
+            }
             #region CreateFunctions
                 private void CreateHarmonyPatch()
                 {
@@ -427,7 +447,7 @@ namespace {_editor.Mod.NameNoSpaces}
                     promptWindow.Close();
                 }
             #endregion
-
+            
             private void BuildMod()
             {
                 var infoWindow = new InfoWindow("Building Mod", InfoWindowType.Info, "Waiting for changelog entry...");
@@ -439,24 +459,13 @@ namespace {_editor.Mod.NameNoSpaces}
             {
                 MenuCommands.LoadModDialogCommand.Execute(_editor);
             }
-
-            private void OpenSettings()
-            {
-                MenuCommands.OpenSettingsInEditorCommand.Execute(_editor);
-            }
             
             private void SaveMod()
             {
                 Mod mod = _editor.Mod;
                 mod.SaveFiles(_editor);
             }
-
-            private void SaveFile()
-            {
-                var tab = _editor._tabControl.SelectedItem as TabItem;
-                _editor.Mod.SaveFile(tab);
-            }
-
+            
             private async Task CreateModFiles()
             {
                 if (await _editor.Mod.CreateModFiles() != null)
@@ -464,6 +473,7 @@ namespace {_editor.Mod.NameNoSpaces}
                     new InfoWindow("Created Files Successfully", InfoWindowType.Ok, "Mod files were created successfully", true, fontSize:20).Show();
                 }
             }
+            #endregion
         #endregion
         #region MenuCommands
 

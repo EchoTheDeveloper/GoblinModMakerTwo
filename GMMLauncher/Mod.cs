@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Layout;
@@ -30,12 +33,12 @@ public class Mod
         Version = "1.0.0";
     }
 
-    public string Name { get; init; }
-    public string NameNoSpaces { get; init; }
-    public string Description { get; init; }
-    public string Authors { get; init; }
-    public string GMMVersion { get; init; }
-    public string Version { get; init; } = "1.0.0";
+    public string Name { get; set; }
+    public string NameNoSpaces { get; set; }
+    public string Description { get; set; }
+    public string Authors { get; set; }
+    public string GMMVersion { get; set; }
+    public string Version { get; set; } = "1.0.0";
 
 
     public void SaveMod()
@@ -46,8 +49,6 @@ public class Mod
     }
     public void SaveFiles(CodeEditor editor)
     {
-        string currentDir = Directory.GetCurrentDirectory();
-        string folderPath = Path.Combine(currentDir, "Mods", NameNoSpaces, "Files");
         foreach (var tab in editor._tabs)
         {
             string filePath = Path.Combine(GetFolderPath(), "Files", tab.Header.ToString()); // TODO: MIGHT HAVE TO ADD + ".cs
@@ -101,11 +102,11 @@ namespace {NameNoSpaces}
     [BepInDependency(""Isle Goblin"")]
     [BepInDependency(ConfigurationManager.ConfigurationManager.GUID, BepInDependency.DependencyFlags.HardDependency)]
 
-    public class {Name} : BaseUnityPlugin
+    public class {NameNoSpaces} : BaseUnityPlugin
     {{
         public const string GUID = ""org.bepinex.plugins.{NameNoSpaces}"";
         public const string Name = ""{Name}"";
-        public const string Version = ""1.0.0"";
+        public const string Version = ""{Version}"";
         
         public static ConfigEntry<bool> mEnabled;
 
@@ -138,6 +139,95 @@ namespace {NameNoSpaces}
     {
         string currentDir = Directory.GetCurrentDirectory();
         return Path.Combine(currentDir, "Mods", NameNoSpaces);
+    }
+
+    public void ConfigureMod(CodeEditor _editor)
+    {
+        var window = new PromptWindow("Configure Mod", 
+            new List<(Type, string, object?, bool)>
+            {
+                (typeof(TextBox), "Name", Name, true),
+                (typeof(TextBox), "Description", Description, true),
+                (typeof(TextBox), "Developers (Separate By Comma)", Authors, true),
+                (typeof(TextBox), "Version", Version, true),
+            }, ConfigureModDone);
+        window.Show();
+
+        void ConfigureModDone(List<Control> answers, Window promptWindow)
+        {
+            string modName = (answers[0] as TextBox)?.Text ?? Name;
+            string modDesc = (answers[1] as TextBox)?.Text ?? Description;
+            string modDevelopers = (answers[2] as TextBox)?.Text ?? Authors;
+            string modVersion = (answers[3] as TextBox)?.Text ?? Version;
+
+            
+            if (modName != Name || modVersion != Version || modDesc != Description || modDevelopers != Authors)
+            {
+                SaveFiles(_editor);
+                string modNameNoSpaces = modName.Replace(" ", "");
+                TabControl savedTabControl = _editor._tabControl;
+                _editor.ClearFileTree();
+                _editor._tabControl = null;
+                _editor.Close();
+
+
+                string modFolder = Path.Combine(Directory.GetCurrentDirectory(), "Mods");
+                string modDirectory = Path.Combine(modFolder, NameNoSpaces);
+                string newModDirectory = Path.Combine(modFolder, modNameNoSpaces);
+                try
+                {
+                    if (Directory.Exists(modDirectory) && !Directory.Exists(newModDirectory))
+                    {
+                        Directory.Move(modDirectory, newModDirectory);
+                    }
+                }
+                catch (Exception _)
+                {
+                    new InfoWindow("Mod couldn't be moved", InfoWindowType.Error,
+                        "Mod files couldn't be moved. This is most likely because you have a mod file open in another application or in the File Explorer",
+                        true).Show();
+                    promptWindow.Close();
+                    return;
+                }
+                
+                string oldMainFileName = NameNoSpaces + ".cs";
+                string oldFilePath = Path.Combine(newModDirectory, "Files", oldMainFileName);
+                    
+                string mainFileCode = File.ReadAllText(oldFilePath);
+
+                mainFileCode = Regex.Replace(mainFileCode, $@"\b{Regex.Escape(NameNoSpaces)}\b", modNameNoSpaces);
+                mainFileCode = mainFileCode.Replace(Name, modName);
+                mainFileCode = Regex.Replace(mainFileCode, @"const string Version = ""[^""]+""", $"const string Version = \"{modVersion}\"");
+                
+                File.WriteAllText(Path.Combine(newModDirectory, "Files", modNameNoSpaces + ".cs"), mainFileCode);
+                
+                File.Delete(oldFilePath);
+                File.Delete(Path.Combine(newModDirectory, NameNoSpaces + ".json"));
+                    
+                Name = modName;
+                NameNoSpaces = modNameNoSpaces;
+                Description = modDesc;
+                Authors = modDevelopers;
+                Version =  modVersion;
+                
+                SaveMod();
+                
+                    
+                var editor = new CodeEditor(this)
+                {
+                    TabControl = savedTabControl
+                };
+                foreach (var tab in _editor._tabs)
+                {
+                    if (tab.Header.ToString() == oldMainFileName)
+                    {
+                        ((tab.Content as TextCodeEditor).Content as TextEditor).Text = mainFileCode;
+                    }
+                }
+                editor.Show();
+            }
+            promptWindow.Close();
+        }
     }
     
     
