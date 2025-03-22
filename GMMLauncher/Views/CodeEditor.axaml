@@ -154,6 +154,11 @@
                             <TextBlock Text="{Binding Name}"/>
                         </TreeDataTemplate>
                     </TreeView.ItemTemplate>
+                    <TreeView.ContextMenu>
+                        <ContextMenu Closed="OnTabMenuClosed">
+                            <MenuItem Header="Delete File" Command="{Binding DeleteFileCommand}"/>
+                        </ContextMenu>
+                    </TreeView.ContextMenu>
                 </TreeView>
                 
                 <!-- Text Editor -->

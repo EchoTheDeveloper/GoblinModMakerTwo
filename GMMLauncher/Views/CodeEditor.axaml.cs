@@ -22,6 +22,7 @@ using AvaloniaEdit.Indentation.CSharp;
 using GMMLauncher.ViewModels;
 using System.Diagnostics;
 using System.IO.Pipelines;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AvaloniaEdit.Folding;
@@ -42,6 +43,7 @@ public partial class CodeEditor : Window
     public TabControl _tabControl { get; set; }
     public ObservableCollection<TabItem> _tabs = new();
     public TabItem rightClickedTab { get; set; }
+    public TreeViewItem rightClickedFile { get; set; }
     
     public Mod Mod;
     
@@ -125,6 +127,18 @@ public partial class CodeEditor : Window
             _tabs.Remove(tab);
         }
     }
+
+    public void UpdateTabControl()
+    {
+        string fileFolder = Path.Combine(Mod.GetFolderPath(), "Files");
+        var tabsToRemove = _tabs.Where(tab => !File.Exists(Path.Combine(fileFolder, tab.Header.ToString()))).ToList();
+
+        foreach (var tab in tabsToRemove)
+        {
+            _tabs.Remove(tab);
+        }
+    }
+
     
     private void AddNewTab(string fileName)
     {
@@ -228,7 +242,6 @@ public partial class CodeEditor : Window
                         }
                     }
                     AddNewTab(selectedItem.Header.ToString());
-                    
                 }
             }
         };
@@ -248,6 +261,25 @@ public partial class CodeEditor : Window
                 Header = file.Name,
                 Tag = file.FullName
             };
+            fileItem.PointerPressed += (sender, e) =>
+            {
+                var pointerPoint = e.GetCurrentPoint(fileItem);
+                if (pointerPoint.Properties.IsRightButtonPressed) 
+                {
+                    var clickedFile = e.Source as Control;
+                    while (clickedFile != null && clickedFile is not TreeViewItem)
+                    {
+                        clickedFile = (Control)clickedFile.Parent;
+                    }
+        
+                    if (clickedFile is TreeViewItem item)
+                    {
+                        Console.WriteLine("BAM");
+                        rightClickedFile = item;
+                        e.Handled = true;
+                    }
+                }
+            };
 
             parentItem.Items.Add(fileItem);
         }
@@ -266,14 +298,14 @@ public partial class CodeEditor : Window
         }
     }
     
-    public void UpdateFileTree(string folderPath)
+    public void UpdateFileTree()
     {
         var fileTree = this.FindControl<TreeView>("FileTree");
         if (fileTree == null) return;
 
         fileTree.Items.Clear();
 
-        var rootDirectory = new DirectoryInfo(folderPath);
+        var rootDirectory = new DirectoryInfo(Path.Combine(Mod.GetFolderPath(), "Files"));
         var rootItem = new TreeViewItem
         {
             Header = rootDirectory.Name,
