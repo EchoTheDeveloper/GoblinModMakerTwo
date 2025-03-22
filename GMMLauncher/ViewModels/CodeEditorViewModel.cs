@@ -536,7 +536,7 @@ namespace {_editor.Mod.NameNoSpaces}
                 var window = new PromptWindow("Go to Line:Column",
                     new List<(Type, string, object?, bool)>
                     {
-                        (typeof(TextBox), "Line:Column", "", true)
+                        (typeof(TextBlock), "Line:Column", null, true)
                     },
                     GoToLineDone, 
                     baseHeight:220);

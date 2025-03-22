@@ -33,45 +33,45 @@
         </DockPanel>
         <DockPanel Margin="0,34,0,0">
             <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
-                <MenuItem Header="_File" Foreground="White">
-                    <MenuItem Header="_New Project">
+                <MenuItem Header="File" Foreground="White">
+                    <MenuItem Header="New Project" Command="{Binding NewModCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource document_add_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Open Project">
+                    <MenuItem Header="Open Project" Command="{Binding LoadExistingModCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource folder_open_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Exit" Command="{Binding QuitAppCommand}">
+                    <MenuItem Header="Exit" Command="{Binding QuitAppCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource dismiss_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Version Control" Foreground="White">
-                    <MenuItem Header="_Get from VCS">
-                        <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource arrow_download_regular}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="_Settings" Foreground="White">
-                    <MenuItem Header="_Preferences">
+                <!-- <MenuItem Header="Version Control" Foreground="White"> -->
+                <!--     <MenuItem Header="Get from VCS"> -->
+                <!--         <MenuItem.Icon> -->
+                <!--             <PathIcon Data="{StaticResource arrow_download_regular}" /> -->
+                <!--         </MenuItem.Icon> -->
+                <!--     </MenuItem> -->
+                <!-- </MenuItem> -->
+                <MenuItem Header="Settings" Foreground="White">
+                    <MenuItem Header="Preferences" Command="{Binding OpenSettingsCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource settings_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Help" Foreground="White">
-                    <MenuItem Header="_Documentation">
+                <MenuItem Header="Help" Foreground="White">
+                    <MenuItem Header="Documentation" Command="{Binding OpenDocumentationCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource book_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_About">
+                    <MenuItem Header="About">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource info_regular}" />
                         </MenuItem.Icon>

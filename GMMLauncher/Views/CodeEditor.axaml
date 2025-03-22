@@ -36,97 +36,117 @@
         <DockPanel Margin="0,34,0,0">
             <!-- Menu Bar -->
             <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
-                <MenuItem Header="_File" Foreground="White">
-                    <MenuItem Header="_Save Project" InputGesture="Ctrl+Shift+S" Command="{Binding SaveModCommand}">
+                <MenuItem Header="File" Foreground="White">
+                    <MenuItem Header="Save Project" InputGesture="Ctrl+Shift+S" Command="{Binding SaveModCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource folder_open_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_New Project" InputGesture="Ctrl+Shift+N" Command="{Binding NewModCommand}">
+                    <MenuItem Header="New Project" InputGesture="Ctrl+Shift+N" Command="{Binding NewModCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource document_add_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Open Project">
+                    <MenuItem Header="Open Project">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource folder_open_regular}" />
                         </MenuItem.Icon>
-                        <MenuItem Header="_Open Existing" InputGesture="Ctrl+O" Command="{Binding LoadExistingModCommand}"/>
-                        <MenuItem Header="_Open From File" InputGesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
+                        <MenuItem Header="Open Existing" InputGesture="Ctrl+O" Command="{Binding LoadExistingModCommand}"/>
+                        <MenuItem Header="Open From File" InputGesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_New File" InputGesture="Ctrl+N" Command="{Binding NewFileCommand}">
+                    <MenuItem Header="New File" InputGesture="Ctrl+N" Command="{Binding NewFileCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource document_new}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Save File" InputGesture="Ctrl+S" Command="{Binding SaveFileCommand}">
+                    <MenuItem Header="Save File" InputGesture="Ctrl+S" Command="{Binding SaveFileCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource folder_open_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="_Exit" InputGesture="Alt+F4" Command="{Binding QuitAppCommand}">
+                    <MenuItem Header="Exit" InputGesture="Alt+F4" Command="{Binding QuitAppCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource dismiss_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Edit" Foreground="White">
-                    <MenuItem Header="_Undo" InputGesture="Ctrl+Z" Command="{Binding UndoCommand}"/>
-                    <MenuItem Header="_Redo" InputGesture="Ctrl+Y" Command="{Binding RedoCommand}"/>
+                <MenuItem Header="Edit" Foreground="White">
+                    <MenuItem Header="Undo" InputGesture="Ctrl+Z" Command="{Binding UndoCommand}"/>
+                    <MenuItem Header="Redo" InputGesture="Ctrl+Y" Command="{Binding RedoCommand}"/>
                     <Separator/>
-                    <MenuItem Header="_Copy" 
+                    <MenuItem Header="Copy" 
                               InputGesture="Ctrl+C"
                               Command="{Binding CopyCommand}"/>
-                    <MenuItem Header="_Cut" 
+                    <MenuItem Header="Cut" 
                               InputGesture="Ctrl+X"
                               Command="{Binding CutCommand}"/>
-                    <MenuItem Header="_Paste" 
+                    <MenuItem Header="Paste" 
                               InputGesture="Ctrl+V"
                               Command="{Binding PasteCommand}"/>
-                    <MenuItem Header="_Select All" 
+                    <MenuItem Header="Select All" 
                               InputGesture="Ctrl+A"
                               Command="{Binding SelectAllCommand}"/>
-                
                     <Separator/>
-                    <MenuItem Header="_Find" InputGesture="Ctrl+F" Command="{Binding FindCommand}"/>
-                    <MenuItem Header="_Replace" InputGesture="Ctrl+H" Command="{Binding ReplaceCommand}"/>
-                    <MenuItem Header="_Go To Line" InputGesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
+                    <MenuItem Header="Find" InputGesture="Ctrl+F" Command="{Binding FindCommand}"/>
+                    <MenuItem Header="Replace" InputGesture="Ctrl+H" Command="{Binding ReplaceCommand}"/>
+                    <MenuItem Header="Go To Line" InputGesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
                 </MenuItem>
-                <MenuItem Header="_Mod" Foreground="White">
-                    <MenuItem Header="_Configure Mod" InputGesture="Ctrl+Alt+M" Command="{Binding ConfigureModCommand}"/>
+                <MenuItem Header="Mod" Foreground="White">
+                    <MenuItem Header="Configure Mod" InputGesture="Ctrl+Alt+M" Command="{Binding ConfigureModCommand}"/>
                     <Separator/>
-                    <MenuItem Header="_Create Harmony Patch" InputGesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatchCommand}"/>
-                    <MenuItem Header="_Create Config Item" InputGesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
-                    <MenuItem Header="_Create Keybind" InputGesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
-                    <MenuItem Header="_Create NPC Asset" InputGesture="Ctrl+Alt+N"/>
+                    <MenuItem Header="Create Harmony Patch" InputGesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatchCommand}"/>
+                    <MenuItem Header="Create Config Item" InputGesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
+                    <MenuItem Header="Create Keybind" InputGesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
+                    <Separator/>
+                    <MenuItem Header="Create Asset">
+                        <MenuItem Header="Entity">
+                            <MenuItem Header="NPC"/>
+                            <MenuItem Header="Fish"/>
+                            <MenuItem Header="Enemy"/>
+                            <MenuItem Header="Boss">
+                                <MenuItem Header="Normal Boss"/>
+                                <MenuItem Header="Swarm/Wave Boss"/>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="Item"/>
+                        <Separator/>
+                        <MenuItem Header="Warpaint"/>
+                        <MenuItem Header="Gizmos"/>
+                        <Separator/>
+                        <MenuItem Header="Quest"/>
+                        <MenuItem Header="Research Task"/>
+                        <Separator/>
+                        <MenuItem Header="Buff"/>
+                        <MenuItem Header="Debuff"/>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Build" Foreground="White">
-                    <MenuItem Header="_Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
-                    <MenuItem Header="_Generate Mod Files" Command="{Binding CreateModFilesCommand}"/>
+                <MenuItem Header="Build" Foreground="White">
+                    <MenuItem Header="Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
+                    <MenuItem Header="Generate Mod Files" Command="{Binding CreateModFilesCommand}"/>
                 </MenuItem>
-                <MenuItem Header="_Version Control" Foreground="White">
-                    <MenuItem Header="_Get from VCS" InputGesture="Ctrl+Alt+Y">
+                <MenuItem Header="Version Control" Foreground="White">
+                    <MenuItem Header="Get from VCS" InputGesture="Ctrl+Alt+Y">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource arrow_download_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Settings"  Foreground="White" Command="{Binding OpenSettingsCommand}">
-                    <MenuItem Header="_Preferences" InputGesture="Ctrl+,">
+                <MenuItem Header="Settings"  Foreground="White" Command="{Binding OpenSettingsCommand}">
+                    <MenuItem Header="Preferences" InputGesture="Ctrl+,">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource settings_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Help" Foreground="White">
-                    <MenuItem Header="_Documentation" InputGesture="F1" Command="{Binding OpenDocumentationCommand}">
+                <MenuItem Header="Help" Foreground="White">
+                    <MenuItem Header="Documentation" InputGesture="F1" Command="{Binding OpenDocumentationCommand}">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource book_regular}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_About">
+                    <MenuItem Header="About">
                         <MenuItem.Icon>
                             <PathIcon Data="{StaticResource info_regular}" />
                         </MenuItem.Icon>
