@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using GMMLauncher.ViewModels;
 using Avalonia.Markup.Xaml;
 using System.Runtime.InteropServices;
-using Avalonia.Layout;
 
 namespace GMMLauncher.Views;
 

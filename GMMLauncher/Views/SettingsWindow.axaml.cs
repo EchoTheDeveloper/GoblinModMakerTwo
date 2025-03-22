@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Avalonia.Controls;
-using Avalonia.Layout;
 using GMMLauncher.ViewModels;
 using Avalonia.Markup.Xaml;
-using Avalonia.Threading;
-using GMMBackend;
 
 namespace GMMLauncher.Views;
 

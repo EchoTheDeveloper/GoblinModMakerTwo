@@ -1,18 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using AvaloniaEdit;
-using AvaloniaEdit.TextMate;
-using GMMBackend;
 using GMMLauncher.Views;
-using Microsoft.Win32;
 using TextMateSharp.Grammars;
-using RegistryOptions = TextMateSharp.Grammars.RegistryOptions;
 
 namespace GMMLauncher.ViewModels
 {

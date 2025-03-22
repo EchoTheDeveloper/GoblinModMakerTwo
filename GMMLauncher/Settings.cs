@@ -4,12 +4,10 @@ using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using GMMLauncher.Views;
 using Microsoft.Win32;
 using TextMateSharp.Grammars;
-using TextMateSharp.Themes;
 
 namespace GMMLauncher;
 
