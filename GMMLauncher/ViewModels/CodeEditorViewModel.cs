@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Controls;
 using AvaloniaEdit;
+using AvaloniaEdit.Utils;
 using GMMLauncher.Views;
 
 namespace GMMLauncher.ViewModels
@@ -62,6 +63,8 @@ namespace GMMLauncher.ViewModels
         public ICommand CloseTabCommand => new RelayCommand(CloseTab);
         public ICommand CloseAllTabsCommand => new RelayCommand(CloseAllTabs);
         public ICommand CloseOtherTabsCommand => new RelayCommand(CloseOtherTabs);
+
+        public ICommand DeleteFileCommand => new RelayCommand(DeleteFile);
         #endregion
         #endregion
         
@@ -96,8 +99,7 @@ namespace GMMLauncher.ViewModels
                     nameNoSpace += ".cs";
                 }
                 
-                string fileFolder = Path.Combine(_editor.Mod.GetFolderPath(), "Files");
-                string filePath = Path.Combine(fileFolder, nameNoSpace);
+                string filePath = Path.Combine(Path.Combine(_editor.Mod.GetFolderPath(), "Files"), nameNoSpace);
 
                 string className = string.Concat(Path.GetFileNameWithoutExtension(fileName)
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries));
@@ -116,8 +118,23 @@ namespace {_editor.Mod.NameNoSpaces}
     }}
 }}";
                 File.WriteAllText(filePath, newFileContent);
-                _editor.UpdateFileTree(fileFolder);
+                _editor.UpdateFileTree();
                 promptWindow.Close();
+            }
+
+            private void DeleteFile()
+            {
+                string fileFolder = Path.Combine(_editor.Mod.GetFolderPath(), "Files");
+                string? fileName = _editor.rightClickedFile.Header?.ToString();
+                if (fileName == _editor.Mod.NameNoSpaces + ".cs")
+                {
+                    new InfoWindow("Can't Delete Main File", InfoWindowType.Error,
+                        "You cannot delete the main mod file. If you feel like this should be changed please let us know.").Show();
+                    return;
+                }
+                File.Delete(Path.Combine(fileFolder, fileName));
+                _editor.UpdateFileTree();
+                _editor.UpdateTabControl();
             }
             
             private void SaveFile()

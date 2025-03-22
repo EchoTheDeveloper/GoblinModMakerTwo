@@ -61,6 +61,7 @@ public static class MenuCommands
     public static void LoadExistingMod()
     {
         var availableMods = GetAvailableMods();
+        StackPanel promptsPanel;
 
         if (availableMods != null && availableMods.Length > 0)
         {
@@ -74,7 +75,7 @@ public static class MenuCommands
                 LoadExistingModDone
             );
             
-            var promptsPanel = window.FindControl<StackPanel>("PromptsPanel")!;
+            promptsPanel = window.FindControl<StackPanel>("PromptsPanel")!;
             window.Height += availableMods.Length * 24;
             foreach (var modName in availableMods)
             {
@@ -82,13 +83,32 @@ public static class MenuCommands
                 var button = new Button
                 {
                     Content = modNameFixed,
-                    HorizontalAlignment = HorizontalAlignment.Center
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                };
+                button.ContextMenu = new ContextMenu
+                {
+                    Items =
+                    {
+                        new MenuItem
+                        {
+                            Header = "Delete Mod",
+                            Command = new RelayCommand((() => { DeleteMod(button); }))
+                        }
+                    }
                 };
                 
                 button.Click += (_, _) =>
                 {
                     LoadModFromFile(modNameFixed.Replace(" ", ""));
                     window.Close();
+                };
+                button.PointerPressed += (_, e) =>
+                {
+                    var pointerPoint = e.GetCurrentPoint(button);
+                    if (pointerPoint.Properties.IsRightButtonPressed)
+                    {
+                        button.ContextMenu.Open(button);
+                    }
                 };
     
                 promptsPanel.Children.Add(button);
@@ -98,6 +118,17 @@ public static class MenuCommands
         else
         {
             new InfoWindow("Error Loading Mods", InfoWindowType.Error, "No Mods Found!", true, fontSize:20).Show();
+        }
+
+        void DeleteMod(Button button)
+        {
+            string modName = button.Content.ToString();
+            new InfoWindow("Are You Sure?", InfoWindowType.YesNo, $"Are you sure you want to delete {modName}. This action is irreversible.", true,
+                () =>
+                {
+                    Directory.Delete(Path.Combine(Directory.GetCurrentDirectory(), "Mods" , modName), true);
+                    promptsPanel.Children.Remove(button);
+                }).Show();
         }
     }
 

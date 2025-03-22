@@ -1,4 +1,5 @@
-using Avalonia.Controls;
+using 
+    Avalonia.Controls;
 using GMMLauncher.ViewModels;
 using Avalonia.Markup.Xaml;
 
