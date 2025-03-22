@@ -134,7 +134,6 @@ public static class MenuCommands
 
     private static string[] GetAvailableMods()
     {
-        string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Mods");
         return Directory.GetDirectories("Mods");
     }
 
