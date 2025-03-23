@@ -103,7 +103,7 @@
                     <MenuItem Header="Create Asset" >
                         <MenuItem Header="Entity">
                             <MenuItem Header="NPC" IsEnabled="False"/>
-                            <MenuItem Header="Fish" IsEnabled="False"/>
+                            <MenuItem Header="Fish" IsEnabled="False" Command="{Binding CreateFishCommand}"/>
                             <MenuItem Header="Enemy" IsEnabled="False"/>
                             <MenuItem Header="Boss">
                                 <MenuItem Header="Normal Boss" IsEnabled="False"/>
