@@ -102,18 +102,26 @@ public class Settings
     #region BepInEx Installation
     public async Task InstallBepInEx()
     {
-        if (Directory.Exists(Path.Combine(SteamDirectory, "BepInEx")))
+        string bepInFolder = Path.Combine(SteamDirectory, "BepInEx");
+        if (Directory.Exists(bepInFolder))
         {
-            new InfoWindow("Already Installed", InfoWindowType.YesNo, "BepInEx is already installed. Are you trying to reinstall?", true, 
-                () =>
-                {
-                    Directory.Delete(Path.Combine(SteamDirectory, "BepInEx"), true);
-                    File.Delete(Path.Combine(SteamDirectory, "doorstop_config.ini"));
-                    File.Delete(Path.Combine(SteamDirectory, "winhttp.dll"));
-                    File.Delete(Path.Combine(SteamDirectory, "changelog.txt"));
-                    InstallBepInEx();
-                },
-                fontSize:18).Show();
+            if (Directory.Exists(Path.Combine(bepInFolder, "plugins")))
+            {
+                new InfoWindow("Already Installed", InfoWindowType.YesNo, "BepInEx is already installed. Are you trying to reinstall?", true, 
+                    () =>
+                    {
+                        Directory.Delete(Path.Combine(SteamDirectory, "BepInEx"), true);
+                        File.Delete(Path.Combine(SteamDirectory, "doorstop_config.ini"));
+                        File.Delete(Path.Combine(SteamDirectory, "winhttp.dll"));
+                        File.Delete(Path.Combine(SteamDirectory, "changelog.txt"));
+                        InstallBepInEx();
+                    },
+                    fontSize:18).Show();
+            }
+            else
+            {
+                new InfoWindow("Partially Installed", InfoWindowType.YesNo, "BepInEx is partially installed. Please run Isle Goblin once.", true, fontSize:18).Show();
+            }
         }
         else
         {

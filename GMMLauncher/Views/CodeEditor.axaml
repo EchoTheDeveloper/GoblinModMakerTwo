@@ -204,14 +204,6 @@
                     </TabControl.ContextMenu>
                 </TabControl>
 
-                    <!-- <TabControl.ItemTemplate> -->
-                    <!--     <DataTemplate DataType="views:CodeEditor"> -->
-                    <!--         <StackPanel Orientation="Horizontal"> -->
-                    <!--             <TextBlock Text="{Binding Name}" Margin="0,0,5,0"/> -->
-                    <!--             <TextBlock Text="*" Margin="0,0,5,0"/> -->
-                    <!--         </StackPanel> -->
-                    <!--     </DataTemplate> -->
-                    <!-- </TabControl.ItemTemplate> -->
                 
                 <!-- Status Bar -->
                 <StackPanel Grid.Row="2" Name="StatusBar" Background="Transparent" Height="25" Orientation="Horizontal">

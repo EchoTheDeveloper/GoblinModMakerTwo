@@ -201,6 +201,8 @@ public partial class CodeEditor : Window
         
         editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.W, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).CloseTabCommand});
         
+        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.B, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).BuildModCommand});
+        
         editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.N, KeyModifiers.Control | KeyModifiers.Alt), Command = ((CodeEditorViewModel)DataContext).ConfigureModCommand });
 
         
