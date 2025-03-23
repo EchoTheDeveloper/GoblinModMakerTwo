@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -230,40 +231,58 @@ namespace {NameNoSpaces}
     
     
     #region Install/Building Mod
-        public async Task InstallMod(InfoWindow infoWindow, CodeEditor editor)
+    public async Task InstallMod(InfoWindow infoWindow, CodeEditor editor)
+    {
+        SaveFiles(editor);
+        
+        string path = await CreateModFiles(infoWindow);
+        if (path == null)
         {
-            SaveFiles(editor);
-            
-            string path = await CreateModFiles(infoWindow);
-            if (!BuildMod(path, out string errorMessage))
-            {
-                infoWindow.ChangeWindowType("Build Failed",InfoWindowType.Error, errorMessage, true, height:400, width:600);
-                return;
-            }
-            string modFolderName = $"{Name}_{Version}";
-            string installPath = Path.Combine(App.Settings.SteamDirectory, "BepInEx", "plugins", modFolderName);
-            Directory.CreateDirectory(installPath);
-    
-            string dllPath = Path.Combine(path, "bin", "Debug", "netstandard2.1", $"{NameNoSpaces}.dll");
-            File.Copy(dllPath, Path.Combine(installPath, $"{NameNoSpaces}.dll"), true);
-    
-            File.Copy(Path.Combine(path, "manifest.json"), Path.Combine(installPath, "manifest.json"), true);
-            File.Copy(Path.Combine(path, "README.md"), Path.Combine(installPath, "README.md"), true);
-            File.Copy(Path.Combine(path, "CHANGELOG.md"), Path.Combine(installPath, "CHANGELOG.md"), true);
-    
-            if (infoWindow.windowType != InfoWindowType.Error)
-            {
-                infoWindow.ChangeWindowType("Build Successful", InfoWindowType.Ok,"Mod Successfully Installed. On clicking Ok the mod folder path will open.", true,
-                    () =>
+            infoWindow.Close();
+            return;
+        }
+        if (!BuildMod(path, out string errorMessage))
+        {
+            infoWindow.ChangeWindowType("Build Failed",InfoWindowType.Error, errorMessage, true, height:400, width:600);
+            return;
+        }
+        string modFolderName = $"{Name}_{Version}";
+        string pluginFolderName = Path.Combine(App.Settings.SteamDirectory, "BepInEx", "plugins");
+        string installPath = Path.Combine(pluginFolderName, modFolderName);
+        Directory.CreateDirectory(installPath);
+
+        string dllPath = Path.Combine(path, "bin", "Debug", "netstandard2.1", $"{NameNoSpaces}.dll");
+        File.Copy(dllPath, Path.Combine(installPath, $"{NameNoSpaces}.dll"), true);
+
+        File.Copy(Path.Combine(path, "manifest.json"), Path.Combine(installPath, "manifest.json"), true);
+        File.Copy(Path.Combine(path, "README.md"), Path.Combine(installPath, "README.md"), true);
+        File.Copy(Path.Combine(path, "CHANGELOG.md"), Path.Combine(installPath, "CHANGELOG.md"), true);
+
+        if (infoWindow.windowType != InfoWindowType.Error)
+        {
+            infoWindow.ChangeWindowType("Build Successful", InfoWindowType.YesNo,"Mod Successfully Installed. Would you like the mod compiled in a zip (this is to make it easier to share the mod)?", true,
+                async () =>
+                {
+                    await Task.Run(() =>
                     {
+                        ZipFile.CreateFromDirectory(installPath, Path.Combine(pluginFolderName, NameNoSpaces + ".zip"));
                         Process.Start(new ProcessStartInfo
                         {
-                            FileName = installPath,
+                            FileName = pluginFolderName,
                             UseShellExecute = true
                         });
                     });
-            }
+                },
+                () =>
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = installPath,
+                        UseShellExecute = true
+                    });
+                });
         }
+    }
     public async Task<string> CreateModFiles(InfoWindow infoWindow = null)
     {
         string currentDirectory = Directory.GetCurrentDirectory();
@@ -306,8 +325,7 @@ namespace {NameNoSpaces}
         catch (DirectoryNotFoundException)
         {
             new InfoWindow("Error While Making Mod Files", InfoWindowType.YesNo, 
-                "Could not create mod files, this is because BepInEx is not installed. Would you like to install it now?", true,
-                () =>
+                "Could not create mod files, this is because BepInEx is not installed. Would you like to install it now?", true, () =>
                 {
                     App.Settings.InstallBepInEx();
                 }).Show();
