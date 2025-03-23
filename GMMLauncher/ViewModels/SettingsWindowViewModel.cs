@@ -38,14 +38,20 @@ namespace GMMLauncher.ViewModels
             string steamDir = settingsWindow.FindControl<TextBox>("SteamDirectory").Text;
             ThemeName selectedTheme = (ThemeName)settingsWindow.FindControl<ComboBox>("SelectTheme").SelectedIndex;
             bool showLineNumbers = (bool)settingsWindow.FindControl<CheckBox>("ShowLineNumbers").IsChecked;
+            bool showExplorer = (bool)settingsWindow.FindControl<CheckBox>("ShowExplorer").IsChecked;
+            
             App.Settings.SteamDirectory = steamDir;
             App.Settings.SelectedTheme = selectedTheme;
             App.Settings.ShowLineNumbers = showLineNumbers;
+            App.Settings.ShowExplorer = showExplorer;
             App.Settings.SaveSettings();
+            
             if (editor != null)
             {
                 editor.UpdateVisuals();
+                editor.fileTree.IsVisible = showExplorer;
             }
+            
             settingsWindow.Close();
         }
 

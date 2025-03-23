@@ -44,7 +44,7 @@ public class Mod
     {
         foreach (var tab in editor._tabs)
         {
-            string filePath = Path.Combine(GetFolderPath(), "Files", tab.Header.ToString()); // TODO: MIGHT HAVE TO ADD + ".cs
+            string filePath = Path.Combine(GetFileFolderPath(), tab.Header.ToString()); // TODO: MIGHT HAVE TO ADD + ".cs
             TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
             string code = textEditor.Text;
             File.WriteAllText(filePath, code);
@@ -54,7 +54,7 @@ public class Mod
 
     public void SaveFile(TabItem tab)
     {
-        string filePath = Path.Combine(GetFolderPath(), "Files", tab.Header.ToString());
+        string filePath = Path.Combine(GetFileFolderPath(), tab.Header.ToString());
         TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
         textEditor.IsModified = false;
         string code = textEditor.Text;
@@ -134,6 +134,11 @@ namespace {NameNoSpaces}
         return Path.Combine(currentDir, "Mods", NameNoSpaces);
     }
 
+    public string GetFileFolderPath()
+    {
+        return Path.Combine(GetFolderPath(), "Files");
+    }
+
     public void ConfigureMod(CodeEditor _editor)
     {
         var window = new PromptWindow("Configure Mod", 
@@ -159,7 +164,7 @@ namespace {NameNoSpaces}
                 SaveFiles(_editor);
                 string modNameNoSpaces = modName.Replace(" ", "");
                 TabControl savedTabControl = _editor._tabControl;
-                _editor.ClearFileTree();
+                _editor.fileTree.Items.Clear();
                 _editor._tabControl = null;
                 _editor.Close();
 

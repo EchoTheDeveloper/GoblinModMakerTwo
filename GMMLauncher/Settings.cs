@@ -16,6 +16,7 @@ public class Settings
     public string SteamDirectory { get; set; } = "C:\\Program Files (x86)\\Steam\\steamapps\\common";
     public ThemeName SelectedTheme { get; set; } = ThemeName.DarkPlus;
     public bool ShowLineNumbers { get; set; } = true;
+    public bool ShowExplorer { get; set; } = true;
 
     public void LoadSettings()
     {
@@ -35,6 +36,7 @@ public class Settings
                 SteamDirectory = settings.SteamDirectory;
                 SelectedTheme = settings.SelectedTheme;
                 ShowLineNumbers = settings.ShowLineNumbers;
+                ShowExplorer = settings.ShowExplorer;
             }
         }
     }

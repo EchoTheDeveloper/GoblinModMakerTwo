@@ -99,7 +99,7 @@ namespace GMMLauncher.ViewModels
                     nameNoSpace += ".cs";
                 }
                 
-                string filePath = Path.Combine(Path.Combine(_editor.Mod.GetFolderPath(), "Files"), nameNoSpace);
+                string filePath = Path.Combine(_editor.Mod.GetFileFolderPath(), nameNoSpace);
 
                 string className = string.Concat(Path.GetFileNameWithoutExtension(fileName)
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries));
@@ -124,7 +124,7 @@ namespace {_editor.Mod.NameNoSpaces}
 
             private void DeleteFile()
             {
-                string fileFolder = Path.Combine(_editor.Mod.GetFolderPath(), "Files");
+                string fileFolder = _editor.Mod.GetFileFolderPath();
                 string? fileName = _editor.rightClickedFile.Header?.ToString();
                 if (fileName == _editor.Mod.NameNoSpaces + ".cs")
                 {

@@ -39,11 +39,12 @@ public partial class CodeEditor : Window
     private TextBlock _statusTextBlock;
     private CustomMargin _margin;
     
-
     public TabControl _tabControl { get; set; }
     public ObservableCollection<TabItem> _tabs = new();
     public TabItem rightClickedTab { get; set; }
+    
     public TreeViewItem rightClickedFile { get; set; }
+    public TreeView fileTree  { get; set; }
     
     public Mod Mod;
     
@@ -57,6 +58,8 @@ public partial class CodeEditor : Window
         _statusTextBlock = this.Find<TextBlock>("StatusText");
         _tabControl = this.FindControl<TabControl>("TabControl");
         
+        fileTree = this.FindControl<TreeView>("FileTree");
+        
         _tabControl.ItemsSource = _tabs;
         _tabControl.PointerPressed += TabControl_PointerPressed;
         
@@ -66,7 +69,7 @@ public partial class CodeEditor : Window
             mod.CreateMainFile();
         }
 
-        SetupFileTree(Path.Combine(mod.GetFolderPath(), "Files"));
+        SetupFileTree(mod.GetFileFolderPath());
         
         AddNewTab(Path.Combine(mod.NameNoSpaces + ".cs"));
     }
@@ -130,7 +133,7 @@ public partial class CodeEditor : Window
 
     public void UpdateTabControl()
     {
-        string fileFolder = Path.Combine(Mod.GetFolderPath(), "Files");
+        string fileFolder = Mod.GetFileFolderPath();
         var tabsToRemove = _tabs.Where(tab => !File.Exists(Path.Combine(fileFolder, tab.Header.ToString()))).ToList();
 
         foreach (var tab in tabsToRemove)
@@ -142,7 +145,7 @@ public partial class CodeEditor : Window
     
     private void AddNewTab(string fileName)
     {
-        string filePath = Path.Combine(Mod.GetFolderPath(), "Files", fileName);
+        string filePath = Path.Combine(Mod.GetFileFolderPath(), fileName);
         var tab = new TabItem
         {
             Header = fileName,
@@ -215,8 +218,6 @@ public partial class CodeEditor : Window
     #region File Tree
     private void SetupFileTree(string folderPath)
     {
-        var fileTree = this.FindControl<TreeView>("FileTree");
-
         var rootDirectory = new DirectoryInfo(folderPath);
         var rootItem = new TreeViewItem
         {
@@ -247,6 +248,7 @@ public partial class CodeEditor : Window
         };
 
         PopulateTreeView(rootDirectory, rootItem);
+        fileTree.IsVisible = App.Settings.ShowExplorer;
     }
     
     private void PopulateTreeView(DirectoryInfo directoryInfo, TreeViewItem parentItem)
@@ -274,7 +276,6 @@ public partial class CodeEditor : Window
         
                     if (clickedFile is TreeViewItem item)
                     {
-                        Console.WriteLine("BAM");
                         rightClickedFile = item;
                         e.Handled = true;
                     }
@@ -300,12 +301,9 @@ public partial class CodeEditor : Window
     
     public void UpdateFileTree()
     {
-        var fileTree = this.FindControl<TreeView>("FileTree");
-        if (fileTree == null) return;
-
         fileTree.Items.Clear();
 
-        var rootDirectory = new DirectoryInfo(Path.Combine(Mod.GetFolderPath(), "Files"));
+        var rootDirectory = new DirectoryInfo(Mod.GetFileFolderPath());
         var rootItem = new TreeViewItem
         {
             Header = rootDirectory.Name,
@@ -316,15 +314,6 @@ public partial class CodeEditor : Window
         PopulateTreeView(rootDirectory, rootItem);
 
         fileTree.Items.Add(rootItem);
-    }
-    
-    public void ClearFileTree()
-    {
-        var fileTree = this.FindControl<TreeView>("FileTree");
-        if (fileTree != null)
-        {
-            fileTree.Items.Clear();
-        }
     }
     #endregion
 

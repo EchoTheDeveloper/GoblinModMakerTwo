@@ -57,12 +57,7 @@
                         
                         <Separator HorizontalAlignment="Stretch"/>
                         
-                        <CheckBox HorizontalAlignment="Center"
-                                  Name="ShowLineNumbers">
-                            <TextBlock Text="Show Line Numbers"/>
-                        </CheckBox>
                         
-                        <Separator HorizontalAlignment="Stretch"/>
                         
                         <TextBlock Text="Select Theme" 
                                    HorizontalAlignment="Center"/>
@@ -86,6 +81,17 @@
                             <ComboBoxItem><TextBlock Text="High Contrast Dark"/></ComboBoxItem>
                         </ComboBox>
                         
+                        <Separator HorizontalAlignment="Stretch"/>
+                        
+                        <CheckBox HorizontalAlignment="Center"
+                                  Name="ShowLineNumbers">
+                            <TextBlock Text="Show Line Numbers"/>
+                        </CheckBox>
+                        <CheckBox HorizontalAlignment="Center"
+                                  Name="ShowExplorer">
+                            <TextBlock Text="Show Explorer"/>
+                        </CheckBox>
+
                         <Separator HorizontalAlignment="Stretch"/>
                         
                         <Button HorizontalAlignment="Center" Command="{Binding InstallBepInExCommand}">
