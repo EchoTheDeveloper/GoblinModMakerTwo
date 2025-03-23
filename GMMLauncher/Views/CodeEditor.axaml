@@ -100,26 +100,26 @@
                     <MenuItem Header="Create Config Item" InputGesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
                     <MenuItem Header="Create Keybind" InputGesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
                     <Separator/>
-                    <MenuItem Header="Create Asset">
+                    <MenuItem Header="Create Asset" >
                         <MenuItem Header="Entity">
-                            <MenuItem Header="NPC"/>
-                            <MenuItem Header="Fish"/>
-                            <MenuItem Header="Enemy"/>
+                            <MenuItem Header="NPC" IsEnabled="False"/>
+                            <MenuItem Header="Fish" IsEnabled="False"/>
+                            <MenuItem Header="Enemy" IsEnabled="False"/>
                             <MenuItem Header="Boss">
-                                <MenuItem Header="Normal Boss"/>
-                                <MenuItem Header="Swarm/Wave Boss"/>
+                                <MenuItem Header="Normal Boss" IsEnabled="False"/>
+                                <MenuItem Header="Swarm/Wave Boss" IsEnabled="False"/>
                             </MenuItem>
                         </MenuItem>
-                        <MenuItem Header="Item"/>
+                        <MenuItem Header="Item" IsEnabled="False"/>
                         <Separator/>
-                        <MenuItem Header="Warpaint"/>
-                        <MenuItem Header="Gizmos"/>
+                        <MenuItem Header="Warpaint" IsEnabled="False"/>
+                        <MenuItem Header="Gizmos" IsEnabled="False"/>
                         <Separator/>
-                        <MenuItem Header="Quest"/>
-                        <MenuItem Header="Research Task"/>
+                        <MenuItem Header="Quest" IsEnabled="False"/>
+                        <MenuItem Header="Research Task" IsEnabled="False"/>
                         <Separator/>
-                        <MenuItem Header="Buff"/>
-                        <MenuItem Header="Debuff"/>
+                        <MenuItem Header="Buff" IsEnabled="False"/>
+                        <MenuItem Header="Debuff" IsEnabled="False"/>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Build" Foreground="White">
@@ -168,7 +168,14 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TreeView Grid.Row="1" Grid.Column="0" Name="FileTree" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="400">
+                <TreeView Grid.Row="1" 
+                          Grid.Column="0" 
+                          Name="FileTree" 
+                          Margin="10" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Top" 
+                          Width="200" 
+                          Height="400">
                     <TreeView.ItemTemplate>
                         <TreeDataTemplate DataType="{x:Type TreeViewItem}" >
                             <TextBlock Text="{Binding Name}"/>
