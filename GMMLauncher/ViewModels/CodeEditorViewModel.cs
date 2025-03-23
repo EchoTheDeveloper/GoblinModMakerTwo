@@ -55,6 +55,10 @@ namespace GMMLauncher.ViewModels
         public ICommand CreateModFilesCommand => new RelayCommand(() => CreateModFiles());
         #endregion
         
+        #region CreateAssetCommands
+        public ICommand CreateFishCommand => new RelayCommand(CreateFish);
+        #endregion
+        
         #region Extra
         public ICommand OpenDocumentationCommand => MenuCommands.OpenDocumentationCommand; 
         
@@ -635,6 +639,36 @@ namespace {_editor.Mod.NameNoSpaces}
 
             #endregion
 
+        #endregion
+        
+        #region CreateAssetCommands
+
+        private void CreateFish()
+        {
+            new PromptWindow("New Fish",
+                new List<(Type, string, object?, bool)>
+                {
+                    (typeof(TextBox), "Name", "", true),
+                    (typeof(TextBox), "Size", "1", true),
+                    (typeof(TextBox), "Speed", "1", true),
+                    (typeof(TextBox), "Panic Distance", "1", true),
+                    (typeof(ComboBox), "Movement Type", new List<string> { "Random", "Wave", "Zigzag", "Line" }, true),
+                    (typeof(TextBox), "NPC Catch Chance", "0.01", true),
+                    (typeof(CheckBox), "Pauses Periodically", true, true),
+                    (typeof(TextBox), "Pause Time (if pauses)", "1", true),
+                    (typeof(TextBox), "Unpause or Zigzag time (if applicable)", "0", true),
+                    (typeof(TextBox), "Amplitude (Wave Mode Only)", "1", true),
+                    (typeof(TextBox), "Frequency (Wave Mode Only)", "1", true),
+                    // (typeof(TextBox), "Item", "", true), // IDEK
+                },
+                CreateFishDone
+            ).Show();
+
+            void CreateFishDone(List<Control> answers, Window promptWindow)
+            {
+                promptWindow.Close();
+            }
+        }
         #endregion
     }
 }
