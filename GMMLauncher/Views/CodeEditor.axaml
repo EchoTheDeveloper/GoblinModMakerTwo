@@ -188,7 +188,6 @@
                     </TreeView.ContextMenu>
                 </TreeView>
                 
-                <!-- Text Editor -->
                 <TabControl Grid.Column="1"
                             Grid.Row="1"
                             Name="TabControl">
@@ -203,7 +202,6 @@
                         </ContextMenu>
                     </TabControl.ContextMenu>
                 </TabControl>
-
                 
                 <!-- Status Bar -->
                 <StackPanel Grid.Row="2" Name="StatusBar" Background="Transparent" Height="25" Orientation="Horizontal">
@@ -213,46 +211,12 @@
         </DockPanel>
     </Panel>
     <Window.Styles>
-        <Style Selector="Button.action">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="20"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <ControlTemplate>
-                    <ContentPresenter Name="PART_ContentPresenter"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Content="{TemplateBinding Content}"
-                                    Padding="{TemplateBinding Padding}"/>
-                </ControlTemplate>
-            </Setter>
-        </Style>
-
-        <Style Selector="Button.action:pointerover">
-            <Setter Property="Background" Value="#20FFFFFF"/>
-        </Style>
-
-        <Style Selector="Button.link">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
-
-        <Style Selector="Button.link:pointerover">
-            <Setter Property="Opacity" Value="0.8"/>
-        </Style>
-
-        <Style Selector="Border.card">
-            <Setter Property="Background" Value="#30FFFFFF"/>
-            <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="ClipToBounds" Value="True"/>
-        </Style>
-
         <Style Selector="PathIcon">
             <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style Selector="TreeViewItem">
+            <Setter Property="CornerRadius" Value="4"/>
         </Style>
     </Window.Styles>
 </Window>
