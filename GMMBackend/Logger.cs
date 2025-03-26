@@ -18,7 +18,7 @@ namespace GMMBackend
     {
         private static readonly string logDirectory = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "Goblin Mod Maker");
+            "GoblinModMaker");
 
         private static readonly string logFilePath = Path.Combine(logDirectory, "LOG.txt");
 
