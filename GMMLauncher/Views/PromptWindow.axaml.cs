@@ -19,7 +19,6 @@ public partial class PromptWindow : Window
         InitializeComponent();
         DataContext = new PromptWindowViewModel();
         Height = baseHeight;
-        MaxHeight = 800;
         this.FindControl<Button>("Cancel").Content = cancelText;
         if (postion.HasValue)
         {
@@ -139,6 +138,8 @@ public partial class PromptWindow : Window
                 Close();
             });
         });
+        
+        if (Height > 800) Height = 800;
     }
 
     private void InitializeComponent()

@@ -11,7 +11,8 @@ namespace GMMLauncher.ViewModels
         public ICommand NewModCommand => MenuCommands.NewModCommand;
         public ICommand LoadExistingModCommand => MenuCommands.LoadExistingModCommand;
         public ICommand LoadModDialogCommand => new RelayCommand(LoadModDialog);
-        
+
+        public string version => "Goblin Mod Maker v"+App.appVersion;
 
         MainWindow mainWindow;
         public MainWindowViewModel(MainWindow mainWindow)
