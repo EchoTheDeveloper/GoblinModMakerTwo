@@ -3,7 +3,6 @@
         xmlns:vm="using:GMMLauncher.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="GMMLauncher.Views.CodeEditor"
         x:DataType="vm:CodeEditorViewModel"
@@ -101,9 +100,10 @@
                     <MenuItem Header="Create Keybind" InputGesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
                     <Separator/>
                     <MenuItem Header="Create Asset" >
+                        <MenuItem Header="Important Event" IsEnabled="False"/>
                         <MenuItem Header="Entity">
                             <MenuItem Header="NPC" IsEnabled="False"/>
-                            <MenuItem Header="Fish" IsEnabled="False" Command="{Binding CreateFishCommand}"/>
+                            <MenuItem Header="Fish" Command="{Binding CreateFishCommand}"/>
                             <MenuItem Header="Enemy" IsEnabled="False"/>
                             <MenuItem Header="Boss">
                                 <MenuItem Header="Normal Boss" IsEnabled="False"/>
@@ -113,13 +113,11 @@
                         <MenuItem Header="Item" IsEnabled="False"/>
                         <Separator/>
                         <MenuItem Header="Warpaint" IsEnabled="False"/>
-                        <MenuItem Header="Gizmos" IsEnabled="False"/>
                         <Separator/>
                         <MenuItem Header="Quest" IsEnabled="False"/>
                         <MenuItem Header="Research Task" IsEnabled="False"/>
                         <Separator/>
-                        <MenuItem Header="Buff" IsEnabled="False"/>
-                        <MenuItem Header="Debuff" IsEnabled="False"/>
+                        <MenuItem Header="Buff Or Debuff" Command="{Binding CreateBuffOrDebuffCommand}"/>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Build" Foreground="White">
@@ -211,6 +209,16 @@
         </DockPanel>
     </Panel>
     <Window.Styles>
+        <Style Selector="Button.link">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style Selector="Button.link:pointerover">
+            <Setter Property="Opacity" Value="0.8"/>
+        </Style>
         <Style Selector="PathIcon">
             <Setter Property="Foreground" Value="White"/>
         </Style>

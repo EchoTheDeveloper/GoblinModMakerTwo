@@ -8,7 +8,7 @@
         ExtendClientAreaToDecorationsHint="True"
         TransparencyLevelHint="AcrylicBlur"
         Width="500"
-        Height="600"
+        Height="750"
         CanResize="True">
 
     <Design.DataContext>

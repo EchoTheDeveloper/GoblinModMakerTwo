@@ -49,7 +49,7 @@ public static class MenuCommands
         string developers = (answers[2] as TextBox)?.Text ?? string.Empty;
 
         Mod mod = new(modName, description, developers,
-            Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            App.appVersion);
         mod.CreateMainFile();
     
         var editor = new CodeEditor(mod);

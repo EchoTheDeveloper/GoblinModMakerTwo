@@ -29,7 +29,7 @@
 
         <DockPanel Margin="10,10,0,0">
             <TextBlock DockPanel.Dock="Top" 
-                       Text="Goblin Mod Maker"/>
+                       Text="{Binding version}"/>
         </DockPanel>
         <DockPanel Margin="0,34,0,0">
             <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
@@ -51,13 +51,6 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <!-- <MenuItem Header="Version Control" Foreground="White"> -->
-                <!--     <MenuItem Header="Get from VCS"> -->
-                <!--         <MenuItem.Icon> -->
-                <!--             <PathIcon Data="{StaticResource arrow_download_regular}" /> -->
-                <!--         </MenuItem.Icon> -->
-                <!--     </MenuItem> -->
-                <!-- </MenuItem> -->
                 <MenuItem Header="Settings" Foreground="White">
                     <MenuItem Header="Preferences" Command="{Binding OpenSettingsCommand}">
                         <MenuItem.Icon>
@@ -84,6 +77,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
@@ -187,12 +181,12 @@
                     <Button Classes="link"
                             Command="{Binding OpenDocumentationCommand}"
                             Content="Need help? Visit our documentation"
-							IsEnabled="True"
                             Foreground="#5EA7FF"/>
                     <Button Classes="link"
                             Content="Report an issue or give feedback"
                             Foreground="#5EA7FF"/>
                 </StackPanel>
+                
             </Grid>
         </DockPanel>
     </Panel>

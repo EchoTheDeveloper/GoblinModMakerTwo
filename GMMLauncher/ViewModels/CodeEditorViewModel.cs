@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Controls;
+using Avalonia.Layout;
 using AvaloniaEdit;
 using AvaloniaEdit.Utils;
 using GMMLauncher.Views;
@@ -57,6 +58,7 @@ namespace GMMLauncher.ViewModels
         
         #region CreateAssetCommands
         public ICommand CreateFishCommand => new RelayCommand(CreateFish);
+        public ICommand CreateBuffOrDebuffCommand => new RelayCommand(CreateBuffOrDebuff);
         #endregion
         
         #region Extra
@@ -669,6 +671,152 @@ namespace {_editor.Mod.NameNoSpaces}
                 promptWindow.Close();
             }
         }
+        
+        private void CreateBuffOrDebuff()
+        {
+            var effectEntries = new List<(TextBox effectType, TextBox effectStrength)>();
+            
+            var promptWindow = new PromptWindow("New Buff or Debuff",
+                new List<(Type, string, object?, bool)>
+                {
+                    (typeof(TextBox), "Name", "", true),
+                    (typeof(TextBox), "Description", "", true),
+                    (typeof(CheckBox), "Can't Stack", false, true),
+                    (typeof(CheckBox), "Stacks Visually", false, true)
+                },
+                CreateBuffOrDebuffDone
+            );
+
+            var promptsPanel = promptWindow.FindControl<StackPanel>("PromptsPanel");
+
+            var addButton = new Button
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Content = "Add New Status Effect"
+            };
+
+            var linkButton = new Button
+            {
+                Content = "Effect Type"
+            };
+            linkButton.Click += (_, _) =>
+            {
+                var url = "https://docs.unity3d.com/ScriptReference/KeyCode.html"; // MAKE THIS SHOW EFFECT TYPE TO INT IN THE DOCUMENTATION
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = url,
+                    UseShellExecute = true
+                });
+            };
+
+            addButton.Click += (_, _) =>
+            {
+                var effectTypeBox = new TextBox();
+                var effectStrengthBox = new TextBox();
+
+                promptsPanel?.Children.Add(new Separator());
+                promptsPanel?.Children.Add(new TextBlock
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Text = "Effect Type"
+                });
+                promptsPanel?.Children.Add(linkButton);
+                promptsPanel?.Children.Add(effectTypeBox);
+
+                promptsPanel?.Children.Add(new TextBlock
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Text = "Effect Strength"
+                });
+                promptsPanel?.Children.Add(effectStrengthBox);
+
+                effectEntries.Add((effectTypeBox, effectStrengthBox));
+            };
+
+            promptsPanel?.Children.Add(addButton);
+            promptWindow.Show();
+
+            void CreateBuffOrDebuffDone(List<Control> answers, Window promptWindow)
+            {
+                if (effectEntries.Count > 0)
+                {
+                    var effectData = new List<(string effectType, string effectStrength)>();
+    
+                    foreach (var (effectTypeBox, effectStrengthBox) in effectEntries)
+                    {
+                        var effectType = effectTypeBox.Text.Trim();
+                        var effectStrength = effectStrengthBox.Text.Trim();
+                        if (!string.IsNullOrEmpty(effectType) && !string.IsNullOrEmpty(effectStrength))
+                        {
+                            effectData.Add((effectType, effectStrength));
+                        }
+                    }
+                    
+                    promptWindow.Close();
+                }
+            }
+        }
+        
+        private void CreateQuest()
+        {
+            new PromptWindow("New Quest",
+                new List<(Type, string, object?, bool)>
+                {
+                    (typeof(TextBox), "Name", "", true),
+                    (typeof(TextBox), "Description", "", true),
+                    (typeof(TextBox), "NPC To Cash In To (if applicable)", "", false),
+                    (typeof(TextBox), "Assign Event", "", true),
+                    (typeof(TextBox), "Completion Event", "", true),
+                    (typeof(TextBox), "Cash In Event", "", true),
+                },
+                CreateQuestDone
+            ).Show();
+
+            void CreateQuestDone(List<Control> answers, Window promptWindow)
+            {
+                promptWindow.Close();
+            }
+        }
+        
+        // This one will be a pain
+        // private void CreateResearchTask()
+        // {
+        //     new PromptWindow("New Research Task",
+        //         new List<(Type, string, object?, bool)>
+        //         {
+        //             (typeof(TextBox), "Name", "", true),
+        //             (typeof(TextBox), "Description", "", true),
+        //             (typeof(TextBox), "NPC To Cash In To (if applicable)", "", false),
+        //             (typeof(TextBox), "Assign Event", "", true),
+        //             (typeof(TextBox), "Completion Event", "", true),
+        //             (typeof(TextBox), "Cash In Event", "", true),
+        //         },
+        //         CreateResearchTaskDone
+        //     ).Show();
+        //
+        //     void CreateResearchTaskDone(List<Control> answers, Window promptWindow)
+        //     {
+        //         promptWindow.Close();
+        //     }
+        // }
+        
+        private void CreateImportantEvent()
+        {
+            new PromptWindow("New Fish",
+                new List<(Type, string, object?, bool)>
+                {
+                    (typeof(TextBox), "Name", "", true),
+                    (typeof(TextBox), "Size", "1", true),
+                },
+                CreateImportantEventDone
+            ).Show();
+
+            void CreateImportantEventDone(List<Control> answers, Window promptWindow)
+            {
+                promptWindow.Close();
+            }
+        }
+
         #endregion
     }
 }
