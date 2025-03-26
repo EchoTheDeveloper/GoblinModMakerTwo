@@ -7,7 +7,7 @@ namespace GMMBackend
     {
         public static string GetAppDataPath()
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Goblin Mod Maker");
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GoblinModMaker");
         }
         public static string GetAppDataPath(string fileName)
         {
