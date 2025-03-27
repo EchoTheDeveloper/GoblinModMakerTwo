@@ -65,11 +65,13 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
+                    <MenuItem Header="Open Decompiler" Command="{Binding OpenDecompilerCommand}"/>
+                    <Separator />
                     <MenuItem Header="Exit" InputGesture="Alt+F4" Command="{Binding QuitAppCommand}">
-                        <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource dismiss_regular}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
+                    <MenuItem.Icon>
+                        <PathIcon Data="{StaticResource dismiss_regular}" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Edit" Foreground="White">
                     <MenuItem Header="Undo" InputGesture="Ctrl+Z" Command="{Binding UndoCommand}"/>

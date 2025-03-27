@@ -1,0 +1,116 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:GMMLauncher.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit"
+        xmlns:document="clr-namespace:AvaloniaEdit.Document;assembly=AvaloniaEdit"
+        mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+        x:Class="GMMLauncher.Views.Decompiler"
+        x:DataType="vm:DecompilerViewModel"
+        Icon="/Assets/goblin-mod-maker.ico"
+        Title="Goblin Mod Maker"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True">
+	
+    <Design.DataContext>
+        <vm:DecompilerViewModel/>
+    </Design.DataContext>
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <DockPanel Margin="10,10,0,0">
+            <TextBlock DockPanel.Dock="Top" 
+                       Text="Goblin Mod Maker"/>
+        </DockPanel>
+        <DockPanel Margin="0,34,0,0">
+            <!-- Menu Bar -->
+            <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
+                <MenuItem Header="Help" Foreground="White">
+                    <MenuItem Header="Documentation" InputGesture="F1">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource book_regular}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="About">
+                        <MenuItem.Icon>
+                            <PathIcon Data="{StaticResource info_regular}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+            <Separator DockPanel.Dock="Top"/>
+
+            <!-- Main -->
+            <Grid Margin="10,4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+    
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Status Bar -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="0">
+                    <TreeView AutoScrollToSelectedItem="True"
+                              Name="TreeView"
+                              ItemsSource="{Binding AssemblyTree}" 
+                              SelectedItem="{Binding SelectedItem}">
+                        <TreeView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </ScrollViewer>
+
+                <avaloniaEdit:TextEditor 
+                    FontSize="14"
+                    FontFamily="Cascadia Code"
+                    Background="Black"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Visible"
+                    Name="DecompiledCode" 
+                    Grid.Row="1" 
+                    Grid.Column="1" 
+                    IsReadOnly="True" 
+                    
+                    Document="{Binding SelectedItem.DecompiledCode, Mode=OneWay}"/>
+            </Grid>
+        </DockPanel>
+    </Panel>
+    <Window.Styles>
+        <Style Selector="Button.link">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style Selector="Button.link:pointerover">
+            <Setter Property="Opacity" Value="0.8"/>
+        </Style>
+        <Style Selector="PathIcon">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style Selector="TreeViewItem">
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+    </Window.Styles>
+</Window>

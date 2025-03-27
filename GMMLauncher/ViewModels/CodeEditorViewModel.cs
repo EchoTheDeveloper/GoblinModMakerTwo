@@ -26,6 +26,9 @@ namespace GMMLauncher.ViewModels
         public ICommand NewFileCommand => new RelayCommand(NewFile);
         public ICommand SaveFileCommand => new RelayCommand(SaveFile);
         
+        public ICommand OpenDecompilerCommand => new RelayCommand(OpenDecompiler);
+
+        
         public ICommand QuitAppCommand => MenuCommands.QuitAppCommand;
         #endregion
         
@@ -82,6 +85,12 @@ namespace GMMLauncher.ViewModels
         }
 
         #region MenuBarFunctions
+
+        private void OpenDecompiler()
+        {
+            new Decompiler(_editor).Show();
+        }
+
             private void NewFile()
             {
                 var window = new PromptWindow("New File",
@@ -262,7 +271,7 @@ namespace {_editor.Mod.NameNoSpaces}
                         new List<(Type, string, object?, bool)>
                         {
                             (typeof(TextBox), "Variable Name:", "", true),
-                            (typeof(ComboBox), "Data Type:", new List<string> { "int", "string" }, false),
+                            (typeof(ComboBox), "Data Type:", new List<string> { "int", "string", "bool" }, false),
                             (typeof(TextBox), "Default Value:", "", true),
                             (typeof(TextBox), "Definition (name in mod's configuration):", "", true),
                             (typeof(TextBox), "Description (info on hovered)", "", true)

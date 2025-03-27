@@ -103,6 +103,10 @@
               "target": "Package",
               "version": "[8.2.1, )"
             },
+            "ICSharpCode.Decompiler": {
+              "target": "Package",
+              "version": "[9.0.0.7889, )"
+            },
             "ReactiveUI": {
               "target": "Package",
               "version": "[20.1.63, )"

@@ -16,7 +16,7 @@ namespace GMMLauncher.Views
     /// A custom margin that draws a red dot when clicked. (Similar to the breakpoint margin the
     /// Visual Studio editor.)
     /// </summary>
-    internal sealed class CustomMargin : AbstractMargin
+    public sealed class CustomMargin : AbstractMargin
     {
         private readonly IBrush _defaultbackgroundBrush = Brushes.Transparent;
         private IBrush _backgroundBrush = new ImmutableSolidColorBrush(new Color(255, 51, 51, 51));

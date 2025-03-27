@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "picjZ0mpVqw=",
+  "dgSpecHash": "2/fkBNvd44E=",
   "success": true,
   "projectFilePath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMLauncher\\GMMLauncher.csproj",
   "expectedPackageFiles": [
@@ -29,6 +29,7 @@
     "C:\\Users\\Nick\\.nuget\\packages\\harfbuzzsharp.nativeassets.macos\\7.3.0.2\\harfbuzzsharp.nativeassets.macos.7.3.0.2.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\harfbuzzsharp.nativeassets.webassembly\\7.3.0.3-preview.2.2\\harfbuzzsharp.nativeassets.webassembly.7.3.0.3-preview.2.2.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\harfbuzzsharp.nativeassets.win32\\7.3.0.2\\harfbuzzsharp.nativeassets.win32.7.3.0.2.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\icsharpcode.decompiler\\9.0.0.7889\\icsharpcode.decompiler.9.0.0.7889.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\microcom.runtime\\0.11.0\\microcom.runtime.0.11.0.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\reactiveui\\20.1.63\\reactiveui.20.1.63.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\skiasharp\\2.88.8\\skiasharp.2.88.8.nupkg.sha512",
@@ -37,9 +38,12 @@
     "C:\\Users\\Nick\\.nuget\\packages\\skiasharp.nativeassets.webassembly\\2.88.8\\skiasharp.nativeassets.webassembly.2.88.8.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\skiasharp.nativeassets.win32\\2.88.8\\skiasharp.nativeassets.win32.2.88.8.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\splat\\15.1.1\\splat.15.1.1.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\system.io.pipelines\\8.0.0\\system.io.pipelines.8.0.0.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\system.reactive\\6.0.1\\system.reactive.6.0.1.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\system.reflection.metadata\\6.0.0\\system.reflection.metadata.6.0.0.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\system.text.json\\8.0.4\\system.text.json.8.0.4.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\textmatesharp\\1.0.59\\textmatesharp.1.0.59.nupkg.sha512",

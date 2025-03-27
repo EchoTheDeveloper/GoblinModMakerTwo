@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
@@ -14,6 +15,7 @@ namespace GMMLauncher
     {
         public static Settings Settings { get; set; }
         public static string appVersion { get; private set; }
+        public static ObservableCollection<AssemblyItem> DecompiledTree { get; set; }
         public override void Initialize()
         {
             appVersion = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()!

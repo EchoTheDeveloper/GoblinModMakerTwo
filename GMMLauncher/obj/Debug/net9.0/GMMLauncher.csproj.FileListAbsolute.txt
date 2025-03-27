@@ -254,3 +254,4 @@ C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMLauncher\bin\Debug\net9.0\BepIn
 C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMLauncher\bin\Debug\net9.0\BepInEx.Preloader.xml
 C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMLauncher\bin\Debug\net9.0\MonoMod.RuntimeDetour.xml
 C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMLauncher\bin\Debug\net9.0\MonoMod.Utils.xml
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\ICSharpCode.Decompiler.dll

@@ -34,10 +34,10 @@ public partial class CodeEditor : Window
     private TextMate.Installation _textMateInstallation;
     private CompletionWindow _completionWindow;
     private OverloadInsightWindow _insightWindow;
-    private RegistryOptions _registryOptions;
+    public RegistryOptions _registryOptions { get; private set; }
     private int _currentTheme = (int)App.Settings.SelectedTheme;
     private TextBlock _statusTextBlock;
-    private CustomMargin _margin;
+    public CustomMargin _margin { get; private set; }
     
     public TabControl _tabControl { get; set; }
     public ObservableCollection<TabItem> _tabs = new();
@@ -348,7 +348,7 @@ public partial class CodeEditor : Window
             textEditor.TextArea.Caret.Line,
             textEditor.TextArea.Caret.Column);
     }
-    private void TextMateInstallationOnAppliedTheme(object sender, TextMate.Installation e, TextEditor textEditor)
+    public void TextMateInstallationOnAppliedTheme(object sender, TextMate.Installation e, TextEditor textEditor)
     {
         ApplyThemeColorsToEditor(e);
         ApplyThemeColorsToWindow(e);

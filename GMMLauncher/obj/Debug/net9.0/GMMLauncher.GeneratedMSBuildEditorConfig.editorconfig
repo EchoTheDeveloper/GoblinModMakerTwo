@@ -27,10 +27,16 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/CodeEditor.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/Decompiler.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/InfoWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/MainWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/ProgressWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/PromptWindow.axaml]
