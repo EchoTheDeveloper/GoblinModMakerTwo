@@ -15,10 +15,10 @@ namespace GMMLauncher.Views
         
         public Decompiler(CodeEditor codeEditor)
         {
-            DataContext = new DecompilerViewModel();
+            DataContext = new DecompilerViewModel(this);
             InitializeComponent();
             
-            (DataContext as DecompilerViewModel)?.LoadAssembly(this, Path.Combine(App.Settings.SteamDirectory, "Isle Goblin_Data", "Managed", "Assembly-CSharp.dll"));
+            (DataContext as DecompilerViewModel)?.LoadAssembly(this, false);
 
             decompiledCode = this.FindControl<TextEditor>("DecompiledCode");
             if (decompiledCode != null)

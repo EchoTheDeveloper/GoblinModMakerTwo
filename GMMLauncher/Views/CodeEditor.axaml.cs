@@ -177,36 +177,6 @@ public partial class CodeEditor : Window
     
         editor.ContextMenu = contextMenu;
     
-        // Add key bindings
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.S, KeyModifiers.Control | KeyModifiers.Shift), Command = ((CodeEditorViewModel)DataContext).SaveModCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.S, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).SaveFileCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.N, KeyModifiers.Control | KeyModifiers.Shift), Command = ((CodeEditorViewModel)DataContext).NewModCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.O, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).LoadExistingModCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.O, KeyModifiers.Control | KeyModifiers.Shift), Command = ((CodeEditorViewModel)DataContext).LoadModDialogCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.N, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).NewFileCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.F4, KeyModifiers.Alt), Command = ((CodeEditorViewModel)DataContext).QuitAppCommand });
-    
-        // Editing 
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.C, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).CopyCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.X, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).CutCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.V, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).PasteCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.A, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).SelectAllCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.Z, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).UndoCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.Y, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).RedoCommand });
-    
-        // Search
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.F, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).FindCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.H, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).ReplaceCommand });
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.G, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).GoToLineCommand });
-        
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.W, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).CloseTabCommand});
-        
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.B, KeyModifiers.Control), Command = ((CodeEditorViewModel)DataContext).BuildModCommand});
-        
-        editor.KeyBindings.Add(new KeyBinding { Gesture = new KeyGesture(Key.N, KeyModifiers.Control | KeyModifiers.Alt), Command = ((CodeEditorViewModel)DataContext).ConfigureModCommand });
-
-        
-        
         _tabs.Add(tab);
         _tabControl.SelectedItem = tab;
 

@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit"
-        xmlns:document="clr-namespace:AvaloniaEdit.Document;assembly=AvaloniaEdit"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="GMMLauncher.Views.Decompiler"
         x:DataType="vm:DecompilerViewModel"
@@ -36,6 +35,7 @@
         <DockPanel Margin="0,34,0,0">
             <!-- Menu Bar -->
             <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
+                <MenuItem Header="Force Reload" InputGesture="Ctrl+R" Command="{Binding ForceReloadCommand}"/>
                 <MenuItem Header="Help" Foreground="White">
                     <MenuItem Header="Documentation" InputGesture="F1">
                         <MenuItem.Icon>
@@ -88,8 +88,7 @@
                     Name="DecompiledCode" 
                     Grid.Row="1" 
                     Grid.Column="1" 
-                    IsReadOnly="True" 
-                    
+                    IsReadOnly="True"
                     Document="{Binding SelectedItem.DecompiledCode, Mode=OneWay}"/>
             </Grid>
         </DockPanel>
@@ -113,4 +112,7 @@
             <Setter Property="CornerRadius" Value="4"/>
         </Style>
     </Window.Styles>
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Ctrl+R" Command="{Binding ForceReloadCommand}"/>
+    </Window.KeyBindings>
 </Window>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Avalonia.Controls;
 using Avalonia.Threading;
 using AvaloniaEdit.Document;
@@ -13,9 +15,12 @@ using ICSharpCode.Decompiler.TypeSystem;
 
 namespace GMMLauncher.ViewModels
 {
-    public class DecompilerViewModel : ViewModelBase
+    public class DecompilerViewModel(Decompiler decompiler) : ViewModelBase
     {
+        private Decompiler _decompiler = decompiler;
+        public ICommand ForceReloadCommand => new RelayCommand(() => _ = LoadAssembly(_decompiler, true));
         private AssemblyItem _selectedItem;
+
         public AssemblyItem SelectedItem
         {
             get => _selectedItem;
@@ -27,9 +32,12 @@ namespace GMMLauncher.ViewModels
         }
     
         public ObservableCollection<AssemblyItem> AssemblyTree { get; set; } = new();
-        public async Task LoadAssembly(Decompiler decompilerWindow, string dllPath)
+        public async Task LoadAssembly(Decompiler decompilerWindow, bool forceLoad)
         {
-            if (App.DecompiledTree != null)
+            string dllPath = Path.Combine(App.Settings.SteamDirectory, "Isle Goblin_Data", "Managed",
+                "Assembly-CSharp.dll");
+            _decompiler = decompilerWindow;
+            if (App.DecompiledTree != null && !forceLoad)
             {
                 AssemblyTree = App.DecompiledTree;
                 var tree = decompilerWindow.FindControl<TreeView>("TreeView");

@@ -108,7 +108,11 @@ namespace GMMLauncher.ViewModels
                 string fileName = (answers[0] as TextBox).Text;
                 string nameNoSpace = string.Concat(fileName.Split(' ', StringSplitOptions.RemoveEmptyEntries));
                 nameNoSpace = char.ToUpper(nameNoSpace[0]) + nameNoSpace[1..];
-
+                if (string.IsNullOrEmpty(nameNoSpace) || nameNoSpace[0] == '.')
+                {
+                    new InfoWindow("Invalid File Name", InfoWindowType.Error, $@"File Name: ""{nameNoSpace}"" is invalid").Show();
+                    return;
+                }
                 if (Path.GetExtension(nameNoSpace) == "")
                 {
                     nameNoSpace += ".cs";

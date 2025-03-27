@@ -9,41 +9,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/DecompilerViewModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/ProgressWindowViewModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/Views/ProgressWindow.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/Views/ProgressWindow.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/App.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/App.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/GMMLauncher.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/GMMLauncher.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/CodeEditorViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/CodeEditorViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/DecompilerViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/DecompilerViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CustomMargin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CustomMargin.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.exe" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/Resources.Inputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/Resources.Inputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/references" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/references" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.sourcelink.json" afterDir="false" />
@@ -51,12 +31,6 @@
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/ref/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/ref/GMMLauncher.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/Avalonia/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/Avalonia/GMMLauncher.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GoblinModMaker.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/GoblinModMaker.sln.DotSettings.user" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -88,6 +62,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2a8be55c9cf847d288568621aad398de11e930/2b/2c6d71c4/MetadataReader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a6b7f037ba7b44df80b8d3aa7e58eeb2e8e938/87/c0ef5e82/IReadOnlyCollection`1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6abc24aae4aed7ee3bc0ffdca4c6a6fd5846f2333dc15c93cea6972bc8dc9ba6/MetadataFile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/876cd892fc66a9dc8f6afd3704c264acebdfc46aed08089463e8117c21a532/String.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a0ec8f8072cd5bb565b67529d36273caac51f5f97da9c3998c29c3a22351637/HandleCollections.TypeSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GMMLauncher/ViewModels/MainWindowViewModel.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -104,28 +79,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.GMMLauncher.executor": "Run",
-    ".NET Static Method.GMMLauncher.MenuCommands.LoadExistingMod.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.GMMLauncher.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Static Method.GMMLauncher.MenuCommands.LoadExistingMod.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C#&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "AiIgnore"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;AiIgnore&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Project.GMMLauncher">
     <configuration name="GMMBackend" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -230,7 +205,8 @@
       <workItem from="1742781435279" duration="217000" />
       <workItem from="1742949955843" duration="217000" />
       <workItem from="1742950334563" duration="3101000" />
-      <workItem from="1743043884116" duration="2549000" />
+      <workItem from="1743043884116" duration="2782000" />
+      <workItem from="1743104445938" duration="3667000" />
     </task>
     <task id="LOCAL-00001" summary="Changed simple stuff">
       <option name="closed" value="true" />
