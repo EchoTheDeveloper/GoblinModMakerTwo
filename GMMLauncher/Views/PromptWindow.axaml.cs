@@ -14,12 +14,12 @@ public partial class PromptWindow : Window
 {
     public List<Control> answers;
 
-    public PromptWindow(string title, List<(Type promptType, string promptText, object? defaultValue, bool required)> prompts = null, Action<List<Control>, Window> done = null, Action<Window> cancel = null, int baseHeight = 300, string cancelText = "Cancel", PixelPoint? postion = null)
+    public PromptWindow(string title, List<(Type promptType, string promptText, object? defaultValue, bool required)>? prompts = null, Action<List<Control>, Window>? done = null, Action<Window>? cancel = null, int baseHeight = 300, string cancelText = "Cancel", PixelPoint? postion = null)
     {
         InitializeComponent();
         DataContext = new PromptWindowViewModel();
         Height = baseHeight;
-        this.FindControl<Button>("Cancel").Content = cancelText;
+        this.FindControl<Button>("Cancel")!.Content = cancelText;
         if (postion.HasValue)
         {
             Position = postion.Value;
@@ -73,7 +73,7 @@ public partial class PromptWindow : Window
                             if (required) requiredFields.Add(textBox);
                             textBox.Width = Math.Max(Width - 200, 150);
                             
-                            Resized += (sender, args) =>
+                            Resized += (_, _) =>
                             {
                                 textBox.Width = Math.Max(Width - 200, 150);
                             };
@@ -129,7 +129,7 @@ public partial class PromptWindow : Window
                     }
                 }
 
-                done.Invoke(answers, this);
+                done?.Invoke(answers, this);
                 // Close();
             });
             this.FindControl<Button>("Cancel")!.Command = new RelayCommand(() =>

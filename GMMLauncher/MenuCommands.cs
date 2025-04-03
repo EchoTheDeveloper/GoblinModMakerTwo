@@ -63,7 +63,7 @@ public static class MenuCommands
         var availableMods = GetAvailableMods();
         StackPanel promptsPanel;
 
-        if (availableMods != null && availableMods.Length > 0)
+        if (availableMods != null && availableMods.Length > 0) 
         {
             var window = new PromptWindow("Load Mod",
                 new List<(Type, string, object?, bool)>

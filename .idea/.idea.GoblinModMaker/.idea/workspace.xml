@@ -10,28 +10,12 @@
   <component name="ChangeListManager">
     <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/CodeEditorViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/CodeEditorViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/DecompilerViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/DecompilerViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.exe" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/MenuCommands.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/MenuCommands.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/ViewModelBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/ViewModelBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/PromptWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/PromptWindow.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.sourcelink.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/apphost.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/ref/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/ref/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/Avalonia/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/Avalonia/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoblinModMaker.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/GoblinModMaker.sln.DotSettings.user" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +190,10 @@
       <workItem from="1742949955843" duration="217000" />
       <workItem from="1742950334563" duration="3101000" />
       <workItem from="1743043884116" duration="2782000" />
-      <workItem from="1743104445938" duration="3667000" />
+      <workItem from="1743104445938" duration="3999000" />
+      <workItem from="1743200762662" duration="4651000" />
+      <workItem from="1743360725918" duration="2575000" />
+      <workItem from="1743457176345" duration="1842000" />
     </task>
     <task id="LOCAL-00001" summary="Changed simple stuff">
       <option name="closed" value="true" />
