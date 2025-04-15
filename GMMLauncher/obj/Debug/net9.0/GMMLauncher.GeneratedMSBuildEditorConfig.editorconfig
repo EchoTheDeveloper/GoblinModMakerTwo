@@ -15,32 +15,35 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GMMLauncher
-build_property.ProjectDir = C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\
+build_property.ProjectDir = C:\Users\arda\Documents\GoblinModMakerTwo\GMMLauncher\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/App.axaml]
+[C:/Users/arda/Documents/GoblinModMakerTwo/GMMLauncher/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/CodeEditor.axaml]
+[C:/Users/arda/Documents/GoblinModMakerTwo/GMMLauncher/Views/CodeEditor.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/Decompiler.axaml]
+[C:/Users/arda/Documents/GoblinModMakerTwo/GMMLauncher/Views/Decompiler.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/InfoWindow.axaml]
+[C:/Users/arda/Documents/GoblinModMakerTwo/GMMLauncher/Views/GitMenu.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/MainWindow.axaml]
+[C:/Users/arda/Documents/GoblinModMakerTwo/GMMLauncher/Views/InfoWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/ProgressWindow.axaml]
+[C:/Users/arda/Documents/GoblinModMakerTwo/GMMLauncher/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/PromptWindow.axaml]
+[C:/Users/arda/Documents/GoblinModMakerTwo/GMMLauncher/Views/ProgressWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/Views/SettingsWindow.axaml]
+[C:/Users/arda/Documents/GoblinModMakerTwo/GMMLauncher/Views/PromptWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/arda/Documents/GoblinModMakerTwo/GMMLauncher/Views/SettingsWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
