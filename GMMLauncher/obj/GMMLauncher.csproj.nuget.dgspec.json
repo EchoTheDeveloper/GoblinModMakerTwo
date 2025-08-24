@@ -107,9 +107,33 @@
               "target": "Package",
               "version": "[9.0.0.7889, )"
             },
+            "Microsoft.Build.Locator": {
+              "target": "Package",
+              "version": "[1.9.1, )"
+            },
+            "Microsoft.CodeAnalysis.CSharp": {
+              "target": "Package",
+              "version": "[4.14.0, )"
+            },
+            "Microsoft.CodeAnalysis.CSharp.Features": {
+              "target": "Package",
+              "version": "[4.14.0, )"
+            },
+            "Microsoft.CodeAnalysis.CSharp.Workspaces": {
+              "target": "Package",
+              "version": "[4.14.0, )"
+            },
+            "Microsoft.CodeAnalysis.Workspaces.MSBuild": {
+              "target": "Package",
+              "version": "[4.14.0, )"
+            },
             "ReactiveUI": {
               "target": "Package",
               "version": "[20.1.63, )"
+            },
+            "Tabalonia": {
+              "target": "Package",
+              "version": "[0.10.7, )"
             }
           },
           "imports": [

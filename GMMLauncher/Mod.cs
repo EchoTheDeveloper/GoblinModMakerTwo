@@ -9,7 +9,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using AvaloniaEdit;
+using GMMLauncher.ViewModels;
 using GMMLauncher.Views;
+using Tabalonia.Controls;
 
 namespace GMMLauncher;
 
@@ -17,14 +19,14 @@ public class Mod
 {
     public Mod() { }
     
-    public Mod(string modName, string modDescription, string modAuthors, string gmmVersion)
+    public Mod(string modName, string modDescription, string modAuthors, string gmmVersion, string version)
     {
         Name = modName;
         NameNoSpaces = modName.Replace(" ", string.Empty);
         Description = modDescription;
         Authors = modAuthors;
         GMMVersion = gmmVersion;
-        Version = "1.0.0";
+        Version = version;
     }
 
     public string Name { get; set; }
@@ -39,23 +41,23 @@ public class Mod
     {
         string filePath = Path.Combine(GetFolderPath(), NameNoSpaces + ".json");
         string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true,  });
+        Console.WriteLine(json);
         File.WriteAllText(filePath, json);
     }
     public void SaveFiles(CodeEditor editor)
     {
-        foreach (var tab in editor._tabs)
+        foreach (var tab in editor.viewModel.TabItems)
         {
-            string filePath = Path.Combine(GetFileFolderPath(), tab.Header.ToString()); // TODO: MIGHT HAVE TO ADD + ".cs
-            TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
-            string code = textEditor.Text;
-            File.WriteAllText(filePath, code);
+            SaveFile(tab);
         }
         SaveMod();
     }
 
-    public void SaveFile(TabItem tab)
+    public void SaveFile(TabItemViewModel tab)
     {
-        string filePath = Path.Combine(GetFileFolderPath(), tab.Header.ToString());
+        if (tab.Header.EndsWith("*"))
+            tab.Header = tab.Header.Substring(0, tab.Header.Length - 1);
+        string filePath = Path.Combine(GetFileFolderPath(), tab.Header);
         TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
         textEditor.IsModified = false;
         string code = textEditor.Text;
@@ -82,39 +84,29 @@ public class Mod
         string folderPath = Path.Combine(currentDir, "Mods", NameNoSpaces, "Files");
         Directory.CreateDirectory(folderPath);
         CreateFile(NameNoSpaces, $@"using System;
+using System.IO;
 using System.Reflection;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using GoblinManager;
 
 namespace {NameNoSpaces}
 {{
-    [BepInPlugin(GUID, Name, Version)]
-    [BepInDependency(""Isle Goblin"")]
-    [BepInDependency(ConfigurationManager.ConfigurationManager.GUID, BepInDependency.DependencyFlags.HardDependency)]
-
-    public class {NameNoSpaces} : BaseUnityPlugin
+    [BepInDependency(""GoblinManager"", BepInDependency.DependencyFlags.HardDependency)]
+    [BepInPlugin(""gmm.{NameNoSpaces}"", ""{Name}"", ""{Version}"")]
+    [ModDescription(""{Description}"")]
+    public class {NameNoSpaces} : IMod
     {{
-        public const string GUID = ""org.bepinex.plugins.{NameNoSpaces}"";
-        public const string Name = ""{Name}"";
-        public const string Version = ""{Version}"";
-        
-        public static ConfigEntry<bool> mEnabled;
-
-        public ConfigDefinition mEnabledDef = new ConfigDefinition(pluginVersion, ""Enable/Disable Mod"");
-
-
-        public {NameNoSpaces}()
+        public void OnModLoaded(AssetBundle bundle)
         {{
-            mEnabled = Config.Bind(mEnabledDef, false, new ConfigDescription(
-                ""Controls if the mod should be enabled or disabled"", null, 
-                new ConfigurationManagerAttributes {{ Order = 0 }}
-            ));
+            Debug.Log(""{Name} Loaded"");   
         }}
-        
+
         void Awake()
         {{
             Harmony.CreateAndPatchAll(typeof({NameNoSpaces}));
@@ -164,7 +156,7 @@ namespace {NameNoSpaces}
             {
                 SaveFiles(_editor);
                 string modNameNoSpaces = modName.Replace(" ", "");
-                TabControl savedTabControl = _editor._tabControl;
+                TabsControl savedTabControl = _editor._tabControl;
                 _editor.fileTree.Items.Clear();
                 _editor._tabControl = null;
                 _editor.Close();
@@ -189,18 +181,46 @@ namespace {NameNoSpaces}
                     return;
                 }
                 
+                string filesDir = Path.Combine(newModDirectory, "Files");
                 string oldMainFileName = NameNoSpaces + ".cs";
-                string oldFilePath = Path.Combine(newModDirectory, "Files", oldMainFileName);
-                    
-                string mainFileCode = File.ReadAllText(oldFilePath);
+                string newMainFileName = modNameNoSpaces + ".cs";
 
-                mainFileCode = Regex.Replace(mainFileCode, $@"\b{Regex.Escape(NameNoSpaces)}\b", modNameNoSpaces);
-                mainFileCode = mainFileCode.Replace(Name, modName);
-                mainFileCode = Regex.Replace(mainFileCode, @"const string Version = ""[^""]+""", $"const string Version = \"{modVersion}\"");
-                
-                File.WriteAllText(Path.Combine(newModDirectory, "Files", modNameNoSpaces + ".cs"), mainFileCode);
-                
-                File.Delete(oldFilePath);
+
+                foreach (var file in Directory.GetFiles(filesDir, "*.cs"))
+                {
+                    string code = File.ReadAllText(file);
+
+                    code = Regex.Replace(code, $@"\b{Regex.Escape(NameNoSpaces)}\b", modNameNoSpaces);
+                    code = code.Replace(Name, modName);
+
+                    code = Regex.Replace(code,
+                        @"\[BepInPlugin\(\s*""[^""]+"",\s*""[^""]+"",\s*""[^""]+""\s*\)\]",
+                        $"[BepInPlugin(\"gmm.{modNameNoSpaces.ToLower()}\", \"{modName}\", \"{modVersion}\")]");
+
+                    if (Regex.IsMatch(code, @"\[ModDescription\("".*""\)\]"))
+                    {
+                        code = Regex.Replace(code,
+                            @"\[ModDescription\("".*""\)\]",
+                            $"[ModDescription(\"{modDesc}\")]");
+                    }
+
+                    code = Regex.Replace(code,
+                        @"const string Version\s*=\s*""[^""]+""",
+                        $"const string Version = \"{modVersion}\"");
+
+                    if (Path.GetFileName(file) == oldMainFileName)
+                    {
+                        File.Delete(file);
+                        string newPath = Path.Combine(filesDir, newMainFileName);
+                        File.WriteAllText(newPath, code);
+                    }
+                    else
+                    {
+                        File.WriteAllText(file, code);
+                    }
+                }
+
+
                 File.Delete(Path.Combine(newModDirectory, NameNoSpaces + ".json"));
                     
                 Name = modName;
@@ -216,10 +236,11 @@ namespace {NameNoSpaces}
                 {
                     TabControl = savedTabControl
                 };
-                foreach (var tab in _editor._tabs)
+                foreach (var tab in _editor.viewModel.TabItems)
                 {
-                    if (tab.Header.ToString() == oldMainFileName)
+                    if (tab.Header == oldMainFileName)
                     {
+                        string mainFileCode = File.ReadAllText(Path.Combine(filesDir, newMainFileName));
                         ((tab.Content as TextCodeEditor).Content as TextEditor).Text = mainFileCode;
                     }
                 }
@@ -241,61 +262,79 @@ namespace {NameNoSpaces}
             infoWindow.Close();
             return;
         }
+        infoWindow.UpdateInfoText("Running Dotnet Build...");
         if (!BuildMod(path, out string errorMessage))
         {
             infoWindow.ChangeWindowType("Build Failed",InfoWindowType.Error, errorMessage, true, height:400, width:600);
             return;
         }
-        string modFolderName = $"{Name}_{Version}";
+        string modFolderName = $"{NameNoSpaces}_{Version}";
         string pluginFolderName = Path.Combine(App.Settings.SteamDirectory, "BepInEx", "plugins");
         string installPath = Path.Combine(pluginFolderName, modFolderName);
         Directory.CreateDirectory(installPath);
 
-        string dllPath = Path.Combine(path, "bin", "Debug", "netstandard2.1", $"{NameNoSpaces}.dll");
-        File.Copy(dllPath, Path.Combine(installPath, $"{NameNoSpaces}.dll"), true);
 
         File.Copy(Path.Combine(path, "manifest.json"), Path.Combine(installPath, "manifest.json"), true);
         File.Copy(Path.Combine(path, "README.md"), Path.Combine(installPath, "README.md"), true);
-        File.Copy(Path.Combine(path, "CHANGELOG.md"), Path.Combine(installPath, "CHANGELOG.md"), true);
-
+        if (File.Exists(Path.Combine(path, "CHANGELOG.md"))) File.Copy(Path.Combine(path, "CHANGELOG.md"), Path.Combine(installPath, "CHANGELOG.md"), true);
+        
+        string dllPath = Path.Combine(path, "bin", "Debug", "netstandard2.1", $"{NameNoSpaces}.dll");
+        File.Copy(dllPath, Path.Combine(installPath, $"{NameNoSpaces}.dll"), true);
+        
+        
         if (infoWindow.windowType != InfoWindowType.Error)
         {
-            infoWindow.ChangeWindowType("Build Successful", InfoWindowType.YesNo,"Mod Successfully Installed. Would you like the mod compiled in a zip (this is to make it easier to share the mod)?", true,
-                async () =>
+            infoWindow.ChangeWindowType("Build Successful", InfoWindowType.YesNo,"Mod Successfully Installed. Would you like the mod compiled in a .zip (easier to share the mod)?", true,
+            async void (_) =>
+            {
+                string zipPath = Path.Combine(pluginFolderName, $"{NameNoSpaces}.zip");
+                await Task.Run(() =>
                 {
-                    await Task.Run(() =>
-                    {
-                        ZipFile.CreateFromDirectory(installPath, Path.Combine(pluginFolderName, NameNoSpaces + ".zip"));
-                        Process.Start(new ProcessStartInfo
-                        {
-                            FileName = pluginFolderName,
-                            UseShellExecute = true
-                        });
-                    });
-                },
-                () =>
+                    if (File.Exists(zipPath))
+                        File.Delete(zipPath);
+                    ZipFile.CreateFromDirectory(installPath, zipPath);
+                });
+
+                AskToOpenPluginFolder();
+            },
+            (_) =>
+            {
+                AskToOpenPluginFolder();
+            });
+
+            void AskToOpenPluginFolder()
+            {
+                infoWindow.ChangeWindowType("Build Successful", InfoWindowType.YesNo,"Would you like to open the plugin folder", true,
+                async void (window) =>
                 {
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = installPath,
                         UseShellExecute = true
                     });
+                    window.Close();
+                },
+                (window) =>
+                {
+                    window.Close();
                 });
+            }
         }
     }
-    public async Task<string> CreateModFiles(InfoWindow infoWindow = null)
+    public async Task<string> CreateModFiles(InfoWindow? infoWindow = null)
     {
         string currentDirectory = Directory.GetCurrentDirectory();
         string projectRoot = Path.Combine(currentDirectory, "Mods", NameNoSpaces);
-
         Directory.CreateDirectory(projectRoot);
 
-        File.Copy("resources/gitignoretemplate", Path.Combine(projectRoot, ".gitignore"), true);
-        File.Copy("resources/configmanagertemplate", Path.Combine(projectRoot, "ConfigurationManagerAttributes.cs"), true);
-
-        string csprojTemplate = File.ReadAllText("resources/csprojtemplate").Replace("{{mod_name}}", NameNoSpaces);
-        File.WriteAllText(Path.Combine(projectRoot, $"{NameNoSpaces}.csproj"), csprojTemplate);
-
+        if (!File.Exists(Path.Combine(projectRoot, ".gitignore"))) 
+            File.Copy("Resources/gitignoretemplate", Path.Combine(projectRoot, ".gitignore"), true);
+        if (!File.Exists(Path.Combine(projectRoot, "ConfigurationManagerAttributes.cs")))
+            File.Copy("Resources/configmanagertemplate", Path.Combine(projectRoot, "ConfigurationManagerAttributes.cs"), true);
+        
+        await ShowOverwritePrompt();
+        infoWindow?.UpdateInfoText("Creating Mod Files...");
+        
         var manifest = new
         {
             mod_name = Name,
@@ -304,15 +343,14 @@ namespace {NameNoSpaces}
             mod_maker_version = GMMVersion,
             authors = Authors.Split(',')
         };
-        File.WriteAllText(Path.Combine(projectRoot, "manifest.json"), JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
+        
+        await File.WriteAllTextAsync(Path.Combine(projectRoot, "manifest.json"), JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
 
         string readme = $"# {Name}\n\n## Description\n{Description}\n\n## Version\n{Version}\n\n## Developers\n{Authors}\n\n## Installation\nRequires BepInEx.";
-        File.WriteAllText(Path.Combine(projectRoot, "README.md"), readme);
+        await File.WriteAllTextAsync(Path.Combine(projectRoot, "README.md"), readme);
 
         string changelogPath = Path.Combine(projectRoot, "CHANGELOG.md");
-
         await ShowChangelogPrompt(changelogPath);
-        
         try
         {
             string librariesPath = Path.Combine(projectRoot, "Libraries");
@@ -320,14 +358,14 @@ namespace {NameNoSpaces}
 
             CopyDirectory(Path.Combine(App.Settings.SteamDirectory, "Isle Goblin_Data", "Managed"), librariesPath);
             CopyDirectory(Path.Combine(App.Settings.SteamDirectory, "BepInEx/core"), librariesPath);
-            CopyDirectory(Path.Combine(Directory.GetCurrentDirectory(), "resources/Default Libraries"), librariesPath);
         }
         catch (DirectoryNotFoundException)
         {
             new InfoWindow("Error While Making Mod Files", InfoWindowType.YesNo, 
-                "Could not create mod files, this is because BepInEx is not installed. Would you like to install it now?", true, () =>
+                "Could not create mod files, this is because BepInEx is not installed. Would you like to install it now? After please retry building.", true, (window) =>
                 {
-                    App.Settings.InstallBepInEx();
+                    _ = App.Settings.InstallBepInEx();
+                    window.Close();
                 }).Show();
             return null;
         }
@@ -336,8 +374,8 @@ namespace {NameNoSpaces}
         
         Task ShowChangelogPrompt(string changelogPath)
         {
+            infoWindow?.UpdateInfoText("Waiting For Changelog Entry...");
             var tcs = new TaskCompletionSource<bool>();
-
             var window = new PromptWindow("Changelog Entry", new List<(Type, string, object?, bool)>
             {
                 (typeof(TextBox), "Enter Changelog Entry", "", true)
@@ -346,26 +384,63 @@ namespace {NameNoSpaces}
                 string entry = (list[0] as TextBox).Text;
                 string changelogEntry = $"## v{Version} - {DateTime.Now:yyyy-MM-dd}\n- {entry}.\n";
                 File.AppendAllText(changelogPath, changelogEntry);
-                if (infoWindow != null)
-                {
-                    infoWindow.UpdateInfoText("Running Dotnet Build...");
-                }
+                infoWindow?.UpdateInfoText("Running Dotnet Build...");
                 window.Close();
                 tcs.SetResult(true);
             }, (window) =>
             {
-                string changelogEntry = $"## v{Version} - {DateTime.Now:yyyy-MM-dd}\n- [ADD CHANGES].\n";
-                File.AppendAllText(changelogPath, changelogEntry);
-                if (infoWindow != null)
-                {
-                    infoWindow.UpdateInfoText("Running Dotnet Build...");
-                }
+                // string changelogEntry = $"## v{Version} - {DateTime.Now:yyyy-MM-dd}\n- [ADD CHANGES].\n";
+                // File.AppendAllText(changelogPath, changelogEntry);
+                infoWindow?.UpdateInfoText("Running Dotnet Build...");
                 window.Close();
                 tcs.SetResult(true);
             }, cancelText: "Skip");
             window.Topmost = true;
             window.Show();
             
+            return tcs.Task;
+        }
+        
+        Task ShowOverwritePrompt()
+        {
+            infoWindow?.UpdateInfoText("Waiting For Overwrite Choice...");
+            var tcs = new TaskCompletionSource<bool>();
+            string csprojTemplate = File.ReadAllText("Resources/csprojtemplate").Replace("{{mod_name}}", NameNoSpaces);
+            string csprojPath = Path.Combine(projectRoot, $"{NameNoSpaces}.csproj");
+            if (Path.Exists(csprojPath) )
+            {
+                if (File.ReadAllText(csprojPath) != csprojTemplate)
+                {
+                    var window = new PromptWindow("Overwrite Csproj? ", new List<(Type, string, object?, bool)>
+                    {
+                        (typeof(CheckBox), "The .csproj file has been modified \ndo you want to overwrite it?", false, true)
+                    }, (list, window) =>
+                    {
+                        if ((list[0] as CheckBox)?.IsChecked == true)
+                        {
+                            File.WriteAllText(csprojPath, csprojTemplate);
+                        }
+                        tcs.SetResult(true);
+                        window.Close();
+                    }, window =>
+                    {
+                        window.Close();
+                        tcs.SetResult(true);
+                    });
+                    window.Topmost = true;
+                    window.Show();
+                }
+                else
+                {
+                    tcs.SetResult(true);
+                }
+            }
+            else
+            {
+                File.WriteAllText(csprojPath, csprojTemplate);
+                tcs.SetResult(true);
+            }
+
             return tcs.Task;
         }
     }
@@ -389,7 +464,8 @@ namespace {NameNoSpaces}
             string output = process.StandardOutput.ReadToEnd();
             string errorOutput = process.StandardError.ReadToEnd();
             process.WaitForExit();
-
+            Console.WriteLine(output);
+            Console.WriteLine(errorOutput);
             var lines = output.Split('\n').Concat(errorOutput.Split('\n'));
 
             var errors = lines
@@ -433,7 +509,7 @@ namespace {NameNoSpaces}
     private string ShortenPath(string message, string basePath)
     {
         string fullPath = Path.GetFullPath(basePath);
-        var cleanedMessage = System.Text.RegularExpressions.Regex.Replace(message, @"\s*\[\s*.*\]", string.Empty);
+        var cleanedMessage = Regex.Replace(message, @"\s*\[\s*.*\]", string.Empty);
         return cleanedMessage.Replace(fullPath, "...");
     }
     #endregion

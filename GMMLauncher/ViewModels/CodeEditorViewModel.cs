@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -7,127 +8,159 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Controls;
 using Avalonia.Layout;
+using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.Utils;
+using CommunityToolkit.Mvvm.ComponentModel;
 using GMMLauncher.Views;
+using Microsoft.CodeAnalysis.Text;
 
-namespace GMMLauncher.ViewModels
+namespace GMMLauncher.ViewModels;
+public partial class CodeEditorViewModel : ViewModelBase
 {
-    public partial class CodeEditorViewModel : ViewModelBase
+    #region Commands
+    #region File
+    public ICommand LoadModDialogCommand => new RelayCommand(LoadModDialog);
+    public ICommand LoadExistingModCommand => MenuCommands.LoadExistingModCommand;
+    
+    public ICommand NewModCommand => MenuCommands.NewModCommand;
+    public ICommand SaveModCommand => new RelayCommand(SaveMod);
+    
+    public ICommand NewFileCommand => new RelayCommand(NewFile);
+    public ICommand SaveFileCommand => new RelayCommand(SaveFile);
+    
+    public ICommand OpenDecompilerCommand => new RelayCommand(OpenDecompiler);
+
+    
+    public ICommand QuitAppCommand => MenuCommands.QuitAppCommand;
+    #endregion
+    
+    #region Edit
+    public ICommand UndoCommand => new RelayCommand(Undo);
+    public ICommand RedoCommand => new RelayCommand(Redo);
+
+    public ICommand CopyCommand => new RelayCommand(CopyMouse);
+    public ICommand CutCommand => new RelayCommand(CutMouse);
+    public ICommand PasteCommand => new RelayCommand(PasteMouse);
+    public ICommand SelectAllCommand => new RelayCommand(SelectAllMouse);
+        
+    public ICommand FindCommand => new RelayCommand(Find);
+    public ICommand ReplaceCommand => new RelayCommand(Replace);
+    public ICommand GoToLineCommand => new RelayCommand(GoToLine);
+    #endregion
+    
+    #region Mod
+    public ICommand CreateHarmonyPatchCommand => new RelayCommand(CreateHarmonyPatch);
+    public ICommand CreateConfigItemCommand => new RelayCommand(CreateConfigItem);
+    public ICommand CreateKeybindCommand => new RelayCommand(CreateKeybind);
+
+    public ICommand ConfigureModCommand => new RelayCommand(ConfigureMod);
+    #endregion
+    
+    #region Build
+    public ICommand BuildModCommand => new RelayCommand(BuildMod);
+    public ICommand CreateModFilesCommand => new RelayCommand(() => CreateModFiles());
+    #endregion
+    
+    #region CreateAssetCommands
+    public ICommand CreateFishCommand => new RelayCommand(CreateFish);
+    public ICommand CreateBuffOrDebuffCommand => new RelayCommand(CreateBuffOrDebuff);
+    #endregion
+    
+    #region Extra
+    public ICommand OpenDocumentationCommand => MenuCommands.OpenDocumentationCommand; 
+    
+    public ICommand OpenSettingsCommand => new RelayCommand(OpenSettings);
+    
+    public ICommand CloseTabCommand => new RelayCommand<object?>(CloseTab);
+    public ICommand CloseAllTabsCommand => new RelayCommand(CloseAllTabs);
+    public ICommand CloseOtherTabsCommand => new RelayCommand(CloseOtherTabs);
+
+    public ICommand DeleteFileCommand => new RelayCommand(DeleteFile);
+    #endregion
+    #endregion
+    
+    private readonly CodeEditor _editor;
+    public Func<Task<object?>> NewItemAsyncFactory => AddItemAsync;
+
+    public ObservableCollection<TabItemViewModel> TabItems { get; } = new();
+    
+    
+    public CodeEditorViewModel(CodeEditor editor)
     {
-        #region Commands
-        #region File
-        public ICommand LoadModDialogCommand => new RelayCommand(LoadModDialog);
-        public ICommand LoadExistingModCommand => MenuCommands.LoadExistingModCommand;
-        
-        public ICommand NewModCommand => MenuCommands.NewModCommand;
-        public ICommand SaveModCommand => new RelayCommand(SaveMod);
-        
-        public ICommand NewFileCommand => new RelayCommand(NewFile);
-        public ICommand SaveFileCommand => new RelayCommand(SaveFile);
-        
-        public ICommand OpenDecompilerCommand => new RelayCommand(OpenDecompiler);
+        _editor = editor;
+    }
+    
+    #region Tabs
+    private async Task<object?> AddItemAsync()
+    {
+        var tcs = new TaskCompletionSource<TabItemViewModel?>();
 
-        
-        public ICommand QuitAppCommand => MenuCommands.QuitAppCommand;
-        #endregion
-        
-        #region Edit
-        public ICommand UndoCommand => new RelayCommand(Undo);
-        public ICommand RedoCommand => new RelayCommand(Redo);
+        var window = new PromptWindow("New File",
+            new List<(Type, string, object?, bool)>
+            {
+                (typeof(TextBlock), "If no file extension is given, \".cs\" will be added by default", null, false),
+                (typeof(TextBox), "File Name:", "", true)
+            },
+            (list, window) => NewFileDone(list, window)
+        );
 
-        public ICommand CopyCommand => new RelayCommand(CopyMouse);
-        public ICommand CutCommand => new RelayCommand(CutMouse);
-        public ICommand PasteCommand => new RelayCommand(PasteMouse);
-        public ICommand SelectAllCommand => new RelayCommand(SelectAllMouse);
-            
-        public ICommand FindCommand => new RelayCommand(Find);
-        public ICommand ReplaceCommand => new RelayCommand(Replace);
-        public ICommand GoToLineCommand => new RelayCommand(GoToLine);
-        #endregion
-        
-        #region Mod
-        public ICommand CreateHarmonyPatchCommand => new RelayCommand(CreateHarmonyPatch);
-        public ICommand CreateConfigItemCommand => new RelayCommand(CreateConfigItem);
-        public ICommand CreateKeybindCommand => new RelayCommand(CreateKeybind);
-
-        public ICommand ConfigureModCommand => new RelayCommand(ConfigureMod);
-        #endregion
-        
-        #region Build
-        public ICommand BuildModCommand => new RelayCommand(BuildMod);
-        public ICommand CreateModFilesCommand => new RelayCommand(() => CreateModFiles());
-        #endregion
-        
-        #region CreateAssetCommands
-        public ICommand CreateFishCommand => new RelayCommand(CreateFish);
-        public ICommand CreateBuffOrDebuffCommand => new RelayCommand(CreateBuffOrDebuff);
-        #endregion
-        
-        #region Extra
-        public ICommand OpenDocumentationCommand => MenuCommands.OpenDocumentationCommand; 
-        
-        public ICommand OpenSettingsCommand => new RelayCommand(OpenSettings);
-        
-        public ICommand CloseTabCommand => new RelayCommand(CloseTab);
-        public ICommand CloseAllTabsCommand => new RelayCommand(CloseAllTabs);
-        public ICommand CloseOtherTabsCommand => new RelayCommand(CloseOtherTabs);
-
-        public ICommand DeleteFileCommand => new RelayCommand(DeleteFile);
-        #endregion
-        #endregion
-        
-        private readonly CodeEditor _editor;
-        
-        public CodeEditorViewModel(CodeEditor editor)
+        window.Closed += (_, _) =>
         {
-            _editor = editor;
-        }
+            if (!tcs.Task.IsCompleted)
+                tcs.TrySetResult(null);
+        };
 
-        #region MenuBarFunctions
+        window.Show();
+        return await tcs.Task;
+    }
+    #endregion
 
+    #region MenuBarFunctions
         private void OpenDecompiler()
         {
             new Decompiler(_editor).Show();
         }
 
-            private void NewFile()
-            {
-                var window = new PromptWindow("New File",
-                    new List<(Type, string, object?, bool)>
-                    {
-                        (typeof(TextBox), "File Name:", "", true)
-                    },
-                    NewFileDone
-                );
+        private void NewFile()
+        {
+            var window = new PromptWindow("New File",
+                new List<(Type, string, object?, bool)>
+                {
+                    (typeof(TextBlock), "If no file extension is given, \".cs\" will be added by default", null, false),
+                    (typeof(TextBox), "File Name:", "", true)
+                },
+                (list, window) => NewFileDone(list, window)
+            );
 
-                window.Show();
+            window.Show();
+        }
+        private void NewFileDone(List<Control> answers, Window promptWindow, Action<TabItemViewModel>? onSuccess = null)
+        {
+            string fileName = (answers[0] as TextBox).Text;
+            string nameNoSpace = string.Concat(fileName.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+            nameNoSpace = char.ToUpper(nameNoSpace[0]) + nameNoSpace[1..];
+            if (string.IsNullOrEmpty(nameNoSpace) || nameNoSpace[0] == '.')
+            {
+                new InfoWindow("Invalid File Name", InfoWindowType.Error, $@"File Name: ""{nameNoSpace}"" is invalid").Show();
+                return;
             }
-            private void NewFileDone(List<Control> answers, Window promptWindow)
+            if (Path.GetExtension(nameNoSpace) == "")
             {
-                string fileName = (answers[0] as TextBox).Text;
-                string nameNoSpace = string.Concat(fileName.Split(' ', StringSplitOptions.RemoveEmptyEntries));
-                nameNoSpace = char.ToUpper(nameNoSpace[0]) + nameNoSpace[1..];
-                if (string.IsNullOrEmpty(nameNoSpace) || nameNoSpace[0] == '.')
-                {
-                    new InfoWindow("Invalid File Name", InfoWindowType.Error, $@"File Name: ""{nameNoSpace}"" is invalid").Show();
-                    return;
-                }
-                if (Path.GetExtension(nameNoSpace) == "")
-                {
-                    nameNoSpace += ".cs";
-                }
-                
-                string filePath = Path.Combine(_editor.Mod.GetFileFolderPath(), nameNoSpace);
+                nameNoSpace += ".cs";
+            }
+            
+            string filePath = Path.Combine(_editor.Mod.GetFileFolderPath(), nameNoSpace);
 
-                string className = string.Concat(Path.GetFileNameWithoutExtension(fileName)
-                    .Split(' ', StringSplitOptions.RemoveEmptyEntries));
-                className = char.ToUpper(className[0]) + className[1..];
-                string newFileContent = $@"using System;
+            string className = string.Concat(Path.GetFileNameWithoutExtension(fileName)
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries));
+            className = char.ToUpper(className[0]) + className[1..];
+            string newFileContent = $@"using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace {_editor.Mod.NameNoSpaces}
 {{
@@ -136,480 +169,472 @@ namespace {_editor.Mod.NameNoSpaces}
         // Write code here
     }}
 }}";
-                File.WriteAllText(filePath, newFileContent);
-                _editor.UpdateFileTree();
-                promptWindow.Close();
+            File.WriteAllText(filePath, newFileContent);
+            _editor.UpdateFileTree();
+            var tab = _editor.CreateTab(nameNoSpace);
+            TabItems.Add(tab);
+            _editor._tabControl.SelectedItem = tab;
+            onSuccess?.Invoke(tab);
+            promptWindow.Close();
+            
+            var sourceText = SourceText.From(newFileContent);
+            _editor.AddNewFileToProject(nameNoSpace, sourceText, filePath);
+        }
+
+        private void DeleteFile()
+        {
+            string fileFolder = _editor.Mod.GetFileFolderPath();
+            string? fileName = _editor.rightClickedFile.Header?.ToString();
+            if (fileName == _editor.Mod.NameNoSpaces + ".cs")
+            {
+                new InfoWindow("Can't Delete Main File", InfoWindowType.Error,
+                    "You cannot delete the main mod file. If you feel like this should be changed please let us know.").Show();
+                return;
+            }
+            File.Delete(Path.Combine(fileFolder, fileName));
+            _editor.UpdateFileTree();
+            _editor.UpdateTabControl();
+        }
+        
+        private void SaveFile()
+        {
+            var tab = _editor._tabControl.SelectedItem as TabItemViewModel;
+            _editor.Mod.SaveFile(tab);
+        }
+        
+        private void OpenSettings()
+        {
+            MenuCommands.OpenSettingsInEditorCommand.Execute(_editor);
+        }
+                    
+        #region ModFunctions
+
+        private void ConfigureMod()
+        {
+            _editor.Mod.ConfigureMod(_editor);
+        }
+        #region CreateFunctions
+            private void CreateHarmonyPatch()
+            {
+                var window = new PromptWindow("Create Harmony Patch",
+                    new List<(Type, string, object?, bool)>
+                    {
+                        (typeof(TextBox), "Function Name:", "", true),
+                        (typeof(TextBox), "Function's Class:", "", true),
+                        (typeof(TextBox), "Parameters (Separate by comma):", "", false),
+                        (typeof(ComboBox), "Patch Type (Prefix, Postfix):", new List<string> { "Prefix", "Postfix"}, false),
+                        (typeof(TextBox), "Return Type:", "None", true),
+                        (typeof(CheckBox), "Have Instance:", false, false),
+                    },
+                    CreateHarmonyPatchDone
+                );
+
+                window.Show();
             }
 
-            private void DeleteFile()
+            private void CreateHarmonyPatchDone(List<Control> answers, Window promptWindow)
             {
-                string fileFolder = _editor.Mod.GetFileFolderPath();
-                string? fileName = _editor.rightClickedFile.Header?.ToString();
-                if (fileName == _editor.Mod.NameNoSpaces + ".cs")
+                string functionName = (answers[0] as TextBox)?.Text ?? "";
+                string functionClassName = (answers[1] as TextBox)?.Text ?? "";
+                List<string> parameters = ((answers[2] as TextBox)?.Text.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>()).ToList();
+                string patchType = (answers[3] as ComboBox)?.SelectedItem as string ?? "Prefix";
+                string returnType = (answers[4] as TextBox)?.Text ?? "None";
+                bool? hasInstance = (answers[5] as CheckBox)?.IsChecked;
+
+                if (string.IsNullOrWhiteSpace(functionName) || string.IsNullOrWhiteSpace(functionClassName))
                 {
-                    new InfoWindow("Can't Delete Main File", InfoWindowType.Error,
-                        "You cannot delete the main mod file. If you feel like this should be changed please let us know.").Show();
+                    Console.WriteLine("Error: Function name or class name is missing.");
                     return;
                 }
-                File.Delete(Path.Combine(fileFolder, fileName));
-                _editor.UpdateFileTree();
-                _editor.UpdateTabControl();
-            }
-            
-            private void SaveFile()
-            {
-                var tab = _editor._tabControl.SelectedItem as TabItem;
-                _editor.Mod.SaveFile(tab);
-            }
-            
-            private void OpenSettings()
-            {
-                MenuCommands.OpenSettingsInEditorCommand.Execute(_editor);
-            }
-                        
-            #region ModFunctions
 
-            private void ConfigureMod()
-            {
-                _editor.Mod.ConfigureMod(_editor);
-            }
-            #region CreateFunctions
-                private void CreateHarmonyPatch()
+                string signature = "private ";
+
+                if (returnType != "None")
                 {
-                    var window = new PromptWindow("Create Harmony Patch",
-                        new List<(Type, string, object?, bool)>
-                        {
-                            (typeof(TextBox), "Function Name:", "", true),
-                            (typeof(TextBox), "Function's Class:", "", true),
-                            (typeof(TextBox), "Parameters (Separate by comma):", "", false),
-                            (typeof(ComboBox), "Patch Type (Prefix, Postfix):", new List<string> { "Prefix", "Postfix"}, false),
-                            (typeof(TextBox), "Return Type:", "None", true),
-                            (typeof(CheckBox), "Have Instance:", false, false),
-                        },
-                        CreateHarmonyPatchDone
-                    );
-    
-                    window.Show();
+                    parameters.Insert(0, $"ref {returnType} __result");
                 }
-    
-                private void CreateHarmonyPatchDone(List<Control> answers, Window promptWindow)
+
+                if (hasInstance == true)
                 {
-                    string functionName = (answers[0] as TextBox)?.Text ?? "";
-                    string functionClassName = (answers[1] as TextBox)?.Text ?? "";
-                    List<string> parameters = ((answers[2] as TextBox)?.Text.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>()).ToList();
-                    string patchType = (answers[3] as ComboBox)?.SelectedItem as string ?? "Prefix";
-                    string returnType = (answers[4] as TextBox)?.Text ?? "None";
-                    bool? hasInstance = (answers[5] as CheckBox)?.IsChecked;
+                    parameters.Insert(0, $"ref {functionClassName} __instance");
+                    signature += "static ";
+                }
 
-                    if (string.IsNullOrWhiteSpace(functionName) || string.IsNullOrWhiteSpace(functionClassName))
-                    {
-                        Console.WriteLine("Error: Function name or class name is missing.");
-                        return;
-                    }
+                signature += (patchType == "Prefix") ? "bool " : "void ";
+                string joinedParameters = string.Join(", ", parameters);
+                signature += $"{functionName.Replace(" ", "")}{patchType}Patch({joinedParameters})";
 
-                    string signature = "private ";
+                string harmonyPatch = $"[HarmonyPatch(typeof({functionClassName}), \"{functionName}\")]";
 
-                    if (returnType != "None")
-                    {
-                        parameters.Insert(0, $"ref {returnType} __result");
-                    }
-
-                    if (hasInstance == true)
-                    {
-                        parameters.Insert(0, $"ref {functionClassName} __instance");
-                        signature += "static ";
-                    }
-
-                    signature += (patchType == "Prefix") ? "bool " : "void ";
-                    string joinedParameters = string.Join(", ", parameters);
-                    signature += $"{functionName.Replace(" ", "")}{patchType}Patch({joinedParameters})";
-
-                    string harmonyPatch = $"[HarmonyPatch(typeof({functionClassName}), \"{functionName}\")]";
-
-                    string patchCode = $@"
-        {harmonyPatch}
-        [{patchType}Patch]
-        {signature}
+                string patchCode = $@"
+    {harmonyPatch}
+    [{patchType}Patch]
+    {signature}
+    {{
+        if (mEnabled.Value)
         {{
+            // Write code for patch here";
+
+                if (returnType != "None")
+                {
+                    patchCode += "\n                // __result = null;";
+                }
+
+                if (patchType == "Prefix")
+                {
+                    patchCode += "\n                return false; // Cancels Original Function of Method";
+                }
+
+                patchCode += "\n            }";
+
+                if (patchType == "Prefix")
+                {
+                    patchCode += "\n            return true;";
+                }
+                patchCode += "\n        }";
+
+                string code = _editor.GetCurrentTextEditor().Text;
+                int lastNamespaceBracket = code.LastIndexOf('}');
+                int lastClassBracket = code.LastIndexOf('}', lastNamespaceBracket - 2);
+                if (lastClassBracket != -1 && lastNamespaceBracket != -1)
+                {
+                    _editor.GetCurrentTextEditor().Text = code.Insert(lastClassBracket, patchCode + "\n    ");
+                }
+                else
+                {
+                    new InfoWindow("Error", InfoWindowType.Error, "Couldn't find class end bracket.", true, fontSize:20).Show();
+
+                }
+                promptWindow.Close();
+            }
+            
+
+            private void CreateConfigItem()
+            {
+                new PromptWindow("Create Config Item",
+                    new List<(Type, string, object?, bool)>
+                    {
+                        (typeof(TextBox), "Variable Name:", "", true),
+                        (typeof(ComboBox), "Data Type:", ("int", new List<(string, Type, string, string, bool)>
+                        {
+                            ("int", null, null, null, false)!,
+                            ("string", null, null, null, false)!,
+                            ("bool", null, null, null,false)!,
+                            ("Other", typeof(TextBox), "", "", true)!
+                        }), false),
+                        (typeof(TextBox), "Default Value:", "", true),
+                        (typeof(TextBox), "Definition (name in mod's configuration):", "", true),
+                        (typeof(TextBox), "Description (info on hovered)", "", true)
+                    },
+                    CreateConfigItemDone
+                ).Show();
+            }
+
+            private void CreateConfigItemDone(List<Control> answers, Window promptWindow)
+            {
+                string variableName = (answers[0] as TextBox)?.Text ?? "";
+                string dateType = (answers[1] as ComboBox)?.SelectedItem as string ?? (answers[1] as TextBox)?.Text ?? "";
+                string defaultValue = (answers[2] as TextBox)?.Text ?? "";
+                string definition = (answers[3] as TextBox)?.Text ?? "";
+                string description = (answers[4] as TextBox)?.Text ?? "";
+
+                string configEntry = $"        public static ConfigEntry<{dateType}> {variableName};";
+                string configDefinition = $"        public ConfigDefinition {variableName}Def = new ConfigDefinition(pluginVersion, \"{definition}\");";
+                string constructorContent = $"            {variableName} = Config.Bind({variableName}, {defaultValue},new ConfigDescription(\n" +
+                                            $"                \"{description}\", null, \n" +
+                                            $"                new ConfigurationManagerAttributes {{ Order = 0 }}\n" +
+                                            $"            ));";
+                
+                string code = _editor.GetCurrentTextEditor().Text;
+                
+                int configEntryIndex = code.IndexOf("ConfigEntry<");
+                if (configEntryIndex != -1)
+                {
+                    int insertIndex = code.IndexOf('\n', configEntryIndex) + 1;
+                    code = code.Insert(insertIndex, configEntry + "\n");
+                }
+                else
+                {
+                    int lastConst = code.IndexOf("const ");
+                    if (lastConst != -1)
+                    {
+                        code = code.Insert(lastConst, configEntry + "\n");
+                    }
+                    else
+                    {
+                        int classIndex = code.IndexOf("public class");
+                        if (classIndex != -1)
+                        {
+                            int bracketIndex = code.IndexOf('{', classIndex);
+                            if (bracketIndex != -1)
+                            {
+                                Console.WriteLine(code.Substring(classIndex, bracketIndex - classIndex));
+                                code = code.Insert(bracketIndex + 1, "\n"+ configEntry);
+                            }
+                        }
+                    }
+                }
+
+                int configDefinitionIndex = code.LastIndexOf("public ConfigDefinition");
+                if (configDefinitionIndex != -1)
+                {
+                    int insertIndex = code.IndexOf('\n', configDefinitionIndex);
+                    code = code.Insert(insertIndex, configDefinition + "\n");
+                }
+                else
+                {
+                    int lastConfigEntry = code.LastIndexOf("ConfigEntry<");
+                    if (lastConfigEntry != -1)
+                    {
+                        int insertIndex = code.IndexOf('\n', lastConfigEntry);
+                        code = code.Insert(insertIndex,  "\n\n" + configDefinition + "\n");
+                    }
+                }
+
+                int constructorIndex = code.IndexOf($"public {_editor.Mod.NameNoSpaces}");
+                if (constructorIndex != -1)
+                {
+                    int bracketIndex = code.IndexOf('{', constructorIndex);
+                    if (bracketIndex != -1)
+                    {
+                        code = code.Insert(bracketIndex + 1, "\n" + constructorContent);
+                    }
+                }
+                
+                _editor.GetCurrentTextEditor().Text = code;
+                
+                promptWindow.Close();
+            }
+            
+    
+            private void CreateKeybind()
+            {
+                var window = new PromptWindow("Create Keybind",
+                    new List<(Type, string, object?, bool)>
+                    {
+                        (typeof(TextBox), "Variable Name:", "", true),
+                        (typeof(Button), "Keycode:", () =>
+                        {
+                            var url = "https://docs.unity3d.com/ScriptReference/KeyCode.html";
+                            Process.Start(new ProcessStartInfo 
+                            { 
+                                FileName = url, 
+                                UseShellExecute = true 
+                            });
+                        }, false),
+                        (typeof(TextBox), "", "", true),
+                        (typeof(TextBox), "Definition (name in mod's configuration):", "", true),
+                        (typeof(TextBox), "Description (info on hovered)", "", true)
+                    },
+                    CreateKeybindDone
+                );
+
+                window.Show();
+            }
+
+            private void CreateKeybindDone(List<Control> answers, Window promptWindow)
+            {
+                string variableName = (answers[0] as TextBox)?.Text ?? "";
+                string keycode = (answers[2] as TextBox)?.Text ?? "";
+                
+                CreateConfigItemDone([
+                    answers[0],
+                    new TextBox { Text = "BepInEx.Configuration.KeyboardShortcut" },
+                    new TextBox
+                    {
+                        Text = $"new BepInEx.Configuration.KeyboardShortcut(UnityEngine.KeyCode.{keycode})"
+                    },
+                    answers[3],
+                    answers[4]
+                ], promptWindow);
+                
+                string code = _editor.GetCurrentTextEditor().Text;
+                
+                string logic = $@"
+        // Keybind logic for {variableName}
+        {variableName}JustPressed = {variableName}.Value.IsDown();
+        if ({variableName}.Value.IsDown())
+        {{
+            {variableName}Down = true;
             if (mEnabled.Value)
             {{
-                // Write code for patch here";
+                // Code For When Key Is Pressed
+            }}
+        }}
+        if ({variableName}.Value.IsUp())
+        {{
+            {variableName}Down = false;
+            if (mEnabled.Value)
+            {{
+                // Code For When Key Is Released
+            }}
+        }}";
+                
+                int updateIndex = code.IndexOf("void Update()");
+                if (updateIndex == -1)
+                {
+                    string updateCode = @"        void Update()
+    {
 
-                    if (returnType != "None")
-                    {
-                        patchCode += "\n                // __result = null;";
-                    }
-
-                    if (patchType == "Prefix")
-                    {
-                        patchCode += "\n                return false; // Cancels Original Function of Method";
-                    }
-
-                    patchCode += "\n            }";
-
-                    if (patchType == "Prefix")
-                    {
-                        patchCode += "\n            return true;";
-                    }
-                    patchCode += "\n        }";
-
-                    string code = _editor.GetCurrentTextEditor().Text;
+    }";
                     int lastNamespaceBracket = code.LastIndexOf('}');
-                    int lastClassBracket = code.LastIndexOf('}', lastNamespaceBracket - 2);
+                    int lastClassBracket = code.LastIndexOf('}', lastNamespaceBracket-2);
                     if (lastClassBracket != -1 && lastNamespaceBracket != -1)
                     {
-                        _editor.GetCurrentTextEditor().Text = code.Insert(lastClassBracket, patchCode + "\n    ");
+                        code = code.Insert(lastClassBracket, "\n" + updateCode + "\n    ");
+                        
                     }
                     else
                     {
                         new InfoWindow("Error", InfoWindowType.Error, "Couldn't find class end bracket.", true, fontSize:20).Show();
 
                     }
-                    promptWindow.Close();
+                }
+                updateIndex = code.IndexOf("void Update()");
+
+                
+                int bracketIndex = code.IndexOf('{', updateIndex);
+                if (bracketIndex != -1)
+                {
+                    code = code.Insert(bracketIndex + 1, "\n" + logic);
                 }
                 
-
-                private void CreateConfigItem()
+                void DeclareVariable(string nameModifier = "Down")
                 {
-                    var window = new PromptWindow("Create Config Item",
-                        new List<(Type, string, object?, bool)>
-                        {
-                            (typeof(TextBox), "Variable Name:", "", true),
-                            (typeof(ComboBox), "Data Type:", new List<string> { "int", "string", "bool" }, false),
-                            (typeof(TextBox), "Default Value:", "", true),
-                            (typeof(TextBox), "Definition (name in mod's configuration):", "", true),
-                            (typeof(TextBox), "Description (info on hovered)", "", true)
-                        },
-                        CreateConfigItemDone
-                    );
-    
-                    window.Show();
-                }
-    
-                private void CreateConfigItemDone(List<Control> answers, Window promptWindow)
-                {
-                    string variableName = (answers[0] as TextBox)?.Text ?? "";
-                    string dateType = (answers[1] as ComboBox)?.SelectedItem as string ?? (answers[1] as TextBox)?.Text ?? "";
-                    string defaultValue = (answers[2] as TextBox)?.Text ?? "";
-                    string definition = (answers[3] as TextBox)?.Text ?? "";
-                    string description = (answers[4] as TextBox)?.Text ?? "";
-
-                    string configEntry = $"        public static ConfigEntry<{dateType}> {variableName};";
-                    string configDefinition = $"        public ConfigDefinition {variableName}Def = new ConfigDefinition(pluginVersion, \"{definition}\");";
-                    string constructorContent = $"            {variableName} = Config.Bind({variableName}, {defaultValue},new ConfigDescription(\n" +
-                                                $"                \"{description}\", null, \n" +
-                                                $"                new ConfigurationManagerAttributes {{ Order = 0 }}\n" +
-                                                $"            ));";
-                    
-                    string code = _editor.GetCurrentTextEditor().Text;
-                    
-                    int configEntryIndex = code.IndexOf("ConfigEntry<");
-                    if (configEntryIndex != -1)
+                    string declaration = $"        public static bool {variableName}{nameModifier} = false;";
+                    int lastBoolIndex = code.IndexOf("public static bool ");
+                    if (lastBoolIndex != -1)
                     {
-                        int insertIndex = code.IndexOf('\n', configEntryIndex) + 1;
-                        code = code.Insert(insertIndex, configEntry + "\n");
+                        int insertIndex = code.IndexOf('\n', lastBoolIndex) + 1;
+                        code = code.Insert(insertIndex, declaration + "\n");
                     }
                     else
                     {
-                        int lastConst = code.IndexOf("const ");
-                        if (lastConst != -1)
+                        int lastConfigEntryIndex = code.LastIndexOf("ConfigDefinition");
+                        if (lastConfigEntryIndex != -1)
                         {
-                            code = code.Insert(lastConst, configEntry + "\n");
-                        }
-                        else
-                        {
-                            int classIndex = code.IndexOf("public class");
-                            if (classIndex != -1)
-                            {
-                                int bracketIndex = code.IndexOf('{', classIndex);
-                                if (bracketIndex != -1)
-                                {
-                                    Console.WriteLine(code.Substring(classIndex, bracketIndex - classIndex));
-                                    code = code.Insert(bracketIndex + 1, "\n"+ configEntry);
-                                }
-                            }
-                        }
-                    }
-
-                    int configDefinitionIndex = code.LastIndexOf("public ConfigDefinition");
-                    if (configDefinitionIndex != -1)
-                    {
-                        int insertIndex = code.IndexOf('\n', configDefinitionIndex);
-                        code = code.Insert(insertIndex, configDefinition + "\n");
-                    }
-                    else
-                    {
-                        int lastConfigEntry = code.LastIndexOf("ConfigEntry<");
-                        if (lastConfigEntry != -1)
-                        {
-                            int insertIndex = code.IndexOf('\n', lastConfigEntry);
-                            code = code.Insert(insertIndex,  "\n\n" + configDefinition + "\n");
-                        }
-                    }
-
-                    int constructorIndex = code.IndexOf($"public {_editor.Mod.NameNoSpaces}"); // TODO: THIS FOR OTHER SCRIPTS
-                    if (constructorIndex != -1)
-                    {
-                        int bracketIndex = code.IndexOf('{', constructorIndex);
-                        if (bracketIndex != -1)
-                        {
-                            code = code.Insert(bracketIndex + 1, "\n" + constructorContent);
-                        }
-                    }
-                    
-                    _editor.GetCurrentTextEditor().Text = code;
-                    
-                    promptWindow.Close();
-                }
-                
-                
-                private void CreateKeybind()
-                {
-                    var window = new PromptWindow("Create Keybind",
-                        new List<(Type, string, object?, bool)>
-                        {
-                            (typeof(TextBox), "Variable Name:", "", true),
-                            (typeof(Button), "Keycode:", () =>
-                            {
-                                var url = "https://docs.unity3d.com/ScriptReference/KeyCode.html";
-                                Process.Start(new ProcessStartInfo 
-                                { 
-                                    FileName = url, 
-                                    UseShellExecute = true 
-                                });
-                            }, false),
-                            (typeof(TextBox), "", "", true),
-                            (typeof(TextBox), "Definition (name in mod's configuration):", "", true),
-                            (typeof(TextBox), "Description (info on hovered)", "", true)
-                        },
-                        CreateKeybindDone
-                    );
-    
-                    window.Show();
-                }
-    
-                private void CreateKeybindDone(List<Control> answers, Window promptWindow)
-                {
-                    string variableName = (answers[0] as TextBox)?.Text ?? "";
-                    string keycode = (answers[2] as TextBox)?.Text ?? "";
-                    
-                    CreateConfigItemDone([
-                        answers[0],
-                        new TextBox { Text = "BepInEx.Configuration.KeyboardShortcut" },
-                        new TextBox
-                        {
-                            Text = $"new BepInEx.Configuration.KeyboardShortcut(UnityEngine.KeyCode.{keycode})"
-                        },
-                        answers[3],
-                        answers[4]
-                    ], promptWindow);
-                    
-                    string code = _editor.GetCurrentTextEditor().Text;
-                    
-                    string logic = $@"
-            // Keybind logic for {variableName}
-            {variableName}JustPressed = {variableName}.Value.IsDown();
-            if ({variableName}.Value.IsDown())
-            {{
-                {variableName}Down = true;
-                if (mEnabled.Value)
-                {{
-                    // Code For When Key Is Pressed
-                }}
-            }}
-            if ({variableName}.Value.IsUp())
-            {{
-                {variableName}Down = false;
-                if (mEnabled.Value)
-                {{
-                    // Code For When Key Is Released
-                }}
-            }}";
-                    
-                    int updateIndex = code.IndexOf("void Update()");
-                    if (updateIndex == -1)
-                    {
-                        string updateCode = @"        void Update()
-        {
-
-        }";
-                        int lastNamespaceBracket = code.LastIndexOf('}');
-                        int lastClassBracket = code.LastIndexOf('}', lastNamespaceBracket-2);
-                        if (lastClassBracket != -1 && lastNamespaceBracket != -1)
-                        {
-                            code = code.Insert(lastClassBracket, "\n" + updateCode + "\n    ");
-                            
-                        }
-                        else
-                        {
-                            new InfoWindow("Error", InfoWindowType.Error, "Couldn't find class end bracket.", true, fontSize:20).Show();
-
-                        }
-                    }
-                    updateIndex = code.IndexOf("void Update()");
-
-                    
-                    int bracketIndex = code.IndexOf('{', updateIndex);
-                    if (bracketIndex != -1)
-                    {
-                        code = code.Insert(bracketIndex + 1, "\n" + logic);
-                    }
-                    
-                    void DeclareVariable(string nameModifier = "Down")
-                    {
-                        string declaration = $"        public static bool {variableName}{nameModifier} = false;";
-                        int lastBoolIndex = code.IndexOf("public static bool ");
-                        if (lastBoolIndex != -1)
-                        {
-                            int insertIndex = code.IndexOf('\n', lastBoolIndex) + 1;
+                            int insertIndex = code.IndexOf('\n', lastConfigEntryIndex) + 2;
                             code = code.Insert(insertIndex, declaration + "\n");
                         }
-                        else
-                        {
-                            int lastConfigEntryIndex = code.LastIndexOf("ConfigDefinition");
-                            if (lastConfigEntryIndex != -1)
-                            {
-                                int insertIndex = code.IndexOf('\n', lastConfigEntryIndex) + 2;
-                                code = code.Insert(insertIndex, declaration + "\n");
-                            }
-                        }
                     }
-                    DeclareVariable(); 
-                    DeclareVariable("JustPressed");
-                    _editor.GetCurrentTextEditor().Text = code;
-                    
-                    promptWindow.Close();
                 }
-            #endregion
-            
-            private void BuildMod()
-            {
-                var infoWindow = new InfoWindow("Building Mod", InfoWindowType.Info, "Waiting for changelog entry...");
-                infoWindow.Show();
-                _editor.Mod.InstallMod(infoWindow, _editor);
-            }
-            
-            private void LoadModDialog()
-            {
-                MenuCommands.LoadModDialogCommand.Execute(_editor);
-            }
-            
-            private void SaveMod()
-            {
-                Mod mod = _editor.Mod;
-                mod.SaveFiles(_editor);
-            }
-            
-            private async Task CreateModFiles()
-            {
-                if (await _editor.Mod.CreateModFiles() != null)
-                {
-                    new InfoWindow("Created Files Successfully", InfoWindowType.Ok, "Mod files were created successfully", true, fontSize:20).Show();
-                }
-            }
-            #endregion
-        #endregion
-        #region MenuCommands
-
-            private void Undo()
-            {
-                ApplicationCommands.Undo.Execute(null, _editor.GetCurrentTextEditor().TextArea);
-            }
-
-            private void Redo()
-            {
-                ApplicationCommands.Redo.Execute(null, _editor.GetCurrentTextEditor().TextArea);
-            }
-            private void CopyMouse()
-            {
-                ApplicationCommands.Copy.Execute(null, _editor.GetCurrentTextEditor().TextArea);
-            }
-
-            private void CutMouse()
-            {
-                ApplicationCommands.Cut.Execute(null, _editor.GetCurrentTextEditor().TextArea);
-            }
-        
-            private void PasteMouse()
-            {
-                ApplicationCommands.Paste.Execute(null, _editor.GetCurrentTextEditor().TextArea);
-            }
-
-            private void SelectAllMouse()
-            {
-                ApplicationCommands.SelectAll.Execute(null, _editor.GetCurrentTextEditor().TextArea);
-            }
-
-            private void Find()
-            {
-                ApplicationCommands.Find.Execute(null, _editor.GetCurrentTextEditor().TextArea);
-            }
-
-            private void Replace()
-            {
-                ApplicationCommands.Replace.Execute(null, _editor.GetCurrentTextEditor().TextArea);
-            }
-
-            private void GoToLine()
-            {
-                var window = new PromptWindow("Go to Line:Column",
-                    new List<(Type, string, object?, bool)>
-                    {
-                        (typeof(TextBlock), "Line:Column", null, true)
-                    },
-                    GoToLineDone, 
-                    baseHeight:220);
-            
-                var promptsPanel = window.FindControl<StackPanel>("PromptsPanel")!;
+                DeclareVariable(); 
+                DeclareVariable("JustPressed");
+                _editor.GetCurrentTextEditor().Text = code;
                 
-                var lineControl = new TextBox()
-                {
-                    Text = _editor.GetCurrentTextEditor().TextArea.Caret.Line + ":" + _editor.GetCurrentTextEditor().TextArea.Caret.Column,
-                };
-            
-                promptsPanel.Children.Add(lineControl);
-                window.answers.Add(lineControl);
-                window.Show();
+                promptWindow.Close();
             }
-            
-            private void GoToLineDone(List<Control> answers, Window promptWindow)
+        #endregion
+        
+        private void BuildMod()
+        {
+            var infoWindow = new InfoWindow("Building Mod", InfoWindowType.Info, "Getting Ready");
+            infoWindow.Show();
+            _editor.Mod.InstallMod(infoWindow, _editor);
+        }
+        
+        private void LoadModDialog()
+        {
+            MenuCommands.LoadModDialogCommand.Execute(_editor);
+        }
+        
+        private void SaveMod()
+        {
+            Mod mod = _editor.Mod;
+            mod.SaveFiles(_editor);
+        }
+        
+        private async Task CreateModFiles()
+        {
+            if (await _editor.Mod.CreateModFiles() != null)
             {
-                var input = (answers[0] as TextBox)?.Text;
-            
-                if (string.IsNullOrWhiteSpace(input))
+                new InfoWindow("Created Files Successfully", InfoWindowType.Ok, "Mod files were created successfully", true, fontSize:20).Show();
+            }
+        }
+        #endregion
+    #endregion
+    
+    #region MenuCommands
+        private void Undo()
+        {
+            ApplicationCommands.Undo.Execute(null, _editor.GetCurrentTextEditor()?.TextArea);
+        }
+
+        private void Redo()
+        {
+            ApplicationCommands.Redo.Execute(null, _editor.GetCurrentTextEditor()?.TextArea);
+        }
+        private void CopyMouse()
+        {
+            ApplicationCommands.Copy.Execute(null, _editor.GetCurrentTextEditor()?.TextArea);
+        }
+
+        private void CutMouse()
+        {
+            ApplicationCommands.Cut.Execute(null, _editor.GetCurrentTextEditor()?.TextArea);
+        }
+    
+        private void PasteMouse()
+        {
+            ApplicationCommands.Paste.Execute(null, _editor.GetCurrentTextEditor()?.TextArea);
+        }
+
+        private void SelectAllMouse()
+        {
+            ApplicationCommands.SelectAll.Execute(null, _editor.GetCurrentTextEditor()?.TextArea);
+        }
+
+        private void Find()
+        {
+            ApplicationCommands.Find.Execute(null, _editor.GetCurrentTextEditor()?.TextArea);
+        }
+
+        private void Replace()
+        {
+            ApplicationCommands.Replace.Execute(null, _editor.GetCurrentTextEditor()?.TextArea);
+        }
+
+        private void GoToLine()
+        {
+            var window = new PromptWindow("Go to Line:Column",
+                new List<(Type, string, object?, bool)>
                 {
-                    _editor.GetCurrentTextEditor().TextArea.Caret.Line = 1;
-                    _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
-                }
-                else
-                {
-                    var parts = input.Split(':');
+                    (typeof(TextBlock), "Line:Column", null, true)
+                },
+                GoToLineDone, 
+                baseHeight:220);
+        
+            var promptsPanel = window.FindControl<StackPanel>("PromptsPanel")!;
             
-                    if (parts.Length == 1)
+            var lineControl = new TextBox()
+            {
+                Text = _editor.GetCurrentTextEditor().TextArea.Caret.Line + ":" + _editor.GetCurrentTextEditor().TextArea.Caret.Column,
+            };
+        
+            promptsPanel.Children.Add(lineControl);
+            window.answers.Add(lineControl);
+            window.Show();
+        }
+        
+        private void GoToLineDone(List<Control> answers, Window promptWindow)
+        {
+            var input = (answers[0] as TextBox)?.Text;
+        
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                _editor.GetCurrentTextEditor().TextArea.Caret.Line = 1;
+                _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
+            }
+            else
+            {
+                var parts = input.Split(':');
+        
+                if (parts.Length == 1)
+                {
+                    if (int.TryParse(parts[0], out int line))
                     {
-                        if (int.TryParse(parts[0], out int line))
-                        {
-                            _editor.GetCurrentTextEditor().TextArea.Caret.Line = line;
-                            _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
-                        }
-                        else
-                        {
-                            _editor.GetCurrentTextEditor().TextArea.Caret.Line = 1;
-                            _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
-                        }
-                    }
-                    else if (parts.Length == 2)
-                    {
-                        if (int.TryParse(parts[0], out int line) && int.TryParse(parts[1], out int column))
-                        {
-                            _editor.GetCurrentTextEditor().TextArea.Caret.Line = line;
-                            _editor.GetCurrentTextEditor().TextArea.Caret.Column = column;
-                        }
-                        else
-                        {
-                            _editor.GetCurrentTextEditor().TextArea.Caret.Line = 1;
-                            _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
-                        }
+                        _editor.GetCurrentTextEditor().TextArea.Caret.Line = line;
+                        _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
                     }
                     else
                     {
@@ -617,219 +642,258 @@ namespace {_editor.Mod.NameNoSpaces}
                         _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
                     }
                 }
-            
-                promptWindow.Close();
+                else if (parts.Length == 2)
+                {
+                    if (int.TryParse(parts[0], out int line) && int.TryParse(parts[1], out int column))
+                    {
+                        _editor.GetCurrentTextEditor().TextArea.Caret.Line = line;
+                        _editor.GetCurrentTextEditor().TextArea.Caret.Column = column;
+                    }
+                    else
+                    {
+                        _editor.GetCurrentTextEditor().TextArea.Caret.Line = 1;
+                        _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
+                    }
+                }
+                else
+                {
+                    _editor.GetCurrentTextEditor().TextArea.Caret.Line = 1;
+                    _editor.GetCurrentTextEditor().TextArea.Caret.Column = 1;
+                }
             }
+        
+            promptWindow.Close();
+        }
 
-            #region Tab Commands
+        #region Tab Commands
 
-            private void CloseTab()
+        private void CloseTab(object? parameter)
+        {
+            if (parameter is TabItemViewModel tab)
+                _editor.CloseTab(tab);
+
+            _editor.lastClickedTab = null;
+        }
+
+
+        private void CloseAllTabs()
+        {
+            var tabs = _editor._tabControl.Items.Cast<TabItemViewModel>().ToList();
+            foreach (var tab in tabs)
             {
-                _editor.CloseTab(_editor?.rightClickedTab ?? _editor._tabControl.SelectedItem as TabItem);
-                _editor.rightClickedTab = null;
+                _editor.CloseTab(tab);
+                _editor.lastClickedTab = null;
             }
+        }
 
-            private void CloseAllTabs()
+        private void CloseOtherTabs()
+        {
+            var tabs = _editor._tabControl.Items.Cast<TabItemViewModel>().ToList();
+            bool waitingForPrompt = false;
+            foreach (var tab in tabs)
             {
-                var tabs = _editor._tabControl.Items.Cast<TabItem>().ToList();
-                foreach (var tab in tabs)
+                if (tab != _editor.lastClickedTab)
                 {
                     _editor.CloseTab(tab);
-                    _editor.rightClickedTab = null;
                 }
-            }
-
-            private void CloseOtherTabs()
-            {
-                var tabs = _editor._tabControl.Items.Cast<TabItem>().ToList();
-                bool waitingForPrompt = false;
-                foreach (var tab in tabs)
-                {
-                    if (tab != _editor.rightClickedTab)
-                    {
-                        _editor.CloseTab(tab);
-                    }
-                }
-            }
-
-            #endregion
-
-        #endregion
-        
-        #region CreateAssetCommands
-
-        private void CreateFish()
-        {
-            new PromptWindow("New Fish",
-                new List<(Type, string, object?, bool)>
-                {
-                    (typeof(TextBox), "Name", "", true),
-                    (typeof(TextBox), "Size", "1", true),
-                    (typeof(TextBox), "Speed", "1", true),
-                    (typeof(TextBox), "Panic Distance", "1", true),
-                    (typeof(ComboBox), "Movement Type", new List<string> { "Random", "Wave", "Zigzag", "Line" }, true),
-                    (typeof(TextBox), "NPC Catch Chance", "0.01", true),
-                    (typeof(CheckBox), "Pauses Periodically", true, true),
-                    (typeof(TextBox), "Pause Time (if pauses)", "1", true),
-                    (typeof(TextBox), "Unpause or Zigzag time (if applicable)", "0", true),
-                    (typeof(TextBox), "Amplitude (Wave Mode Only)", "1", true),
-                    (typeof(TextBox), "Frequency (Wave Mode Only)", "1", true),
-                    // (typeof(TextBox), "Item", "", true), // IDEK
-                },
-                CreateFishDone
-            ).Show();
-
-            void CreateFishDone(List<Control> answers, Window promptWindow)
-            {
-                promptWindow.Close();
             }
         }
-        
-        private void CreateBuffOrDebuff()
+
+        #endregion
+
+    #endregion
+    
+    #region CreateAssetCommands
+
+    private void CreateFish()
+    {
+        new PromptWindow("New Fish",
+            new List<(Type, string, object?, bool)>
+            {
+                (typeof(TextBox), "Name", "", true),
+                (typeof(TextBox), "Size", "1", true),
+                (typeof(TextBox), "Speed", "1", true),
+                (typeof(TextBox), "Panic Distance", "1", true),
+                (typeof(ComboBox), "Movement Type", new List<string> { "Random", "Wave", "Zigzag", "Line" }, true),
+                (typeof(TextBox), "NPC Catch Chance", "0.01", true),
+                (typeof(CheckBox), "Pauses Periodically", true, true),
+                (typeof(TextBox), "Pause Time (if pauses)", "1", true),
+                (typeof(TextBox), "Unpause or Zigzag time (if applicable)", "0", true),
+                (typeof(TextBox), "Amplitude (Wave Mode Only)", "1", true),
+                (typeof(TextBox), "Frequency (Wave Mode Only)", "1", true),
+                // (typeof(TextBox), "Item", "", true), // IDEK
+            },
+            CreateFishDone
+        ).Show();
+
+        void CreateFishDone(List<Control> answers, Window promptWindow)
         {
-            var effectEntries = new List<(TextBox effectType, TextBox effectStrength)>();
-            
-            var promptWindow = new PromptWindow("New Buff or Debuff",
-                new List<(Type, string, object?, bool)>
-                {
-                    (typeof(TextBox), "Name", "", true),
-                    (typeof(TextBox), "Description", "", true),
-                    (typeof(CheckBox), "Can't Stack", false, true),
-                    (typeof(CheckBox), "Stacks Visually", false, true)
-                },
-                CreateBuffOrDebuffDone
-            );
+            promptWindow.Close();
+        }
+    }
+    
+    private void CreateBuffOrDebuff()
+    {
+        var effectEntries = new List<(TextBox effectType, TextBox effectStrength)>();
+        
+        var promptWindow = new PromptWindow("New Buff or Debuff",
+            new List<(Type, string, object?, bool)>
+            {
+                (typeof(TextBox), "Name", "", true),
+                (typeof(TextBox), "Description", "", true),
+                (typeof(CheckBox), "Can't Stack", false, true),
+                (typeof(CheckBox), "Stacks Visually", false, true)
+            },
+            CreateBuffOrDebuffDone
+        );
 
-            var promptsPanel = promptWindow.FindControl<StackPanel>("PromptsPanel");
+        var promptsPanel = promptWindow.FindControl<StackPanel>("PromptsPanel");
 
-            var addButton = new Button
+        var addButton = new Button
+        {
+            HorizontalAlignment = HorizontalAlignment.Center,
+            Content = "Add New Status Effect"
+        };
+
+        var linkButton = new Button
+        {
+            Content = "Effect Type"
+        };
+        linkButton.Click += (_, _) =>
+        {
+            var url = "https://docs.unity3d.com/ScriptReference/KeyCode.html"; // MAKE THIS SHOW EFFECT TYPE TO INT IN THE DOCUMENTATION
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            });
+        };
+
+        addButton.Click += (_, _) =>
+        {
+            var effectTypeBox = new TextBox();
+            var effectStrengthBox = new TextBox();
+
+            promptsPanel?.Children.Add(new Separator());
+            promptsPanel?.Children.Add(new TextBlock
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Content = "Add New Status Effect"
-            };
+                Text = "Effect Type"
+            });
+            promptsPanel?.Children.Add(linkButton);
+            promptsPanel?.Children.Add(effectTypeBox);
 
-            var linkButton = new Button
+            promptsPanel?.Children.Add(new TextBlock
             {
-                Content = "Effect Type"
-            };
-            linkButton.Click += (_, _) =>
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Text = "Effect Strength"
+            });
+            promptsPanel?.Children.Add(effectStrengthBox);
+
+            effectEntries.Add((effectTypeBox, effectStrengthBox));
+        };
+
+        promptsPanel?.Children.Add(addButton);
+        promptWindow.Show();
+
+        void CreateBuffOrDebuffDone(List<Control> answers, Window promptWindow)
+        {
+            if (effectEntries.Count > 0)
             {
-                var url = "https://docs.unity3d.com/ScriptReference/KeyCode.html"; // MAKE THIS SHOW EFFECT TYPE TO INT IN THE DOCUMENTATION
-                Process.Start(new ProcessStartInfo
+                var effectData = new List<(string effectType, string effectStrength)>();
+
+                foreach (var (effectTypeBox, effectStrengthBox) in effectEntries)
                 {
-                    FileName = url,
-                    UseShellExecute = true
-                });
-            };
-
-            addButton.Click += (_, _) =>
-            {
-                var effectTypeBox = new TextBox();
-                var effectStrengthBox = new TextBox();
-
-                promptsPanel?.Children.Add(new Separator());
-                promptsPanel?.Children.Add(new TextBlock
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Text = "Effect Type"
-                });
-                promptsPanel?.Children.Add(linkButton);
-                promptsPanel?.Children.Add(effectTypeBox);
-
-                promptsPanel?.Children.Add(new TextBlock
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Text = "Effect Strength"
-                });
-                promptsPanel?.Children.Add(effectStrengthBox);
-
-                effectEntries.Add((effectTypeBox, effectStrengthBox));
-            };
-
-            promptsPanel?.Children.Add(addButton);
-            promptWindow.Show();
-
-            void CreateBuffOrDebuffDone(List<Control> answers, Window promptWindow)
-            {
-                if (effectEntries.Count > 0)
-                {
-                    var effectData = new List<(string effectType, string effectStrength)>();
-    
-                    foreach (var (effectTypeBox, effectStrengthBox) in effectEntries)
+                    var effectType = effectTypeBox.Text.Trim();
+                    var effectStrength = effectStrengthBox.Text.Trim();
+                    if (!string.IsNullOrEmpty(effectType) && !string.IsNullOrEmpty(effectStrength))
                     {
-                        var effectType = effectTypeBox.Text.Trim();
-                        var effectStrength = effectStrengthBox.Text.Trim();
-                        if (!string.IsNullOrEmpty(effectType) && !string.IsNullOrEmpty(effectStrength))
-                        {
-                            effectData.Add((effectType, effectStrength));
-                        }
+                        effectData.Add((effectType, effectStrength));
                     }
-                    
-                    promptWindow.Close();
                 }
-            }
-        }
-        
-        private void CreateQuest()
-        {
-            new PromptWindow("New Quest",
-                new List<(Type, string, object?, bool)>
-                {
-                    (typeof(TextBox), "Name", "", true),
-                    (typeof(TextBox), "Description", "", true),
-                    (typeof(TextBox), "NPC To Cash In To (if applicable)", "", false),
-                    (typeof(TextBox), "Assign Event", "", true),
-                    (typeof(TextBox), "Completion Event", "", true),
-                    (typeof(TextBox), "Cash In Event", "", true),
-                },
-                CreateQuestDone
-            ).Show();
-
-            void CreateQuestDone(List<Control> answers, Window promptWindow)
-            {
+                
                 promptWindow.Close();
             }
         }
-        
-        // This one will be a pain
-        // private void CreateResearchTask()
-        // {
-        //     new PromptWindow("New Research Task",
-        //         new List<(Type, string, object?, bool)>
-        //         {
-        //             (typeof(TextBox), "Name", "", true),
-        //             (typeof(TextBox), "Description", "", true),
-        //             (typeof(TextBox), "NPC To Cash In To (if applicable)", "", false),
-        //             (typeof(TextBox), "Assign Event", "", true),
-        //             (typeof(TextBox), "Completion Event", "", true),
-        //             (typeof(TextBox), "Cash In Event", "", true),
-        //         },
-        //         CreateResearchTaskDone
-        //     ).Show();
-        //
-        //     void CreateResearchTaskDone(List<Control> answers, Window promptWindow)
-        //     {
-        //         promptWindow.Close();
-        //     }
-        // }
-        
-        private void CreateImportantEvent()
-        {
-            new PromptWindow("New Fish",
-                new List<(Type, string, object?, bool)>
-                {
-                    (typeof(TextBox), "Name", "", true),
-                    (typeof(TextBox), "Size", "1", true),
-                },
-                CreateImportantEventDone
-            ).Show();
-
-            void CreateImportantEventDone(List<Control> answers, Window promptWindow)
-            {
-                promptWindow.Close();
-            }
-        }
-
-        #endregion
     }
+    
+    private void CreateQuest()
+    {
+        new PromptWindow("New Quest",
+            new List<(Type, string, object?, bool)>
+            {
+                (typeof(TextBox), "Name", "", true),
+                (typeof(TextBox), "Description", "", true),
+                (typeof(TextBox), "NPC To Cash In To (if applicable)", "", false),
+                (typeof(TextBox), "Assign Event", "", true),
+                (typeof(TextBox), "Completion Event", "", true),
+                (typeof(TextBox), "Cash In Event", "", true),
+            },
+            CreateQuestDone
+        ).Show();
+
+        void CreateQuestDone(List<Control> answers, Window promptWindow)
+        {
+            promptWindow.Close();
+        }
+    }
+    
+    // This one will be a pain
+    // private void CreateResearchTask()
+    // {
+    //     new PromptWindow("New Research Task",
+    //         new List<(Type, string, object?, bool)>
+    //         {
+    //             (typeof(TextBox), "Name", "", true),
+    //             (typeof(TextBox), "Description", "", true),
+    //             (typeof(TextBox), "NPC To Cash In To (if applicable)", "", false),
+    //             (typeof(TextBox), "Assign Event", "", true),
+    //             (typeof(TextBox), "Completion Event", "", true),
+    //             (typeof(TextBox), "Cash In Event", "", true),
+    //         },
+    //         CreateResearchTaskDone
+    //     ).Show();
+    //
+    //     void CreateResearchTaskDone(List<Control> answers, Window promptWindow)
+    //     {
+    //         promptWindow.Close();
+    //     }
+    // }
+    
+    private void CreateImportantEvent()
+    {
+        new PromptWindow("New Fish",
+            new List<(Type, string, object?, bool)>
+            {
+                (typeof(TextBox), "Name", "", true),
+                (typeof(TextBox), "Size", "1", true),
+            },
+            CreateImportantEventDone
+        ).Show();
+
+        void CreateImportantEventDone(List<Control> answers, Window promptWindow)
+        {
+            promptWindow.Close();
+        }
+    }
+
+    #endregion
 }
+public class TabItemViewModel : ObservableObject
+{
+    private string _header;
+    public string Header
+    {
+        get => _header;
+        set => SetProperty(ref _header, value);
+    }
+    
+    private Control _content;
+    public Control Content
+    {
+        get => _content;
+        set => SetProperty(ref _content, value);
+    }
+    public override string ToString() => Header;
+}
+

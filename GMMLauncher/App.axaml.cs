@@ -23,6 +23,7 @@ namespace GMMLauncher
             AvaloniaXamlLoader.Load(this);
             Settings = new Settings();
             Settings.LoadSettings();
+            Microsoft.Build.Locator.MSBuildLocator.RegisterDefaults();
         }
         
 

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text.Json;
 using System.Windows.Input;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Layout;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
+using GMMBackend;
 using GMMLauncher.ViewModels;
 using GMMLauncher.Views;
 
@@ -22,14 +23,15 @@ public static class MenuCommands
     public static ICommand NewModCommand { get; } = new RelayCommand(NewMod);
     public static ICommand LoadExistingModCommand { get; } = new RelayCommand(LoadExistingMod);
     public static ICommand LoadModDialogCommand { get; } = new RelayCommand<Window>(LoadMod);
-    public static ICommand QuitAppCommand { get; } = new RelayCommand(QuitApp);
+    public static ICommand QuitAppCommand { get; } = new RelayCommand(QuitCodeEditor);
     public static ICommand OpenSettingsInEditorCommand { get; } = new RelayCommand<CodeEditor>(OpenSettingsInEditor);
     public static ICommand OpenSettingsCommand { get; } = new RelayCommand(OpenSettings);
     public static ICommand OpenDocumentationCommand { get; } = new RelayCommand(OpenDocumentation);
 
     
     #region Mods
-    public static void NewMod()
+
+    private static void NewMod()
     {
         var window = new PromptWindow("New Mod",
             new List<(Type, string, object?, bool)>
@@ -49,7 +51,7 @@ public static class MenuCommands
         string developers = (answers[2] as TextBox)?.Text ?? string.Empty;
 
         Mod mod = new(modName, description, developers,
-            App.appVersion);
+            App.appVersion, "1.0.0");
         mod.CreateMainFile();
     
         var editor = new CodeEditor(mod);
@@ -57,8 +59,8 @@ public static class MenuCommands
     
         promptWindow.Close();
     }
-    
-    public static void LoadExistingMod()
+
+    private static void LoadExistingMod()
     {
         var availableMods = GetAvailableMods();
         StackPanel promptsPanel;
@@ -124,10 +126,11 @@ public static class MenuCommands
         {
             string modName = button.Content.ToString();
             new InfoWindow("Are You Sure?", InfoWindowType.YesNo, $"Are you sure you want to delete {modName}. This action is irreversible.", true,
-                () =>
+                (window) =>
                 {
                     Directory.Delete(Path.Combine(Directory.GetCurrentDirectory(), "Mods" , modName), true);
                     promptsPanel.Children.Remove(button);
+                    window.Close();
                 }).Show();
         }
     }
@@ -137,7 +140,7 @@ public static class MenuCommands
         return Directory.GetDirectories("Mods");
     }
 
-    public static void LoadExistingModDone(List<Control> answers, Window promptWindow)
+    private static void LoadExistingModDone(List<Control> answers, Window promptWindow)
     {
         string modName = (answers[0] as TextBox)?.Text ?? string.Empty;
         if (string.IsNullOrEmpty(modName))
@@ -148,8 +151,8 @@ public static class MenuCommands
         LoadModFromFile(modName.Replace(" ", ""));
         promptWindow.Close();
     }
-    
-    public static async void LoadMod(Window window)
+
+    private static async void LoadMod(Window window)
     {
         var selectedFolders = await window.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
         {
@@ -172,8 +175,8 @@ public static class MenuCommands
             LoadModFromFile(filePath: selectedFolder.Path.ToString().Replace("file:///", ""));
         }
     }
-    
-    public static void LoadModFromFile(string folderName = "", string filePath = "")
+
+    private static void LoadModFromFile(string folderName = "", string filePath = "")
     {
         if (filePath == "" && folderName != "") filePath = Path.Combine(Directory.GetCurrentDirectory(),"Mods", folderName, folderName + ".json");
             
@@ -189,10 +192,9 @@ public static class MenuCommands
                 string description = modData.Description;
                 string developers = modData.Authors;
                 string gmmVersion = modData.GMMVersion;
+                string version = modData.Version;
 
-                mod = new Mod(modName, description, developers, gmmVersion);
-            
-                mod.CreateMainFile();
+                mod = new Mod(modName, description, developers, gmmVersion, version);
             }
         }
 
@@ -200,13 +202,14 @@ public static class MenuCommands
         editor.Show();
     }
     #endregion
-    
-    public static void OpenSettingsInEditor(CodeEditor editor = null)
+
+    private static void OpenSettingsInEditor(CodeEditor editor = null)
     {
         var window = new SettingsWindow(editor);
         window.Show();
     }
-    public static void OpenSettings()
+
+    private static void OpenSettings()
     {
         var window = new SettingsWindow();
         window.Show();
@@ -231,11 +234,36 @@ public static class MenuCommands
         });
     }
 
-    private static void QuitApp()
+    private static void QuitCodeEditor()
     {
-        Dispatcher.UIThread.Post(() => 
+        Window mainWindow = WindowManager.Windows.FirstOrDefault(w => w is MainWindow);
+
+        if (mainWindow == null && App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            Environment.Exit(0);
-        });
+            mainWindow = new MainWindow();
+            WindowManager.Add(mainWindow);
+            desktop.MainWindow = mainWindow;
+            mainWindow.Show();
+        }
+
+        foreach (var window in WindowManager.Windows.ToList())
+        {
+            if (window is not MainWindow)
+            {
+                window.Close();
+            }
+        }
+
+        if (mainWindow != null)
+        {
+            if (mainWindow.WindowState == WindowState.Minimized)
+                mainWindow.WindowState = WindowState.Normal;
+            
+            mainWindow.Activate();
+            mainWindow.Topmost = true;
+            mainWindow.Topmost = false;
+        }
     }
+
+
 }

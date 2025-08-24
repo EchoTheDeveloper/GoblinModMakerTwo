@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using GMMLauncher.ViewModels;
 using Avalonia.Markup.Xaml;
 using System.Runtime.InteropServices;
+using GMMBackend;
 
 namespace GMMLauncher.Views;
 
@@ -12,10 +13,12 @@ public partial class InfoWindow : Window
     private readonly TextBlock titleText;
     public InfoWindowType windowType { get; private set; }
 
-    public InfoWindow(string title, InfoWindowType windowType, string startText = "", bool playSound = false, Action OkOrYes = null, Action No = null, int height = 200, int width = 300, int fontSize = 15)
+    public InfoWindow(string title, InfoWindowType windowType, string startText = "", bool playSound = false, Action<Window> OkOrYes = null, Action<Window> No = null, int height = 200, int width = 300, int fontSize = 15)
     {
         InitializeComponent();
         DataContext = new InfoWindowViewModel();
+        
+        WindowManager.Add(this);
         
         titleText = this.FindControl<TextBlock>("TitleText");
         infoText = this.FindControl<TextBlock>("InfoText");
@@ -23,7 +26,7 @@ public partial class InfoWindow : Window
         ChangeWindowType(title, windowType, startText, playSound, OkOrYes, No, height, width, fontSize);
     }
 
-    public void ChangeWindowType(string title, InfoWindowType newWindowType, string newText = "", bool playSound = false, Action OkOrYes = null, Action No = null, int height = 200, int width = 300, int fontSize = 15)
+    public void ChangeWindowType(string title, InfoWindowType newWindowType, string newText = "", bool playSound = false, Action<Window> OkOrYes = null, Action<Window> No = null, int height = 200, int width = 300, int fontSize = 15)
     {
         Height = height;
         Width = width;
@@ -44,8 +47,8 @@ public partial class InfoWindow : Window
                     Content = "Ok",
                     Command = new RelayCommand(() =>
                     {
-                        OkOrYes?.Invoke();
-                        Close();
+                        if (OkOrYes != null) OkOrYes?.Invoke(this);
+                        else Close();
                     }),
                 };
                 buttonPanel.Children.Add(okButton);
@@ -56,8 +59,8 @@ public partial class InfoWindow : Window
                     Content = "No",
                     Command = new RelayCommand(() =>
                     {
-                        No?.Invoke();
-                        Close();
+                        if (No != null) No?.Invoke(this);
+                        else Close();
                     }),
                 };
                 buttonPanel.Children.Add(noButton);
@@ -66,8 +69,8 @@ public partial class InfoWindow : Window
                     Content = "Yes",
                     Command = new RelayCommand(() =>
                     {
-                        OkOrYes?.Invoke();
-                        Close();
+                        if (OkOrYes != null) OkOrYes?.Invoke(this);
+                        else Close();
                     }),
                 };
                 buttonPanel.Children.Add(yesButton);
@@ -78,8 +81,8 @@ public partial class InfoWindow : Window
                     Content = "Ok",
                     Command = new RelayCommand(() =>
                     {
-                        OkOrYes?.Invoke();
-                        Close();
+                        if (OkOrYes != null) OkOrYes?.Invoke(this);
+                        else Close();
                     }),
                 };
                 buttonPanel.Children.Add(errorButton);

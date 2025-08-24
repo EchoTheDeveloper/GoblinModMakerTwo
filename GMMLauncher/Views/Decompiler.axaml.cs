@@ -5,6 +5,7 @@ using AvaloniaEdit.Highlighting;
 using AvaloniaEdit.TextMate;
 using TextMateSharp.Grammars;
 using AvaloniaEdit.Indentation.CSharp;
+using GMMBackend;
 using GMMLauncher.ViewModels;
 
 namespace GMMLauncher.Views
@@ -17,7 +18,8 @@ namespace GMMLauncher.Views
         {
             DataContext = new DecompilerViewModel(this);
             InitializeComponent();
-            
+            WindowManager.Add(this);
+            Title = "Decompiler";
             (DataContext as DecompilerViewModel)?.LoadAssembly(this, false);
 
             decompiledCode = this.FindControl<TextEditor>("DecompiledCode");

@@ -108,13 +108,14 @@ public class Settings
             if (Directory.Exists(Path.Combine(bepInFolder, "plugins")))
             {
                 new InfoWindow("Already Installed", InfoWindowType.YesNo, "BepInEx is already installed. Are you trying to reinstall?", true, 
-                    () =>
+                    (window) =>
                     {
                         Directory.Delete(Path.Combine(SteamDirectory, "BepInEx"), true);
                         File.Delete(Path.Combine(SteamDirectory, "doorstop_config.ini"));
                         File.Delete(Path.Combine(SteamDirectory, "winhttp.dll"));
                         File.Delete(Path.Combine(SteamDirectory, "changelog.txt"));
                         InstallBepInEx();
+                        window.Close();
                     },
                     fontSize:18).Show();
             }

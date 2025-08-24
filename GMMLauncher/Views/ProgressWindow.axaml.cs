@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using GMMBackend;
 using GMMLauncher.ViewModels;
 
 namespace GMMLauncher.Views;
@@ -11,6 +12,7 @@ public partial class ProgressWindow : Window
     {
         InitializeComponent();
         _bar = this.FindControl<ProgressBar>("ProgressBar");
+        WindowManager.Add(this);
     }
 
     private void InitializeComponent()

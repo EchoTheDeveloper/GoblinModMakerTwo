@@ -3,6 +3,8 @@
         xmlns:vm="using:GMMLauncher.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Tabalonia.Controls;assembly=Tabalonia"
+        xmlns:global="clr-namespace:"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="GMMLauncher.Views.CodeEditor"
         x:DataType="vm:CodeEditorViewModel"
@@ -30,6 +32,7 @@
 
         <DockPanel Margin="10,10,0,0">
             <TextBlock DockPanel.Dock="Top" 
+                       Name="TitleText"
                        Text="Goblin Mod Maker"/>
         </DockPanel>
         <DockPanel Margin="0,34,0,0">
@@ -67,7 +70,7 @@
                     <Separator />
                     <MenuItem Header="Open Decompiler" Command="{Binding OpenDecompilerCommand}"/>
                     <Separator />
-                    <MenuItem Header="Exit" InputGesture="Alt+F4" Command="{Binding QuitAppCommand}">
+                    <MenuItem Header="Exit" InputGesture="Ctrl+Q" Command="{Binding QuitAppCommand}">
                     <MenuItem.Icon>
                         <PathIcon Data="{StaticResource dismiss_regular}" />
                     </MenuItem.Icon>
@@ -185,11 +188,26 @@
                         </TreeView.ContextMenu>
                     </TreeView>
                 </ScrollViewer>
-
-                
-                <TabControl Grid.Column="1"
-                            Grid.Row="0"
-                            Name="TabControl">
+                <controls:TabsControl Grid.Row="0" 
+                                      Grid.Column="1"
+                                      Background="Transparent"
+                                      ItemsSource="{Binding TabItems}"
+                                      NewItemAsyncFactory="{Binding NewItemAsyncFactory}"
+                                      FixedHeaderCount="0"
+                                      Name="TabControl"
+                                      ShowDefaultAddButton="True"
+                                      ShowDefaultCloseButton="True"
+                                      >
+                    <TabControl.ContentTemplate>
+                        <DataTemplate DataType="{x:Type vm:TabItemViewModel}">
+                            <Grid Background="{DynamicResource SelectedTabItemBackgroundBrush}">
+                                <ContentPresenter Content="{Binding Content}" 
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Stretch"
+                                                  Padding="10"/>
+                            </Grid>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
                     <TabControl.ContextMenu>
                         <ContextMenu Closed="OnTabMenuClosed">
                             <ContextMenu.KeyBindings>
@@ -200,11 +218,15 @@
                             <MenuItem Header="Close Other Tabs" Command="{Binding CloseOtherTabsCommand}"/>
                         </ContextMenu>
                     </TabControl.ContextMenu>
-                </TabControl>
-                
+                    <TabControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:TabItemViewModel}">
+                            <TextBlock Text="{Binding Header}" />
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                </controls:TabsControl>
                 <!-- Status Bar -->
                 <StackPanel Grid.Row="1" Grid.Column="0" Name="StatusBar" Background="Transparent" Height="25" Orientation="Horizontal">
-                    <TextBlock Name="StatusText" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="12"/>
+                    <TextBlock Name="StatusText" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="12"/>
                 </StackPanel>
             </Grid>
         </DockPanel>
@@ -235,7 +257,7 @@
         <KeyBinding Gesture="Ctrl+N" Command="{Binding NewFileCommand}"/>
         <KeyBinding Gesture="Ctrl+O" Command="{Binding LoadExistingModCommand}"/>
         <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
-        <KeyBinding Gesture="Alt+F4" Command="{Binding QuitAppCommand}"/>
+        <KeyBinding Gesture="Ctrl+Q" Command="{Binding QuitAppCommand}"/>
         
         <KeyBinding Gesture="Ctrl+C" Command="{Binding CopyCommand}"/>
         <KeyBinding Gesture="Ctrl+X" Command="{Binding CutCommand}"/>
@@ -251,7 +273,12 @@
         <KeyBinding Gesture="Ctrl+W" Command="{Binding CloseTabCommand}"/>
         
         <KeyBinding Gesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
+        <KeyBinding Gesture="Ctrl+," Command="{Binding OpenSettingsCommand}"/>
+        <KeyBinding Gesture="F1" Command="{Binding OpenDocumentationCommand}"/>
         
-        <KeyBinding Gesture="Ctrl+Alt+N" Command="{Binding ConfigureModCommand}"/>
+        <KeyBinding Gesture="Ctrl+Alt+M" Command="{Binding ConfigureModCommand}"/>
+        <KeyBinding Gesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatchCommand}"/>
+        <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
+        <KeyBinding Gesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
     </Window.KeyBindings>
 </Window>
