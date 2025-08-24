@@ -1,39 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMLauncher\\GMMLauncher.csproj": {}
+    "C:\\Users\\arda\\Documents\\GoblinModMakerTwo\\GMMLauncher\\GMMLauncher.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMBackend\\GMMBackend.csproj": {
+    "C:\\Users\\arda\\Documents\\GoblinModMakerTwo\\GMMBackend\\GMMBackend.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMBackend\\GMMBackend.csproj",
+        "projectUniqueName": "C:\\Users\\arda\\Documents\\GoblinModMakerTwo\\GMMBackend\\GMMBackend.csproj",
         "projectName": "GMMBackend",
-        "projectPath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMBackend\\GMMBackend.csproj",
+        "projectPath": "C:\\Users\\arda\\Documents\\GoblinModMakerTwo\\GMMBackend\\GMMBackend.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
-          "net472": {
+          "net48": {
             "projectReferences": {}
           }
         }
       },
       "frameworks": {
-        "net472": {}
+        "net48": {}
       }
     },
-    "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMLauncher\\GMMLauncher.csproj": {
+    "C:\\Users\\arda\\Documents\\GoblinModMakerTwo\\GMMLauncher\\GMMLauncher.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMLauncher\\GMMLauncher.csproj",
+        "projectUniqueName": "C:\\Users\\arda\\Documents\\GoblinModMakerTwo\\GMMLauncher\\GMMLauncher.csproj",
         "projectName": "GMMLauncher",
-        "projectPath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMLauncher\\GMMLauncher.csproj",
-        "packagesPath": "C:\\Users\\Nick\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMLauncher\\obj\\",
+        "projectPath": "C:\\Users\\arda\\Documents\\GoblinModMakerTwo\\GMMLauncher\\GMMLauncher.csproj",
+        "packagesPath": "C:\\Users\\arda\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\arda\\Documents\\GoblinModMakerTwo\\GMMLauncher\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Nick\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\arda\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -49,8 +49,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMBackend\\GMMBackend.csproj": {
-                "projectPath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMBackend\\GMMBackend.csproj"
+              "C:\\Users\\arda\\Documents\\GoblinModMakerTwo\\GMMBackend\\GMMBackend.csproj": {
+                "projectPath": "C:\\Users\\arda\\Documents\\GoblinModMakerTwo\\GMMBackend\\GMMBackend.csproj"
               }
             }
           }
