@@ -59,7 +59,9 @@ public partial class CodeEditorViewModel : ViewModelBase
     
     #region Build
     public ICommand BuildModCommand => new RelayCommand(BuildMod);
+    public ICommand QuickBuildCommand => new RelayCommand(QuickBuild);
     public ICommand CreateModFilesCommand => new RelayCommand(() => CreateModFiles());
+    public ICommand OverwriteCsprojCommand => new RelayCommand(OverwriteCsproj);
     #endregion
     
     #region CreateAssetCommands
@@ -594,6 +596,26 @@ namespace {_editor.Mod.NameNoSpaces}
             var infoWindow = new InfoWindow("Building Mod", InfoWindowType.Info, "Getting Ready");
             infoWindow.Show();
             _editor.Mod.InstallMod(infoWindow, _editor);
+        }
+
+        private void QuickBuild()
+        {
+            var infoWindow = new InfoWindow("Building Mod", InfoWindowType.Info, "Getting Ready");
+            infoWindow.Show();
+            _editor.Mod.InstallMod(infoWindow, _editor, true);
+        }
+
+        private void OverwriteCsproj()
+        {
+            new InfoWindow("Confirmation", InfoWindowType.YesNo, "Are you sure you want to overwrite the .csproj file? This action is irreversible", false,
+                window =>
+                {
+                    _editor.Mod.OverwriteCsproj();   
+                    window.Close();
+                }, window =>
+                {
+                    window.Close();
+                }).Show();
         }
         
         private void LoadModDialog()

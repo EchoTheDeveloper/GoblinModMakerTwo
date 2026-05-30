@@ -39,11 +39,17 @@ namespace GMMLauncher.ViewModels
             ThemeName selectedTheme = (ThemeName)settingsWindow.FindControl<ComboBox>("SelectTheme").SelectedIndex;
             bool showLineNumbers = (bool)settingsWindow.FindControl<CheckBox>("ShowLineNumbers").IsChecked;
             bool showExplorer = (bool)settingsWindow.FindControl<CheckBox>("ShowExplorer").IsChecked;
+            bool overwriteCsproj = (bool)settingsWindow.FindControl<CheckBox>("OverwriteCsproj").IsChecked;
+            bool zipMod = (bool)settingsWindow.FindControl<CheckBox>("ZipMod").IsChecked;
+            bool openPluginFolder = (bool)settingsWindow.FindControl<CheckBox>("OpenPluginFolder").IsChecked;
             
             App.Settings.SteamDirectory = steamDir;
             App.Settings.SelectedTheme = selectedTheme;
             App.Settings.ShowLineNumbers = showLineNumbers;
             App.Settings.ShowExplorer = showExplorer;
+            App.Settings.OverwriteCsproj = overwriteCsproj;
+            App.Settings.ZipMod =  zipMod;
+            App.Settings.OpenPluginFolder = openPluginFolder;
             App.Settings.SaveSettings();
             
             if (editor != null)

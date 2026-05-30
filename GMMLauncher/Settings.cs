@@ -17,6 +17,9 @@ public class Settings
     public ThemeName SelectedTheme { get; set; } = ThemeName.DarkPlus;
     public bool ShowLineNumbers { get; set; } = true;
     public bool ShowExplorer { get; set; } = true;
+    public bool OverwriteCsproj { get; set; } = true;
+    public bool ZipMod { get; set; }
+    public bool OpenPluginFolder { get; set; }
 
     public void LoadSettings()
     {
@@ -37,6 +40,9 @@ public class Settings
                 SelectedTheme = settings.SelectedTheme;
                 ShowLineNumbers = settings.ShowLineNumbers;
                 ShowExplorer = settings.ShowExplorer;
+                OverwriteCsproj = settings.OverwriteCsproj;
+                ZipMod = settings.ZipMod;
+                OpenPluginFolder = settings.OpenPluginFolder;
             }
         }
     }

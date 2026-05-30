@@ -127,7 +127,10 @@
                 </MenuItem>
                 <MenuItem Header="Build" Foreground="White">
                     <MenuItem Header="Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
+                    <MenuItem Header="Quick Build" InputGesture="Ctrl+B" Command="{Binding QuickBuildCommand}"/>
                     <MenuItem Header="Generate Mod Files" Command="{Binding CreateModFilesCommand}"/>
+                    <Separator/>
+                    <MenuItem Header="Revert Csproj File" Command="{Binding OverwriteCsprojCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Version Control" Foreground="White">
                     <MenuItem Header="Get from VCS" InputGesture="Ctrl+Alt+Y">

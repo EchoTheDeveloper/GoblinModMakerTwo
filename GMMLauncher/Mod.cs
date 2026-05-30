@@ -37,6 +37,9 @@ public class Mod
     public string Version { get; set; } = "1.0.0";
 
 
+    private string csprojTemplate => File.ReadAllText("Resources/csprojtemplate").Replace("{{mod_name}}", NameNoSpaces);
+    private string csprojPath => Path.Combine(GetFolderPath(), $"{NameNoSpaces}.csproj");
+    
     public void SaveMod()
     {
         string filePath = Path.Combine(GetFolderPath(), NameNoSpaces + ".json");
@@ -132,6 +135,11 @@ namespace {NameNoSpaces}
         return Path.Combine(GetFolderPath(), "Files");
     }
 
+    public void OverwriteCsproj()
+    {
+        File.WriteAllText(csprojPath, csprojTemplate);
+    }
+    
     public void ConfigureMod(CodeEditor _editor)
     {
         var window = new PromptWindow("Configure Mod", 
@@ -252,11 +260,11 @@ namespace {NameNoSpaces}
     
     
     #region Install/Building Mod
-    public async Task InstallMod(InfoWindow infoWindow, CodeEditor editor)
+    public async Task InstallMod(InfoWindow infoWindow, CodeEditor editor, bool quickBuild = false)
     {
         SaveFiles(editor);
         
-        string path = await CreateModFiles(infoWindow);
+        string path = await CreateModFiles(infoWindow, quickBuild);
         if (path == null)
         {
             infoWindow.Close();
@@ -268,6 +276,7 @@ namespace {NameNoSpaces}
             infoWindow.ChangeWindowType("Build Failed",InfoWindowType.Error, errorMessage, true, height:400, width:600);
             return;
         }
+        
         string modFolderName = $"{NameNoSpaces}_{Version}";
         string pluginFolderName = Path.Combine(App.Settings.SteamDirectory, "BepInEx", "plugins");
         string installPath = Path.Combine(pluginFolderName, modFolderName);
@@ -284,23 +293,53 @@ namespace {NameNoSpaces}
         
         if (infoWindow.windowType != InfoWindowType.Error)
         {
-            infoWindow.ChangeWindowType("Build Successful", InfoWindowType.YesNo,"Mod Successfully Installed. Would you like the mod compiled in a .zip (easier to share the mod)?", true,
-            async void (_) =>
+            if (!quickBuild)
             {
-                string zipPath = Path.Combine(pluginFolderName, $"{NameNoSpaces}.zip");
-                await Task.Run(() =>
+                infoWindow.ChangeWindowType("Build Successful", InfoWindowType.YesNo,"Mod Successfully Installed. Would you like the mod compiled in a .zip (easier to share the mod)?", true,
+                async void (_) =>
                 {
-                    if (File.Exists(zipPath))
-                        File.Delete(zipPath);
-                    ZipFile.CreateFromDirectory(installPath, zipPath);
+                    string zipPath = Path.Combine(pluginFolderName, $"{NameNoSpaces}.zip");
+                    await Task.Run(() =>
+                    {
+                        if (File.Exists(zipPath))
+                            File.Delete(zipPath);
+                        ZipFile.CreateFromDirectory(installPath, zipPath);
+                    });
+    
+                    AskToOpenPluginFolder();
+                },
+                (_) =>
+                {
+                    AskToOpenPluginFolder();
                 });
-
-                AskToOpenPluginFolder();
-            },
-            (_) =>
+            }
+            else
             {
-                AskToOpenPluginFolder();
-            });
+                infoWindow.ChangeWindowType("Build Successful", InfoWindowType.Ok,"Mod Successfully Installed.", true,
+                    async void (window) =>
+                    {
+                        window.Close();
+                    });
+                
+                if (App.Settings.ZipMod)
+                {
+                    string zipPath = Path.Combine(pluginFolderName, $"{NameNoSpaces}.zip");
+                    await Task.Run(() =>
+                    {
+                        if (File.Exists(zipPath))
+                            File.Delete(zipPath);
+                        ZipFile.CreateFromDirectory(installPath, zipPath);
+                    });
+                }
+                if (App.Settings.OpenPluginFolder)
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = installPath,
+                        UseShellExecute = true
+                    });
+                }
+            }
 
             void AskToOpenPluginFolder()
             {
@@ -321,23 +360,12 @@ namespace {NameNoSpaces}
             }
         }
     }
-    public async Task<string> CreateModFiles(InfoWindow? infoWindow = null)
+    public async Task<string> CreateModFiles(InfoWindow? infoWindow = null, bool quickBuild = false)
     {
-        string currentDirectory = Directory.GetCurrentDirectory();
-        string projectRoot = Path.Combine(currentDirectory, "Mods", NameNoSpaces);
+        string projectRoot = GetFolderPath();
         Directory.CreateDirectory(projectRoot);
         
-        // if (!File.Exists(Path.Combine(projectRoot, ".gitignore"))) 
-        //     File.Copy("Resources/gitignoretemplate", Path.Combine(projectRoot, ".gitignore"), true);
-        // if (!File.Exists(Path.Combine(projectRoot, "ConfigurationManagerAttributes.cs")))
-        // {
-        //     Console.WriteLine("Check -1");
-        //     File.Copy("Resources/configmanagertemplate", Path.Combine(projectRoot, "ConfigurationManagerAttributes.cs"), true);
-        // }
-        Console.WriteLine("Check 1");
-        
         await ShowOverwritePrompt();
-        Console.WriteLine("Check 2");
 
         infoWindow?.UpdateInfoText("Creating Mod Files...");
         
@@ -356,7 +384,7 @@ namespace {NameNoSpaces}
         await File.WriteAllTextAsync(Path.Combine(projectRoot, "README.md"), readme);
 
         string changelogPath = Path.Combine(projectRoot, "CHANGELOG.md");
-        await ShowChangelogPrompt(changelogPath);
+        if (!quickBuild) await ShowChangelogPrompt(changelogPath);
         try
         {
             string librariesPath = Path.Combine(projectRoot, "Libraries");
@@ -411,39 +439,47 @@ namespace {NameNoSpaces}
         {
             infoWindow?.UpdateInfoText("Waiting For Overwrite Choice...");
             var tcs = new TaskCompletionSource<bool>();
-            string csprojTemplate = File.ReadAllText("Resources/csprojtemplate").Replace("{{mod_name}}", NameNoSpaces);
-            string csprojPath = Path.Combine(projectRoot, $"{NameNoSpaces}.csproj");
-            if (Path.Exists(csprojPath) )
+            
+            if (Path.Exists(csprojPath))
             {
-                // if (File.ReadAllText(csprojPath) != csprojTemplate)
-                // {
-                //     var window = new PromptWindow("Overwrite Csproj? ", new List<(Type, string, object?, bool)>
-                //     {
-                //         (typeof(CheckBox), "The .csproj file has been modified \ndo you want to overwrite it?", false, true)
-                //     }, (list, window) =>
-                //     {
-                //         if ((list[0] as CheckBox)?.IsChecked == true)
-                //         {
-                //             File.WriteAllText(csprojPath, csprojTemplate);
-                //         }
-                //         tcs.SetResult(true);
-                //         window.Close();
-                //     }, window =>
-                //     {
-                //         window.Close();
-                //         tcs.SetResult(true);
-                //     });
-                //     window.Topmost = true;
-                //     window.Show();
-                // }
-                // else
-                // {
+                if (File.ReadAllText(csprojPath) != csprojTemplate)
+                {
+                    if (!quickBuild)
+                    {
+                        var window = new PromptWindow("Overwrite Csproj? ", new List<(Type, string, object?, bool)>
+                        {
+                            (typeof(CheckBox), "The .csproj file has been modified \ndo you want to overwrite it?", false, true)
+                        }, (list, window) =>
+                        {
+                            if ((list[0] as CheckBox)?.IsChecked == true)
+                            {
+                                OverwriteCsproj();
+                            }
+                            tcs.SetResult(true);
+                            window.Close();
+                        }, window =>
+                        {
+                            window.Close();
+                            tcs.SetResult(true);
+                        });
+                        window.Topmost = true;
+                        window.Show();
+                    }
+                    else
+                    {
+                        if (App.Settings.OverwriteCsproj) OverwriteCsproj();
+                        tcs.SetResult(true);
+
+                    }
+                }
+                else
+                {
                     tcs.SetResult(true);
-                // }
+                }
             }
             else
             {
-                File.WriteAllText(csprojPath, csprojTemplate);
+                OverwriteCsproj();
                 tcs.SetResult(true);
             }
 

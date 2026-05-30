@@ -94,6 +94,28 @@
 
                         <Separator HorizontalAlignment="Stretch"/>
                         
+                        <TextBlock Text="Quick Build Preferences" 
+                                   HorizontalAlignment="Center"/>
+                        
+                        <CheckBox HorizontalAlignment="Center"
+                                  Name="OverwriteCsproj"
+                                  IsChecked="False">
+                            <TextBlock Text="Overwrite Csproj"/>
+                        </CheckBox>
+                        <CheckBox HorizontalAlignment="Center"
+                                  Name="ZipMod"
+                                  IsChecked="False">
+                            <TextBlock Text="Zip Mod"/>
+                        </CheckBox>
+                        <CheckBox HorizontalAlignment="Center"
+                                  Name="OpenPluginFolder"
+                                  IsChecked="False">
+                            <TextBlock Text="Show Plugin Folder"/>
+                        </CheckBox>
+
+                        <Separator HorizontalAlignment="Stretch"/>
+                        
+                        
                         <Button HorizontalAlignment="Center" Command="{Binding InstallBepInExCommand}">
                             <TextBlock Text="Install BepInEx"/>
                         </Button>
