@@ -164,12 +164,12 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-    
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
-                    <!-- <ColumnDefinition Width="Auto"/> -->
                 </Grid.ColumnDefinitions>
+                
                 <ScrollViewer VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" Grid.Row="0" Grid.Column="0">
                     <TreeView Name="FileTree" 
                               Margin="10" 
@@ -183,13 +183,21 @@
                         </TreeView.ItemTemplate>
                         <TreeView.ContextMenu>
                             <ContextMenu Closed="OnTabMenuClosed">
+                                <MenuItem Header="Rename File" Command="{Binding RenameFileCommand}"/>
+                                <Separator/>
                                 <MenuItem Header="Delete File" Command="{Binding DeleteFileCommand}"/>
                             </ContextMenu>
                         </TreeView.ContextMenu>
                     </TreeView>
                 </ScrollViewer>
+                
+                <GridSplitter Grid.Row="0" Grid.Column="1" 
+                              ResizeDirection="Columns" 
+                              Background="Transparent" 
+                              HorizontalAlignment="Stretch" />
+                
                 <controls:TabsControl Grid.Row="0" 
-                                      Grid.Column="1"
+                                      Grid.Column="2"
                                       Background="Transparent"
                                       ItemsSource="{Binding TabItems}"
                                       NewItemAsyncFactory="{Binding NewItemAsyncFactory}"

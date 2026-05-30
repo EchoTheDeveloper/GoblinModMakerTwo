@@ -191,7 +191,7 @@ public static class MenuCommands
                 string modName = modData.Name;
                 string description = modData.Description;
                 string developers = modData.Authors;
-                string gmmVersion = modData.GMMVersion;
+                string? gmmVersion = modData.GMMVersion;
                 string version = modData.Version;
 
                 mod = new Mod(modName, description, developers, gmmVersion, version);

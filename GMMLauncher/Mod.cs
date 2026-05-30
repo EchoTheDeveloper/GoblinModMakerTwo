@@ -19,7 +19,7 @@ public class Mod
 {
     public Mod() { }
     
-    public Mod(string modName, string modDescription, string modAuthors, string gmmVersion, string version)
+    public Mod(string modName, string modDescription, string modAuthors, string? gmmVersion, string version)
     {
         Name = modName;
         NameNoSpaces = modName.Replace(" ", string.Empty);
@@ -33,7 +33,7 @@ public class Mod
     public string NameNoSpaces { get; set; }
     public string Description { get; set; }
     public string Authors { get; set; }
-    public string GMMVersion { get; set; }
+    public string? GMMVersion { get; set; }
     public string Version { get; set; } = "1.0.0";
 
 
@@ -100,7 +100,7 @@ namespace {NameNoSpaces}
     [BepInDependency(""GoblinManager"", BepInDependency.DependencyFlags.HardDependency)]
     [BepInPlugin(""gmm.{NameNoSpaces}"", ""{Name}"", ""{Version}"")]
     [ModDescription(""{Description}"")]
-    public class {NameNoSpaces} : IMod
+    public class {NameNoSpaces} : Mod
     {{
         public void OnModLoaded(AssetBundle bundle)
         {{
@@ -326,13 +326,19 @@ namespace {NameNoSpaces}
         string currentDirectory = Directory.GetCurrentDirectory();
         string projectRoot = Path.Combine(currentDirectory, "Mods", NameNoSpaces);
         Directory.CreateDirectory(projectRoot);
-
-        if (!File.Exists(Path.Combine(projectRoot, ".gitignore"))) 
-            File.Copy("Resources/gitignoretemplate", Path.Combine(projectRoot, ".gitignore"), true);
-        if (!File.Exists(Path.Combine(projectRoot, "ConfigurationManagerAttributes.cs")))
-            File.Copy("Resources/configmanagertemplate", Path.Combine(projectRoot, "ConfigurationManagerAttributes.cs"), true);
+        
+        // if (!File.Exists(Path.Combine(projectRoot, ".gitignore"))) 
+        //     File.Copy("Resources/gitignoretemplate", Path.Combine(projectRoot, ".gitignore"), true);
+        // if (!File.Exists(Path.Combine(projectRoot, "ConfigurationManagerAttributes.cs")))
+        // {
+        //     Console.WriteLine("Check -1");
+        //     File.Copy("Resources/configmanagertemplate", Path.Combine(projectRoot, "ConfigurationManagerAttributes.cs"), true);
+        // }
+        Console.WriteLine("Check 1");
         
         await ShowOverwritePrompt();
+        Console.WriteLine("Check 2");
+
         infoWindow?.UpdateInfoText("Creating Mod Files...");
         
         var manifest = new
@@ -409,31 +415,31 @@ namespace {NameNoSpaces}
             string csprojPath = Path.Combine(projectRoot, $"{NameNoSpaces}.csproj");
             if (Path.Exists(csprojPath) )
             {
-                if (File.ReadAllText(csprojPath) != csprojTemplate)
-                {
-                    var window = new PromptWindow("Overwrite Csproj? ", new List<(Type, string, object?, bool)>
-                    {
-                        (typeof(CheckBox), "The .csproj file has been modified \ndo you want to overwrite it?", false, true)
-                    }, (list, window) =>
-                    {
-                        if ((list[0] as CheckBox)?.IsChecked == true)
-                        {
-                            File.WriteAllText(csprojPath, csprojTemplate);
-                        }
-                        tcs.SetResult(true);
-                        window.Close();
-                    }, window =>
-                    {
-                        window.Close();
-                        tcs.SetResult(true);
-                    });
-                    window.Topmost = true;
-                    window.Show();
-                }
-                else
-                {
+                // if (File.ReadAllText(csprojPath) != csprojTemplate)
+                // {
+                //     var window = new PromptWindow("Overwrite Csproj? ", new List<(Type, string, object?, bool)>
+                //     {
+                //         (typeof(CheckBox), "The .csproj file has been modified \ndo you want to overwrite it?", false, true)
+                //     }, (list, window) =>
+                //     {
+                //         if ((list[0] as CheckBox)?.IsChecked == true)
+                //         {
+                //             File.WriteAllText(csprojPath, csprojTemplate);
+                //         }
+                //         tcs.SetResult(true);
+                //         window.Close();
+                //     }, window =>
+                //     {
+                //         window.Close();
+                //         tcs.SetResult(true);
+                //     });
+                //     window.Topmost = true;
+                //     window.Show();
+                // }
+                // else
+                // {
                     tcs.SetResult(true);
-                }
+                // }
             }
             else
             {

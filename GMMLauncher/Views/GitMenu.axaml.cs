@@ -8,4 +8,9 @@ public partial class GitMenu : Window {
     public GitMenu() {
         InitializeComponent();
     }
+    
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
 }

@@ -80,6 +80,7 @@ public partial class CodeEditor : Window
         
         _tabControl.PointerPressed += TabControl_PointerPressed;
         _tabControl.TabClosing += TabControl_CloseTab;
+        _tabControl.LastTabClosedAction = null;
 
         
         string filePath = mod.GetFilePath();
@@ -179,8 +180,8 @@ public partial class CodeEditor : Window
         documentMap.Add(editor, document);
         _textMateInstallation = editor.InstallTextMate(_registryOptions);
         _textMateInstallation.AppliedTheme += (o, installation) => TextMateInstallationOnAppliedTheme(o, installation, editor);
-        editor.TextArea.TextEntered += (o, args) => textEditor_TextArea_TextEntered(o, args, editor);
-        editor.TextArea.TextEntering += textEditor_TextArea_TextEntering;
+        // editor.TextArea.TextEntered += (o, args) => textEditor_TextArea_TextEntered(o, args, editor);
+        // editor.TextArea.TextEntering += textEditor_TextArea_TextEntering;
         editor.TextChanged += textEditor_TextChanged;
         editor.TextArea.IndentationStrategy = new CSharpIndentationStrategy(editor.Options);
         editor.TextArea.Caret.PositionChanged += (o, args) => Caret_PositionChanged(o, args, editor);
@@ -223,8 +224,6 @@ public partial class CodeEditor : Window
         lastClickedTab = null;
     }
     #endregion
-
-    
     
     #region File Tree
     private void SetupFileTree(string folderPath)
@@ -324,7 +323,6 @@ public partial class CodeEditor : Window
             PopulateTreeView(directory, dirItem);
         }
     }
-
     
     public void UpdateFileTree()
     {

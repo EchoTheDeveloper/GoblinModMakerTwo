@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4yyJabjepGk=",
+  "dgSpecHash": "uvJHWlJ4aNw=",
   "success": true,
   "projectFilePath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMLauncher\\GMMLauncher.csproj",
   "expectedPackageFiles": [
@@ -101,7 +101,11 @@
     "C:\\Users\\Nick\\.nuget\\packages\\tabalonia\\0.10.7\\tabalonia.0.10.7.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\textmatesharp\\1.0.59\\textmatesharp.1.0.59.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\textmatesharp.grammars\\1.0.59\\textmatesharp.grammars.1.0.59.nupkg.sha512",
-    "C:\\Users\\Nick\\.nuget\\packages\\tmds.dbus.protocol\\0.20.0\\tmds.dbus.protocol.0.20.0.nupkg.sha512"
+    "C:\\Users\\Nick\\.nuget\\packages\\tmds.dbus.protocol\\0.20.0\\tmds.dbus.protocol.0.20.0.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.15\\microsoft.netcore.app.ref.9.0.15.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.15\\microsoft.windowsdesktop.app.ref.9.0.15.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.15\\microsoft.aspnetcore.app.ref.9.0.15.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\9.0.15\\microsoft.netcore.app.host.win-x64.9.0.15.nupkg.sha512"
   ],
   "logs": []
 }

@@ -11,10 +11,10 @@ namespace GMMLauncher
         public static void Main(string[] args)
         {
             Logger.LogInfo("Starting GMMLauncher");
-            Logger.LogInfo($"GMMLauncher v{Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion}");
+            Logger.LogInfo($"GMMLauncher v{Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion}");
             // Logger.LogWarning("Using Development Build");
             // Logger.LogTrace("TraceTest - should be Program.cs line 15");
-            Console.Write(GitManagement.GenGitKey("johnpork@timcheese.com"));
+            // Console.Write(GitManagement.GenGitKey("johnpork@timcheese.com"));
 
             // Build and start the Avalonia application
             BuildAvaloniaApp()

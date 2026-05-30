@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -14,16 +15,15 @@ namespace GMMLauncher
     public partial class App : Application
     {
         public static Settings Settings { get; set; }
-        public static string appVersion { get; private set; }
+        public static string? appVersion { get; private set; }
         public static ObservableCollection<AssemblyItem> DecompiledTree { get; set; }
         public override void Initialize()
         {
-            appVersion = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()!
-                .InformationalVersion;
+            appVersion = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
             AvaloniaXamlLoader.Load(this);
             Settings = new Settings();
             Settings.LoadSettings();
-            Microsoft.Build.Locator.MSBuildLocator.RegisterDefaults();
+            //Microsoft.Build.Locator.MSBuildLocator.RegisterDefaults();  // Having problems with this line, maybe just me tho
         }
         
 

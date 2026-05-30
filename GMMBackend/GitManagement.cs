@@ -9,7 +9,7 @@ namespace GMMBackend {
             string path = $"{GMMBackend.Utils.GetAppDataPath()}\\GitSSHKey";
             string pubKeyPath = path + ".pub";
 
-            var psi = new ProcessStartInfo
+            var psi = new System.Diagnostics.ProcessStartInfo
             {
                 FileName = "ssh-keygen",
                 Arguments = $"-t ed25519 -f \"{path}\" -C \"{email}\" -N \"\"",

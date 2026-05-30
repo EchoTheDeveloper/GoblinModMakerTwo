@@ -69,6 +69,12 @@
     <Reference Include="Avalonia.Vulkan, Version=11.2.1.0, Culture=neutral, PublicKeyToken=c8d484a7012f9a8b, processorArchitecture=MSIL">
       <HintPath>..\packages\Avalonia.11.2.1\lib\netstandard2.0\Avalonia.Vulkan.dll</HintPath>
     </Reference>
+    <Reference Include="AvaloniaEdit, Version=11.3.0.0, Culture=neutral, PublicKeyToken=c8d484a7012f9a8b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Avalonia.AvaloniaEdit.11.3.0\lib\netstandard2.0\AvaloniaEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="AvaloniaEdit.TextMate, Version=11.3.0.0, Culture=neutral, PublicKeyToken=c8d484a7012f9a8b, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvaloniaEdit.TextMate.11.3.0\lib\netstandard2.0\AvaloniaEdit.TextMate.dll</HintPath>
+    </Reference>
     <Reference Include="MicroCom.Runtime, Version=0.11.0.0, Culture=neutral, PublicKeyToken=b30be05a5f7688e9, processorArchitecture=MSIL">
       <HintPath>..\packages\MicroCom.Runtime.0.11.0\lib\netstandard2.0\MicroCom.Runtime.dll</HintPath>
     </Reference>

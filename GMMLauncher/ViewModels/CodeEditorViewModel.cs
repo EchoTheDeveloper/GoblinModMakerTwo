@@ -77,6 +77,8 @@ public partial class CodeEditorViewModel : ViewModelBase
     public ICommand CloseOtherTabsCommand => new RelayCommand(CloseOtherTabs);
 
     public ICommand DeleteFileCommand => new RelayCommand(DeleteFile);
+    public ICommand RenameFileCommand => new RelayCommand(RenameFile);
+    
     #endregion
     #endregion
     
@@ -179,6 +181,67 @@ namespace {_editor.Mod.NameNoSpaces}
             
             var sourceText = SourceText.From(newFileContent);
             _editor.AddNewFileToProject(nameNoSpace, sourceText, filePath);
+        }
+
+        private void RenameFile()
+        {
+            string? prevFileName = _editor.rightClickedFile.Header?.ToString();
+            
+            var window = new PromptWindow($"Rename File: {prevFileName}", 
+                new List<(Type, string, object?, bool)>
+                {
+                    (typeof(TextBox), "New File Name:", prevFileName, true)
+                }, 
+                (list, window) => RenameFileDone(prevFileName, list, window)
+            );
+
+            window.Show();
+        }
+
+        private void RenameFileDone(string prevFileName, List<Control> answers, Window promptWindow)
+        {
+            string prevFilePath = Path.Combine(_editor.Mod.GetFileFolderPath(), prevFileName);
+            string newFileName = (answers[0] as TextBox).Text;
+            string newFilePath = Path.Combine(_editor.Mod.GetFileFolderPath(), newFileName);
+            if (File.Exists(newFileName))
+            {
+                new InfoWindow("File already exists", InfoWindowType.Error, 
+                    "Could not change name because file name is already in use. Please try again", true, (window) =>
+                    {
+                        RenameFile();
+                        window.Close();
+                    }).Show();
+                promptWindow.Close();
+                return;
+            }
+            if (File.Exists(prevFilePath))
+            {
+                File.Move(prevFilePath, newFilePath);
+            }
+            else
+            {
+                new InfoWindow("Error: Cannot find file", InfoWindowType.Error, 
+                    $"Unable to find file by name {prevFileName}", true, (window) =>
+                    {
+                        window.Close();
+                    }).Show();
+                promptWindow.Close();
+                return;
+            }
+
+            
+            foreach (TabItemViewModel tab in _editor.viewModel.TabItems)
+            {
+                if (tab.Header == prevFileName)
+                {
+                    _editor.AddNewTab(newFileName);
+                    break;
+                }
+            }
+
+            _editor.UpdateFileTree();
+            _editor.UpdateTabControl();
+            promptWindow.Close();
         }
 
         private void DeleteFile()
