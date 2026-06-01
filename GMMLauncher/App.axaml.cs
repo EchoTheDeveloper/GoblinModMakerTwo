@@ -1,11 +1,10 @@
-using System;
 using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using System.Reflection;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using GMMLauncher.ViewModels;
 using GMMLauncher.Views;

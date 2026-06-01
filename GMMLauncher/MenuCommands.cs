@@ -238,11 +238,9 @@ public static class MenuCommands
     {
         Window mainWindow = WindowManager.Windows.FirstOrDefault(w => w is MainWindow);
 
-        if (mainWindow == null && App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if (mainWindow == null)
         {
             mainWindow = new MainWindow();
-            WindowManager.Add(mainWindow);
-            desktop.MainWindow = mainWindow;
             mainWindow.Show();
         }
 

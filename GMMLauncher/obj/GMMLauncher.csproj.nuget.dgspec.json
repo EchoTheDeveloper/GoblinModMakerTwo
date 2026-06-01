@@ -5,25 +5,17 @@
   },
   "projects": {
     "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMBackend\\GMMBackend.csproj": {
-      "version": "1.0.0",
       "restore": {
         "projectUniqueName": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMBackend\\GMMBackend.csproj",
         "projectName": "GMMBackend",
         "projectPath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMBackend\\GMMBackend.csproj",
         "packagesPath": "C:\\Users\\Nick\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMBackend\\obj\\",
-        "skipContentFileWrite": true,
+        "projectStyle": "PackagesConfig",
         "UsingMicrosoftNETSdk": false,
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\Nick\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net472"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -36,9 +28,9 @@
         },
         "restoreAuditProperties": {
           "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        }
+          "auditLevel": "low"
+        },
+        "packagesConfigPath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMBackend\\packages.config"
       },
       "frameworks": {
         "net472": {}
@@ -125,6 +117,10 @@
             "CommunityToolkit.Mvvm": {
               "target": "Package",
               "version": "[8.2.1, )"
+            },
+            "FluentIcons.Avalonia": {
+              "target": "Package",
+              "version": "[2.0.321, )"
             },
             "ICSharpCode.Decompiler": {
               "target": "Package",

@@ -30,6 +30,7 @@
         </PackageReference>
         <PackageReference Include="AvaloniaEdit.TextMate" Version="11.1.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+        <PackageReference Include="FluentIcons.Avalonia" Version="2.0.321" />
         <PackageReference Include="ICSharpCode.Decompiler" Version="9.0.0.7889" />
         <PackageReference Include="Microsoft.Build.Locator" Version="1.9.1" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />

@@ -13,20 +13,18 @@ public partial class InfoWindow : Window
     private readonly TextBlock titleText;
     public InfoWindowType windowType { get; private set; }
 
-    public InfoWindow(string title, InfoWindowType windowType, string startText = "", bool playSound = false, Action<Window> OkOrYes = null, Action<Window> No = null, int height = 200, int width = 300, int fontSize = 15)
+    public InfoWindow(string title, InfoWindowType windowType, string startText = "", bool playSound = false, Action<Window> OkOrYes = null, Action<Window> No = null, int height = 200, int width = 300, int fontSize = 15, string okButtonText = "Ok", string yesButtonText = "Yes", string noButtontext = "No")
     {
         InitializeComponent();
         DataContext = new InfoWindowViewModel();
         
-        WindowManager.Add(this);
-        
         titleText = this.FindControl<TextBlock>("TitleText");
         infoText = this.FindControl<TextBlock>("InfoText");
         
-        ChangeWindowType(title, windowType, startText, playSound, OkOrYes, No, height, width, fontSize);
+        ChangeWindowType(title, windowType, startText, playSound, OkOrYes, No, height, width, fontSize, okButtonText , yesButtonText, noButtontext);
     }
 
-    public void ChangeWindowType(string title, InfoWindowType newWindowType, string newText = "", bool playSound = false, Action<Window> OkOrYes = null, Action<Window> No = null, int height = 200, int width = 300, int fontSize = 15)
+    public void ChangeWindowType(string title, InfoWindowType newWindowType, string newText = "", bool playSound = false, Action<Window> OkOrYes = null, Action<Window> No = null, int height = 200, int width = 300, int fontSize = 15, string okButtonText = "Ok", string yesButtonText = "Yes", string noButtontext = "No")
     {
         Height = height;
         Width = width;
@@ -36,6 +34,7 @@ public partial class InfoWindow : Window
         infoText.FontSize = fontSize;
         windowType = newWindowType;
         
+        
         var buttonPanel = this.FindControl<StackPanel>("ButtonPanel");
         
         buttonPanel.Children.Clear();
@@ -44,7 +43,7 @@ public partial class InfoWindow : Window
             case InfoWindowType.Ok:
                 Button okButton = new Button
                 {
-                    Content = "Ok",
+                    Content = okButtonText,
                     Command = new RelayCommand(() =>
                     {
                         if (OkOrYes != null) OkOrYes?.Invoke(this);
@@ -54,19 +53,9 @@ public partial class InfoWindow : Window
                 buttonPanel.Children.Add(okButton);
                 break;
             case InfoWindowType.YesNo:
-                Button noButton = new Button
-                {
-                    Content = "No",
-                    Command = new RelayCommand(() =>
-                    {
-                        if (No != null) No?.Invoke(this);
-                        else Close();
-                    }),
-                };
-                buttonPanel.Children.Add(noButton);
                 Button yesButton = new Button
                 {
-                    Content = "Yes",
+                    Content = yesButtonText,
                     Command = new RelayCommand(() =>
                     {
                         if (OkOrYes != null) OkOrYes?.Invoke(this);
@@ -74,11 +63,21 @@ public partial class InfoWindow : Window
                     }),
                 };
                 buttonPanel.Children.Add(yesButton);
+                Button noButton = new Button
+                {
+                    Content = noButtontext,
+                    Command = new RelayCommand(() =>
+                    {
+                        if (No != null) No?.Invoke(this);
+                        else Close();
+                    }),
+                };
+                buttonPanel.Children.Add(noButton);
                 break;
             case InfoWindowType.Error:
                 Button errorButton = new Button
                 {
-                    Content = "Ok",
+                    Content = okButtonText,
                     Command = new RelayCommand(() =>
                     {
                         if (OkOrYes != null) OkOrYes?.Invoke(this);
@@ -106,10 +105,10 @@ public partial class InfoWindow : Window
     {
         infoText.Text = text;
     }
-
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+        WindowManager.Add(this);
     }
 }
 

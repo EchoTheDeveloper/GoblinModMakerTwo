@@ -16,6 +16,7 @@
           "Avalonia.Themes.Fluent": "11.2.1",
           "AvaloniaEdit.TextMate": "11.1.0",
           "CommunityToolkit.Mvvm": "8.2.1",
+          "FluentIcons.Avalonia": "2.0.321",
           "GMMBackend": "1.0.0",
           "ICSharpCode.Decompiler": "9.0.0.7889",
           "Microsoft.Build.Locator": "1.9.1",
@@ -306,6 +307,39 @@
           "lib/net8.0/DynamicData.dll": {
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.4.44987"
+          }
+        }
+      },
+      "FluentIcons.Avalonia/2.0.321": {
+        "dependencies": {
+          "Avalonia": "11.2.1",
+          "FluentIcons.Common": "2.0.321",
+          "FluentIcons.Resources.Avalonia": "2.0.321"
+        },
+        "runtime": {
+          "lib/net6.0/FluentIcons.Avalonia.dll": {
+            "assemblyVersion": "2.0.321.0",
+            "fileVersion": "2.0.321.0"
+          }
+        }
+      },
+      "FluentIcons.Common/2.0.321": {
+        "runtime": {
+          "lib/netstandard2.1/FluentIcons.Common.dll": {
+            "assemblyVersion": "2.0.321.0",
+            "fileVersion": "2.0.321.0"
+          }
+        }
+      },
+      "FluentIcons.Resources.Avalonia/2.0.321": {
+        "dependencies": {
+          "Avalonia": "11.2.1",
+          "FluentIcons.Common": "2.0.321"
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentIcons.Resources.Avalonia.dll": {
+            "assemblyVersion": "2.0.321.0",
+            "fileVersion": "2.0.321.0"
           }
         }
       },
@@ -1545,6 +1579,27 @@
       "sha512": "sha512-CjJUF3u8V7QseHlumOBajFUYM9YKlI6QhDKz5MMyeckPeU6QyMExDJhGsJqIk6RYYLaPNLsk5qkzxEgDWv/lsg==",
       "path": "dynamicdata/9.0.4",
       "hashPath": "dynamicdata.9.0.4.nupkg.sha512"
+    },
+    "FluentIcons.Avalonia/2.0.321": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BJMi32VU/wGeN4YrdemjwcKQ5b6fzwCotrTm9+NRNVU+S2RFNSnETLsQeYU740EIF7/2STCWf94ioU7/iaxNZA==",
+      "path": "fluenticons.avalonia/2.0.321",
+      "hashPath": "fluenticons.avalonia.2.0.321.nupkg.sha512"
+    },
+    "FluentIcons.Common/2.0.321": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GILhW0uk7Mo+To2lY//PFgcbew5mLaFHbOjAJYikfDTYTWt16e2P3BgKmQ6YTer1u48YwdP618aKEJxEobLYbQ==",
+      "path": "fluenticons.common/2.0.321",
+      "hashPath": "fluenticons.common.2.0.321.nupkg.sha512"
+    },
+    "FluentIcons.Resources.Avalonia/2.0.321": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ixy1AuI1OwNngn4GyLbEPvx3FjQBkp2jOAdEFF6O8wTQEOaMCueWogFowI146Y7ncbZ1oKuz2w6VF2nlZo5dsw==",
+      "path": "fluenticons.resources.avalonia/2.0.321",
+      "hashPath": "fluenticons.resources.avalonia.2.0.321.nupkg.sha512"
     },
     "HarfBuzzSharp/7.3.0.2": {
       "type": "package",

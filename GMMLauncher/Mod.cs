@@ -58,9 +58,9 @@ public class Mod
 
     public void SaveFile(TabItemViewModel tab)
     {
-        if (tab.Header.EndsWith("*"))
-            tab.Header = tab.Header.Substring(0, tab.Header.Length - 1);
-        string filePath = Path.Combine(GetFileFolderPath(), tab.Header);
+        if (tab.FileName.EndsWith("*"))
+            tab.FileName = tab.FileName.Substring(0, tab.FileName.Length - 1);
+        string filePath = tab.FilePath;
         TextEditor textEditor = (tab.Content as TextCodeEditor).Content as TextEditor;
         textEditor.IsModified = false;
         string code = textEditor.Text;
@@ -74,11 +74,7 @@ public class Mod
         File.WriteAllText(filePath, fileContent);
     }
 
-    public string GetFilePath()
-    {
-        string currentDir = Directory.GetCurrentDirectory();
-        return Path.Combine(currentDir, "Mods", NameNoSpaces, "Files", NameNoSpaces + ".cs");
-    }
+    
 
     public void CreateMainFile()
     {
@@ -123,7 +119,12 @@ namespace {NameNoSpaces}
 }}");
         SaveMod();
     }
-
+    
+    public string GetFilePath()
+    {
+        return Path.Combine(GetFolderPath(), "Files", NameNoSpaces + ".cs");
+    }
+    
     public string GetFolderPath()
     {
         string currentDir = Directory.GetCurrentDirectory();
@@ -134,7 +135,8 @@ namespace {NameNoSpaces}
     {
         return Path.Combine(GetFolderPath(), "Files");
     }
-
+    
+    
     public void OverwriteCsproj()
     {
         File.WriteAllText(csprojPath, csprojTemplate);
@@ -246,7 +248,7 @@ namespace {NameNoSpaces}
                 };
                 foreach (var tab in _editor.viewModel.TabItems)
                 {
-                    if (tab.Header == oldMainFileName)
+                    if (tab.FileName == oldMainFileName)
                     {
                         string mainFileCode = File.ReadAllText(Path.Combine(filesDir, newMainFileName));
                         ((tab.Content as TextCodeEditor).Content as TextEditor).Text = mainFileCode;

@@ -11,7 +11,6 @@ public partial class SettingsWindow : Window
     {
         InitializeComponent();
         DataContext = new SettingsWindowViewModel(this, editor);
-        WindowManager.Add(this);
         this.FindControl<TextBox>("SteamDirectory")!.Text = App.Settings.SteamDirectory;
         this.FindControl<ComboBox>("SelectTheme")!.SelectedIndex = (int)App.Settings.SelectedTheme;
         this.FindControl<CheckBox>("ShowLineNumbers")!.IsChecked = App.Settings.ShowLineNumbers;
@@ -24,5 +23,6 @@ public partial class SettingsWindow : Window
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+        WindowManager.Add(this);
     }
 }

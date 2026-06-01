@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uvJHWlJ4aNw=",
+  "dgSpecHash": "GIYglpvJoKM=",
   "success": true,
   "projectFilePath": "C:\\Users\\Nick\\Downloads\\Isle Goblin\\isle-goblin-modding\\Tools\\GoblinModMaker Development\\GMM 2.0\\GMMLauncher\\GMMLauncher.csproj",
   "expectedPackageFiles": [
@@ -24,6 +24,9 @@
     "C:\\Users\\Nick\\.nuget\\packages\\avaloniaedit.textmate\\11.1.0\\avaloniaedit.textmate.11.1.0.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.1\\communitytoolkit.mvvm.8.2.1.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\dynamicdata\\9.0.4\\dynamicdata.9.0.4.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\fluenticons.avalonia\\2.0.321\\fluenticons.avalonia.2.0.321.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\fluenticons.common\\2.0.321\\fluenticons.common.2.0.321.nupkg.sha512",
+    "C:\\Users\\Nick\\.nuget\\packages\\fluenticons.resources.avalonia\\2.0.321\\fluenticons.resources.avalonia.2.0.321.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\harfbuzzsharp\\7.3.0.2\\harfbuzzsharp.7.3.0.2.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\harfbuzzsharp.nativeassets.linux\\7.3.0.2\\harfbuzzsharp.nativeassets.linux.7.3.0.2.nupkg.sha512",
     "C:\\Users\\Nick\\.nuget\\packages\\harfbuzzsharp.nativeassets.macos\\7.3.0.2\\harfbuzzsharp.nativeassets.macos.7.3.0.2.nupkg.sha512",

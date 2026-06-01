@@ -12,6 +12,7 @@ using Avalonia.Threading;
 using AvaloniaEdit;
 using AvaloniaEdit.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
+using GMMBackend;
 using GMMLauncher.Views;
 using Microsoft.CodeAnalysis.Text;
 
@@ -27,6 +28,7 @@ public partial class CodeEditorViewModel : ViewModelBase
     public ICommand SaveModCommand => new RelayCommand(SaveMod);
     
     public ICommand NewFileCommand => new RelayCommand(NewFile);
+    public ICommand NewFolderCommand => new RelayCommand(NewFolder);
     public ICommand SaveFileCommand => new RelayCommand(SaveFile);
     
     public ICommand OpenDecompilerCommand => new RelayCommand(OpenDecompiler);
@@ -78,8 +80,9 @@ public partial class CodeEditorViewModel : ViewModelBase
     public ICommand CloseAllTabsCommand => new RelayCommand(CloseAllTabs);
     public ICommand CloseOtherTabsCommand => new RelayCommand(CloseOtherTabs);
 
-    public ICommand DeleteFileCommand => new RelayCommand(DeleteFile);
-    public ICommand RenameFileCommand => new RelayCommand(RenameFile);
+    public ICommand DeleteCommand => new RelayCommand(Delete);
+    public ICommand RenameCommand => new RelayCommand(Rename);
+    public ICommand OpenInExplorerCommand => new RelayCommand(OpenInExplorer);
     
     #endregion
     #endregion
@@ -105,8 +108,7 @@ public partial class CodeEditorViewModel : ViewModelBase
             {
                 (typeof(TextBlock), "If no file extension is given, \".cs\" will be added by default", null, false),
                 (typeof(TextBox), "File Name:", "", true)
-            },
-            (list, window) => NewFileDone(list, window)
+            }
         );
 
         window.Closed += (_, _) =>
@@ -128,25 +130,33 @@ public partial class CodeEditorViewModel : ViewModelBase
 
         private void NewFile()
         {
+            string path;
+            if (_editor.rightClickedFile != null) 
+            {
+                path = Directory.Exists(_editor.rightClickedFile.Tag?.ToString()) ? _editor.rightClickedFile.Tag.ToString() : Path.GetDirectoryName(_editor.rightClickedFile.Tag.ToString());
+            }
+            else
+            {
+                path = _editor.Mod.GetFileFolderPath();
+            }
             var window = new PromptWindow("New File",
                 new List<(Type, string, object?, bool)>
                 {
                     (typeof(TextBlock), "If no file extension is given, \".cs\" will be added by default", null, false),
                     (typeof(TextBox), "File Name:", "", true)
                 },
-                (list, window) => NewFileDone(list, window)
+                (list, window) => NewFileDone(path, list, window)
             );
 
             window.Show();
         }
-        private void NewFileDone(List<Control> answers, Window promptWindow, Action<TabItemViewModel>? onSuccess = null)
+        private void NewFileDone(string path, List<Control> answers, Window promptWindow)
         {
             string fileName = (answers[0] as TextBox).Text;
             string nameNoSpace = string.Concat(fileName.Split(' ', StringSplitOptions.RemoveEmptyEntries));
-            nameNoSpace = char.ToUpper(nameNoSpace[0]) + nameNoSpace[1..];
-            if (string.IsNullOrEmpty(nameNoSpace) || nameNoSpace[0] == '.')
+            if (string.IsNullOrEmpty(nameNoSpace) || nameNoSpace[0] == '.' || nameNoSpace[^1] == '.' || nameNoSpace[^1] == '/' ||  nameNoSpace[^1] == '\\')
             {
-                new InfoWindow("Invalid File Name", InfoWindowType.Error, $@"File Name: ""{nameNoSpace}"" is invalid").Show();
+                new InfoWindow("Invalid Path", InfoWindowType.Error, $@"Path: ""{nameNoSpace}"" is invalid").Show();
                 return;
             }
             if (Path.GetExtension(nameNoSpace) == "")
@@ -154,11 +164,12 @@ public partial class CodeEditorViewModel : ViewModelBase
                 nameNoSpace += ".cs";
             }
             
-            string filePath = Path.Combine(_editor.Mod.GetFileFolderPath(), nameNoSpace);
+            string filePath = Path.Combine(path, nameNoSpace);
 
             string className = string.Concat(Path.GetFileNameWithoutExtension(fileName)
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries));
             className = char.ToUpper(className[0]) + className[1..];
+            
             string newFileContent = $@"using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -173,57 +184,114 @@ namespace {_editor.Mod.NameNoSpaces}
         // Write code here
     }}
 }}";
+            
+            string? directory = Path.GetDirectoryName(filePath);
+
+            if (!string.IsNullOrWhiteSpace(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
             File.WriteAllText(filePath, newFileContent);
+            
             _editor.UpdateFileTree();
-            var tab = _editor.CreateTab(nameNoSpace);
-            TabItems.Add(tab);
-            _editor._tabControl.SelectedItem = tab;
-            onSuccess?.Invoke(tab);
+            _editor.AddNewTab(filePath);
             promptWindow.Close();
             
             var sourceText = SourceText.From(newFileContent);
             _editor.AddNewFileToProject(nameNoSpace, sourceText, filePath);
         }
-
-        private void RenameFile()
+    
+        
+        private void NewFolder()
         {
-            string? prevFileName = _editor.rightClickedFile.Header?.ToString();
+            string path;
+            if (_editor.rightClickedFile != null) 
+            {
+                path = Directory.Exists(_editor.rightClickedFile.Tag?.ToString()) ? _editor.rightClickedFile.Tag.ToString() : Path.GetDirectoryName(_editor.rightClickedFile.Tag.ToString());
+            }
+            else
+            {
+                path = _editor.Mod.GetFileFolderPath();
+            }
             
-            var window = new PromptWindow($"Rename File: {prevFileName}", 
+            var window = new PromptWindow("New Folder",
                 new List<(Type, string, object?, bool)>
                 {
-                    (typeof(TextBox), "New File Name:", prevFileName, true)
+                    (typeof(TextBox), "Folder Name:", "", true)
+                },
+                (list, window) => NewFolderDone(path, list, window)
+            );
+            
+            window.Show();
+        }
+        private void NewFolderDone(string path, List<Control> answers, Window promptWindow)
+        {
+            string folderName = (answers[0] as TextBox).Text;
+            if (string.IsNullOrEmpty(folderName) || folderName[0] == '.' || folderName[^1] == '.' || folderName[^1] == '/' ||  folderName[^1] == '\\')
+            {
+                new InfoWindow("Invalid Folder Name", InfoWindowType.Error, $@"Folder name: ""{folderName}"" is invalid").Show();
+                return;
+            }
+            
+            string folderPath = Path.Combine(path, folderName);
+
+            if (!string.IsNullOrWhiteSpace(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            
+            _editor.UpdateFileTree();
+            promptWindow.Close();
+        }
+
+        
+        private void Rename()
+        {
+            string? prevPath = _editor.rightClickedFile.Tag?.ToString();
+            string? prevName = Path.GetFileName(prevPath);
+            
+            var window = new PromptWindow($"Rename: {prevName}", 
+                new List<(Type, string, object?, bool)>
+                {
+                    (typeof(TextBox), "New Name:", prevName, true)
                 }, 
-                (list, window) => RenameFileDone(prevFileName, list, window)
+                (list, window) => RenameDone(prevPath, list, window)
             );
 
             window.Show();
         }
 
-        private void RenameFileDone(string prevFileName, List<Control> answers, Window promptWindow)
+        private void RenameDone(string prevPath, List<Control> answers, Window promptWindow)
         {
-            string prevFilePath = Path.Combine(_editor.Mod.GetFileFolderPath(), prevFileName);
-            string newFileName = (answers[0] as TextBox).Text;
-            string newFilePath = Path.Combine(_editor.Mod.GetFileFolderPath(), newFileName);
-            if (File.Exists(newFileName))
+            string prevName = Path.GetFileName(prevPath);
+            string newName = (answers[0] as TextBox).Text;
+            string newPath = Path.Combine(Path.GetDirectoryName(prevPath), newName);
+            
+            if (File.Exists(newPath))
             {
                 new InfoWindow("File already exists", InfoWindowType.Error, 
                     "Could not change name because file name is already in use. Please try again", true, (window) =>
                     {
-                        RenameFile();
+                        Rename();
                         window.Close();
                     }).Show();
                 promptWindow.Close();
                 return;
             }
-            if (File.Exists(prevFilePath))
+            if (File.Exists(prevPath ))
             {
-                File.Move(prevFilePath, newFilePath);
+                File.Move(prevPath, newPath);
+            }
+            else if (Directory.Exists(prevPath))
+            {
+                Directory.Move(prevPath, newPath);
             }
             else
             {
-                new InfoWindow("Error: Cannot find file", InfoWindowType.Error, 
-                    $"Unable to find file by name {prevFileName}", true, (window) =>
+                new InfoWindow("Error: Cannot find path", InfoWindowType.Error, 
+                    $"Unable to find path of {prevName}", true, (window) =>
                     {
                         window.Close();
                     }).Show();
@@ -234,9 +302,10 @@ namespace {_editor.Mod.NameNoSpaces}
             
             foreach (TabItemViewModel tab in _editor.viewModel.TabItems)
             {
-                if (tab.Header == prevFileName)
+                if (tab.FilePath == prevPath)
                 {
-                    _editor.AddNewTab(newFileName);
+                    tab.FileName = newName;
+                    tab.FilePath = newPath;
                     break;
                 }
             }
@@ -246,19 +315,63 @@ namespace {_editor.Mod.NameNoSpaces}
             promptWindow.Close();
         }
 
-        private void DeleteFile()
+        private void OpenInExplorer()
         {
-            string fileFolder = _editor.Mod.GetFileFolderPath();
-            string? fileName = _editor.rightClickedFile.Header?.ToString();
-            if (fileName == _editor.Mod.NameNoSpaces + ".cs")
+            string filePath = _editor.rightClickedFile.Tag.ToString();
+
+            if (File.Exists(filePath))
             {
-                new InfoWindow("Can't Delete Main File", InfoWindowType.Error,
-                    "You cannot delete the main mod file. If you feel like this should be changed please let us know.").Show();
-                return;
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "explorer.exe",
+                    Arguments = $"/select,\"{filePath}\"",
+                    UseShellExecute = true
+                });
             }
-            File.Delete(Path.Combine(fileFolder, fileName));
-            _editor.UpdateFileTree();
-            _editor.UpdateTabControl();
+            else if (Directory.Exists(filePath))
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "explorer.exe",
+                    Arguments = $"/select,\"{filePath}\"",
+                    UseShellExecute = true
+                });
+            }
+            else
+            {
+                new InfoWindow("Error: Cannot find file", InfoWindowType.Error, 
+                    $"Unable to find file by name {filePath}", true, (window) =>
+                    {
+                        window.Close();
+                    }).Show();
+            }
+        }
+        private void Delete()
+        {
+            string? path = _editor.rightClickedFile.Tag?.ToString();
+            string relativePath = Path.GetRelativePath(_editor.Mod.GetFolderPath(), path);
+            new InfoWindow("Are You Sure?", InfoWindowType.YesNo, $"Do you want to delete path:\n{relativePath}", true,
+                window =>
+                {
+                    if (Path.GetFileName(path) == _editor.Mod.NameNoSpaces + ".cs")
+                    {
+                        new InfoWindow("Can't Delete Main File", InfoWindowType.Error,
+                            "You cannot delete the main mod file. If you feel like this should be changed please let us know.").Show();
+                        return;
+                    }
+                    
+                    
+                    if (File.Exists(path)) File.Delete(path);
+                    else if (Directory.Exists(path))
+                    {
+                        Directory.Delete(path, true);
+                    }
+                    
+                    _editor.UpdateFileTree();
+                    _editor.UpdateTabControl();
+                    window.Close();
+                    
+                }).Show();
         }
         
         private void SaveFile()
@@ -966,11 +1079,11 @@ namespace {_editor.Mod.NameNoSpaces}
 }
 public class TabItemViewModel : ObservableObject
 {
-    private string _header;
-    public string Header
+    private string _fileName;
+    public string FileName
     {
-        get => _header;
-        set => SetProperty(ref _header, value);
+        get => _fileName;
+        set => SetProperty(ref _fileName, value);
     }
     
     private Control _content;
@@ -979,6 +1092,14 @@ public class TabItemViewModel : ObservableObject
         get => _content;
         set => SetProperty(ref _content, value);
     }
-    public override string ToString() => Header;
+
+    private string _filePath;
+    public string FilePath
+    {
+        get => _filePath;
+        set => SetProperty(ref _filePath, value);
+    }
+
+    public override string ToString() => FileName;
 }
 

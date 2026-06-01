@@ -78,6 +78,9 @@ C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Dev
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\AvaloniaEdit.TextMate.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\CommunityToolkit.Mvvm.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\DynamicData.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\FluentIcons.Avalonia.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\FluentIcons.Common.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\FluentIcons.Resources.Avalonia.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\HarfBuzzSharp.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\Humanizer.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\ICSharpCode.Decompiler.dll
@@ -266,6 +269,7 @@ C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Dev
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\runtimes\win-x86\native\onigwrap-x86.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\GMMBackend.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\GMMBackend.pdb
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\bin\Debug\net9.0\GMMBackend.dll.config
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\obj\Debug\net9.0\GMMLauncher.csproj.AssemblyReference.cache
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\obj\Debug\net9.0\GMMLauncher.csproj.SuggestedBindingRedirects.cache
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMLauncher\obj\Debug\net9.0\GMMLauncher.dll.config

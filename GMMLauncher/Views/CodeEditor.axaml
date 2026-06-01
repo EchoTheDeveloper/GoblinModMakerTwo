@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Tabalonia.Controls;assembly=Tabalonia"
         xmlns:global="clr-namespace:"
+        xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="GMMLauncher.Views.CodeEditor"
         x:DataType="vm:CodeEditorViewModel"
@@ -41,54 +42,86 @@
                 <MenuItem Header="File" Foreground="White">
                     <MenuItem Header="Save Project" InputGesture="Ctrl+Shift+S" Command="{Binding SaveModCommand}">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource folder_open_regular}" />
+                            <avalonia:SymbolIcon Symbol="Save" FontSize="16"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="New Project" InputGesture="Ctrl+Shift+N" Command="{Binding NewModCommand}">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource document_add_regular}" />
+                            <avalonia:SymbolIcon Symbol="Add" FontSize="16"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Open Project">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource folder_open_regular}" />
+                            <avalonia:SymbolIcon Symbol="FolderOpen" FontSize="16"/>
                         </MenuItem.Icon>
                         <MenuItem Header="Open Existing" InputGesture="Ctrl+O" Command="{Binding LoadExistingModCommand}"/>
                         <MenuItem Header="Open From File" InputGesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="New File" InputGesture="Ctrl+N" Command="{Binding NewFileCommand}">
-                        <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource document_new}" />
-                        </MenuItem.Icon>
+                    <MenuItem Header="New" Foreground="White">
+                        <MenuItem Header="New File" InputGesture="Ctrl+N" Command="{Binding NewFileCommand}">
+                            <MenuItem.Icon>
+                                <avalonia:SymbolIcon Symbol="DocumentAdd" FontSize="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="New Folder" InputGesture="Ctrl+M" Command="{Binding NewFolderCommand}">
+                            <MenuItem.Icon>
+                                <avalonia:SymbolIcon Symbol="FolderAdd" FontSize="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Save File" InputGesture="Ctrl+S" Command="{Binding SaveFileCommand}">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource folder_open_regular}" />
+                            <avalonia:SymbolIcon Symbol="DocumentSave" FontSize="16"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="Open Decompiler" Command="{Binding OpenDecompilerCommand}"/>
-                    <Separator />
+                    <MenuItem Header="Open Decompiler" Command="{Binding OpenDecompilerCommand}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="WindowNew" FontSize="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    
+                        <Separator />
                     <MenuItem Header="Exit" InputGesture="Ctrl+Q" Command="{Binding QuitAppCommand}">
-                    <MenuItem.Icon>
-                        <PathIcon Data="{StaticResource dismiss_regular}" />
-                    </MenuItem.Icon>
-                </MenuItem>
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="Dismiss" FontSize="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Edit" Foreground="White">
-                    <MenuItem Header="Undo" InputGesture="Ctrl+Z" Command="{Binding UndoCommand}"/>
-                    <MenuItem Header="Redo" InputGesture="Ctrl+Y" Command="{Binding RedoCommand}"/>
+                    <MenuItem Header="Undo" InputGesture="Ctrl+Z" Command="{Binding UndoCommand}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="ArrowUndo" FontSize="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Redo" InputGesture="Ctrl+Y" Command="{Binding RedoCommand}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="ArrowRedo" FontSize="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator/>
                     <MenuItem Header="Copy" 
                               InputGesture="Ctrl+C"
-                              Command="{Binding CopyCommand}"/>
+                              Command="{Binding CopyCommand}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="Copy" FontSize="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="Cut" 
                               InputGesture="Ctrl+X"
-                              Command="{Binding CutCommand}"/>
+                              Command="{Binding CutCommand}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="Cut" FontSize="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="Paste" 
                               InputGesture="Ctrl+V"
-                              Command="{Binding PasteCommand}"/>
+                              Command="{Binding PasteCommand}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="ClipboardPaste" FontSize="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="Select All" 
                               InputGesture="Ctrl+A"
                               Command="{Binding SelectAllCommand}"/>
@@ -98,13 +131,20 @@
                     <MenuItem Header="Go To Line" InputGesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
                 </MenuItem>
                 <MenuItem Header="Mod" Foreground="White">
-                    <MenuItem Header="Configure Mod" InputGesture="Ctrl+Alt+M" Command="{Binding ConfigureModCommand}"/>
+                    <MenuItem Header="Configure Mod" InputGesture="Ctrl+Alt+M" Command="{Binding ConfigureModCommand}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="EditSettings" FontSize="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator/>
                     <MenuItem Header="Create Harmony Patch" InputGesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatchCommand}"/>
                     <MenuItem Header="Create Config Item" InputGesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
                     <MenuItem Header="Create Keybind" InputGesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
                     <Separator/>
                     <MenuItem Header="Create Asset" >
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="Notebook" FontSize="16"/>
+                        </MenuItem.Icon>
                         <MenuItem Header="Important Event" IsEnabled="False"/>
                         <MenuItem Header="Entity">
                             <MenuItem Header="NPC" IsEnabled="False"/>
@@ -126,8 +166,16 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Build" Foreground="White">
-                    <MenuItem Header="Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
-                    <MenuItem Header="Quick Build" InputGesture="Ctrl+B" Command="{Binding QuickBuildCommand}"/>
+                    <MenuItem Header="Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildModCommand}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="Box" FontSize="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Quick Build" InputGesture="Ctrl+B" Command="{Binding QuickBuildCommand}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="FastForward" FontSize="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="Generate Mod Files" Command="{Binding CreateModFilesCommand}"/>
                     <Separator/>
                     <MenuItem Header="Revert Csproj File" Command="{Binding OverwriteCsprojCommand}"/>
@@ -142,19 +190,19 @@
                 <MenuItem Header="Settings"  Foreground="White" Command="{Binding OpenSettingsCommand}">
                     <MenuItem Header="Preferences" InputGesture="Ctrl+,">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource settings_regular}" />
+                            <avalonia:SymbolIcon Symbol="Settings" FontSize="16"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Help" Foreground="White">
                     <MenuItem Header="Documentation" InputGesture="F1" Command="{Binding OpenDocumentationCommand}">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource book_regular}" />
+                            <avalonia:SymbolIcon Symbol="Book" FontSize="16"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="About">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource info_regular}" />
+                            <avalonia:SymbolIcon Symbol="Info" FontSize="16"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -186,9 +234,15 @@
                         </TreeView.ItemTemplate>
                         <TreeView.ContextMenu>
                             <ContextMenu Closed="OnTabMenuClosed">
-                                <MenuItem Header="Rename File" Command="{Binding RenameFileCommand}"/>
+                                <MenuItem Header="New" Foreground="White">
+                                    <MenuItem Header="New File" InputGesture="Ctrl+N" Command="{Binding NewFileCommand}"/>
+                                    <MenuItem Header="New Folder" InputGesture="Ctrl+M" Command="{Binding NewFolderCommand}"/>
+                                </MenuItem>
                                 <Separator/>
-                                <MenuItem Header="Delete File" Command="{Binding DeleteFileCommand}"/>
+                                <MenuItem Header="Rename" Command="{Binding RenameCommand}"/>
+                                <MenuItem Header="Open In Explorer" Command="{Binding OpenInExplorerCommand}"/>
+                                <Separator/>
+                                <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
                             </ContextMenu>
                         </TreeView.ContextMenu>
                     </TreeView>
@@ -203,10 +257,9 @@
                                       Grid.Column="2"
                                       Background="Transparent"
                                       ItemsSource="{Binding TabItems}"
-                                      NewItemAsyncFactory="{Binding NewItemAsyncFactory}"
                                       FixedHeaderCount="0"
                                       Name="TabControl"
-                                      ShowDefaultAddButton="True"
+                                      ShowDefaultAddButton="False"
                                       ShowDefaultCloseButton="True"
                                       >
                     <TabControl.ContentTemplate>
@@ -231,7 +284,7 @@
                     </TabControl.ContextMenu>
                     <TabControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:TabItemViewModel}">
-                            <TextBlock Text="{Binding Header}" />
+                            <TextBlock Text="{Binding FileName}" />
                         </DataTemplate>
                     </TabControl.ItemTemplate>
                 </controls:TabsControl>
@@ -266,6 +319,7 @@
         <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveFileCommand}"/>
         <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewModCommand}"/>
         <KeyBinding Gesture="Ctrl+N" Command="{Binding NewFileCommand}"/>
+        <KeyBinding Gesture="Ctrl+M" Command="{Binding NewFolderCommand}"/>
         <KeyBinding Gesture="Ctrl+O" Command="{Binding LoadExistingModCommand}"/>
         <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
         <KeyBinding Gesture="Ctrl+Q" Command="{Binding QuitAppCommand}"/>

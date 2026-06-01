@@ -7,7 +7,6 @@ using Avalonia.Layout;
 using GMMLauncher.ViewModels;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
-using GMMBackend;
 
 namespace GMMLauncher.Views;
 
@@ -15,11 +14,10 @@ public partial class PromptWindow : Window
 {
     private readonly List<TextBox> requiredFields = [];
     public readonly List<Control> answers = [];
-    
     public PromptWindow(string title, List<(Type promptType, string promptText, object? defaultValue, bool required)>? prompts = null, Action<List<Control>, Window>? done = null, Action<Window>? cancel = null, int baseHeight = 300, string cancelText = "Cancel")
     {
         InitializeComponent();
-        WindowManager.Add(this);
+        
         Height = baseHeight;
         this.FindControl<Button>("Cancel")!.Content = cancelText;
         if (prompts != null)
@@ -283,9 +281,9 @@ public partial class PromptWindow : Window
                 break;
         }
     }
-
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+        WindowManager.Add(this);
     }
 }

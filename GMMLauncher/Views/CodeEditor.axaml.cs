@@ -54,16 +54,15 @@ public partial class CodeEditor : Window
     private AdhocWorkspace workspace = new();
     private ProjectInfo projectInfo;
     private Project project;
-    
-    public static Dictionary<TextEditor, Document> documentMap = new();
+
+    private static Dictionary<TextEditor, Document> documentMap = new();
     public CodeEditor(Mod mod)
     {
         viewModel = new CodeEditorViewModel(this);
         DataContext = viewModel;
         Mod = mod;
         InitializeComponent();
-        
-        WindowManager.Add(this);
+
         
         projectInfo = ProjectInfo.Create(ProjectId.CreateNewId(), VersionStamp.Create(), mod.NameNoSpaces, mod.NameNoSpaces, LanguageNames.CSharp);
         project = workspace.AddProject(projectInfo);
@@ -90,13 +89,15 @@ public partial class CodeEditor : Window
         }
 
         SetupFileTree(mod.GetFileFolderPath());
-        AddNewTab(Path.Combine(mod.NameNoSpaces + ".cs"));
+        AddNewTab(filePath);
     }
+    
     public void AddNewFileToProject(string name, SourceText sourceText, string filePath)
     {
         project = project.AddDocument(name, sourceText, filePath:filePath).Project;
         workspace.TryApplyChanges(project.Solution);
     }
+    
     #region Tabs
     private void TabControl_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
@@ -136,7 +137,7 @@ public partial class CodeEditor : Window
         TextEditor? textEditor = (tab.Content as TextCodeEditor)?.Content as TextEditor;
         if (textEditor.IsModified)
         {
-            new InfoWindow("File Not Saved", InfoWindowType.YesNo, $"{tab.Header.ToString()} is not saved, would you like to save now?", true,
+            new InfoWindow("File Not Saved", InfoWindowType.YesNo, $"{tab.FileName.ToString()} is not saved, would you like to save now?", true,
                 (window) =>
                 {
                     Mod.SaveFile(tab);
@@ -157,8 +158,7 @@ public partial class CodeEditor : Window
 
     public void UpdateTabControl()
     {
-        string fileFolder = Mod.GetFileFolderPath();
-        var tabsToRemove = viewModel.TabItems.Where(tab => !File.Exists(Path.Combine(fileFolder, tab.Header.ToString()))).ToList();
+        var tabsToRemove = viewModel.TabItems.Where(tab => !File.Exists(tab.FilePath.ToString())).ToList();
 
         foreach (var tab in tabsToRemove)
         {
@@ -166,17 +166,17 @@ public partial class CodeEditor : Window
         }
     }
 
-    public TabItemViewModel CreateTab(string fileName)
+    public TabItemViewModel CreateTab(string filePath)
     {
-        string filePath = Path.Combine(Mod.GetFileFolderPath(), fileName);
         var tab = new TabItemViewModel
         {
-            Header = fileName,
+            FileName = Path.GetFileName(filePath),
+            FilePath = filePath,
             Content = new TextCodeEditor(filePath)
         };
 
         var editor = ((TextCodeEditor)tab.Content).Content as TextEditor;
-        var document = GetDocumentByName(fileName);
+        var document = GetDocumentByName(filePath);
         documentMap.Add(editor, document);
         _textMateInstallation = editor.InstallTextMate(_registryOptions);
         _textMateInstallation.AppliedTheme += (o, installation) => TextMateInstallationOnAppliedTheme(o, installation, editor);
@@ -206,9 +206,9 @@ public partial class CodeEditor : Window
         return tab;
     }
     
-    public void AddNewTab(string fileName)
+    public void AddNewTab(string filePath)
     {
-        var tab = CreateTab(fileName);
+        var tab = CreateTab(filePath);
         viewModel.TabItems.Add(tab);
         _tabControl.SelectedItem = tab;
     }
@@ -235,6 +235,25 @@ public partial class CodeEditor : Window
             IsExpanded = true,
             Tag = rootDirectory
         };
+        
+        rootItem.PointerPressed += (sender, e) =>
+        {
+            var pointerPoint = e.GetCurrentPoint(rootItem);
+            if (pointerPoint.Properties.IsRightButtonPressed)
+            {
+                var clickedFile = e.Source as Control;
+                while (clickedFile != null && clickedFile is not TreeViewItem)
+                {
+                    clickedFile = (Control)clickedFile.Parent;
+                }
+    
+                if (clickedFile is TreeViewItem item)
+                {
+                    rightClickedFile = item;
+                    e.Handled = true;
+                }
+            }
+        };
 
         fileTree.Items.Clear();
         fileTree.Items.Add(rootItem);
@@ -246,13 +265,13 @@ public partial class CodeEditor : Window
                 {
                     foreach (var tab in viewModel.TabItems)
                     {
-                        if (tab.Header == selectedItem.Header.ToString())
+                        if (tab.FilePath == selectedItem.Tag.ToString())
                         {
                             _tabControl.SelectedItem = tab;
                             return;
                         }
                     }
-                    AddNewTab(selectedItem.Header.ToString());
+                    AddNewTab(selectedItem.Tag.ToString());
                 }
             }
         };
@@ -317,6 +336,25 @@ public partial class CodeEditor : Window
                 Header = directory.Name,
                 IsExpanded = true,
                 Tag = directory.FullName
+            };
+            
+            dirItem.PointerPressed += (sender, e) =>
+            {
+                var pointerPoint = e.GetCurrentPoint(dirItem);
+                if (pointerPoint.Properties.IsRightButtonPressed)
+                {
+                    var clickedFile = e.Source as Control;
+                    while (clickedFile != null && clickedFile is not TreeViewItem)
+                    {
+                        clickedFile = (Control)clickedFile.Parent;
+                    }
+    
+                    if (clickedFile is TreeViewItem item)
+                    {
+                        rightClickedFile = item;
+                        e.Handled = true;
+                    }
+                }
             };
     
             parentItem.Items.Add(dirItem);
@@ -514,21 +552,20 @@ public partial class CodeEditor : Window
     private void textEditor_TextChanged(object? sender, EventArgs e)
     {
         if (_tabControl?.SelectedContent is not TabItemViewModel selectedTab) return;
-        if (!selectedTab.Header.EndsWith("*"))
+        if (!selectedTab.FileName.EndsWith("*"))
         {
-            selectedTab.Header += "*";
+            selectedTab.FileName += "*";
         }
     }
 
     #endregion
     
     #endregion
-
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+        WindowManager.Add(this);
     }
-    
     private class MyOverloadProvider : IOverloadProvider
         {
             private readonly IList<(string header, string content)> _items;

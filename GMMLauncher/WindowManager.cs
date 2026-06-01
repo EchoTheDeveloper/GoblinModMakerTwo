@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Avalonia.Controls;
 
-namespace GMMBackend;
+namespace GMMLauncher;
 
 public static class WindowManager
 {

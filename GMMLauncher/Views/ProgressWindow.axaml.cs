@@ -12,12 +12,11 @@ public partial class ProgressWindow : Window
     {
         InitializeComponent();
         _bar = this.FindControl<ProgressBar>("ProgressBar");
-        WindowManager.Add(this);
     }
-
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+        WindowManager.Add(this);
     }
 
     public void SetProgress(double value)

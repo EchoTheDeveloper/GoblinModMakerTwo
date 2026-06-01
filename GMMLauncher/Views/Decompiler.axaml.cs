@@ -1,5 +1,6 @@
 using System.IO;
 using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 using AvaloniaEdit;
 using AvaloniaEdit.Highlighting;
 using AvaloniaEdit.TextMate;
@@ -18,7 +19,7 @@ namespace GMMLauncher.Views
         {
             DataContext = new DecompilerViewModel(this);
             InitializeComponent();
-            WindowManager.Add(this);
+
             Title = "Decompiler";
             (DataContext as DecompilerViewModel)?.LoadAssembly(this, false);
 
@@ -35,6 +36,11 @@ namespace GMMLauncher.Views
                 Language csharpLanguage = codeEditor._registryOptions.GetLanguageByExtension(".cs");
                 _textMateInstallation.SetGrammar(codeEditor._registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
             }
+        }
+        private void InitializeComponent()
+        {
+            AvaloniaXamlLoader.Load(this);
+            WindowManager.Add(this);
         }
     }
 }

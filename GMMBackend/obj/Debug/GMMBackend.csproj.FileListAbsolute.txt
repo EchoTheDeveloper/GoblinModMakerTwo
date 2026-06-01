@@ -10,6 +10,7 @@ C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMBackend\obj\Debug\GMMBackend.cs
 C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMBackend\obj\Debug\GMMBackend.csproj.CoreCompileInputs.cache
 C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMBackend\obj\Debug\GMMBackend.dll
 C:\Users\arda\RiderProjects\GoblinModMakerTwo\GMMBackend\obj\Debug\GMMBackend.pdb
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\GMMBackend.dll.config
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\GMMBackend.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\GMMBackend.pdb
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\Avalonia.Base.dll
@@ -26,12 +27,18 @@ C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Dev
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\Avalonia.Vulkan.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\AvaloniaEdit.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\AvaloniaEdit.TextMate.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\FluentIcons.Avalonia.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\FluentIcons.Common.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\FluentIcons.Resources.Avalonia.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\MicroCom.Runtime.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.Buffers.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.ComponentModel.Annotations.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.Memory.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.ValueTuple.dll
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\Avalonia.xml
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\Avalonia.Base.xml
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\Avalonia.Controls.xml
@@ -49,6 +56,8 @@ C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Dev
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.Memory.xml
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\bin\Debug\System.ValueTuple.xml
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\obj\Debug\GMMBackend.csproj.AssemblyReference.cache
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\obj\Debug\Avalonia\Resources.Inputs.cache
 C:\Users\Nick\Downloads\Isle Goblin\isle-goblin-modding\Tools\GoblinModMaker Development\GMM 2.0\GMMBackend\obj\Debug\GMMBackend.GeneratedMSBuildEditorConfig.editorconfig
