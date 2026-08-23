@@ -11,15 +11,18 @@ public partial class InfoWindow : Window
 {
     private readonly TextBlock infoText;
     private readonly TextBlock titleText;
+    private readonly TextBlock identifierText;
     public InfoWindowType windowType { get; private set; }
 
-    public InfoWindow(string title, InfoWindowType windowType, string startText = "", bool playSound = false, Action<Window> OkOrYes = null, Action<Window> No = null, int height = 200, int width = 300, int fontSize = 15, string okButtonText = "Ok", string yesButtonText = "Yes", string noButtontext = "No")
+    public InfoWindow(string title, InfoWindowType windowType, string startText = "", bool playSound = false, Action<Window> OkOrYes = null, Action<Window> No = null, int height = 200, int width = 300, int fontSize = 15, string okButtonText = "Ok", string yesButtonText = "Yes", string noButtontext = "No", string identifier = "")
     {
         InitializeComponent();
         DataContext = new InfoWindowViewModel();
         
         titleText = this.FindControl<TextBlock>("TitleText");
         infoText = this.FindControl<TextBlock>("InfoText");
+        
+        this.FindControl<TextBlock>("IdentifierText").Text = identifier;
         
         ChangeWindowType(title, windowType, startText, playSound, OkOrYes, No, height, width, fontSize, okButtonText , yesButtonText, noButtontext);
     }

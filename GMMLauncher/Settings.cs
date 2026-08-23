@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
@@ -7,19 +8,32 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using GMMLauncher.Views;
 using Microsoft.Win32;
-using TextMateSharp.Grammars;
 
 namespace GMMLauncher;
 
 public class Settings
 {
     public string SteamDirectory { get; set; } = "C:\\Program Files (x86)\\Steam\\steamapps\\common";
-    public ThemeName SelectedTheme { get; set; } = ThemeName.DarkPlus;
+    public string SelectedTheme { get; set; } = "Gobliny";
     public bool ShowLineNumbers { get; set; } = true;
     public bool ShowExplorer { get; set; } = true;
     public bool OverwriteCsproj { get; set; } = true;
     public bool ZipMod { get; set; }
     public bool OpenPluginFolder { get; set; }
+    
+    private string _opacityAmount = "0.65";
+    public string OpacityAmount
+    {
+        get => _opacityAmount;
+        set
+        {
+            if (_opacityAmount == value)
+                return;
+
+            _opacityAmount = value;
+            App.Instance.SetResource("OpacityAmount", double.Parse(_opacityAmount));
+        }
+    }
 
     public void LoadSettings()
     {
@@ -43,8 +57,15 @@ public class Settings
                 OverwriteCsproj = settings.OverwriteCsproj;
                 ZipMod = settings.ZipMod;
                 OpenPluginFolder = settings.OpenPluginFolder;
+                OpacityAmount = settings.OpacityAmount;
             }
         }
+    }
+    public void SaveSettings()
+    {
+        string filePath = Path.Combine(GMMBackend.Utils.GetAppDataPath(), "settings.json");
+        string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true,  });
+        File.WriteAllText(filePath, json);
     }
     
     public string FindSteamDirectory()
@@ -98,131 +119,116 @@ public class Settings
             return null;
         }
     }
+    
+    #region Update Service
 
-    public void SaveSettings()
+    #region GMM Installation
+
+    public async Task<(bool, string)> GMMUpdateAvailable()
     {
-        string filePath = Path.Combine(GMMBackend.Utils.GetAppDataPath(), "settings.json");
-        string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true,  });
-        File.WriteAllText(filePath, json);
+        string version = await GetDefaultStableVersionAsync("https://api.github.com/repos/EchoTheDeveloper/GoblinModMakerTwo/releases");
+        return (!App.appVersion.Equals(version), version);
     }
+    #endregion
+    
     #region BepInEx Installation
-    public async Task InstallBepInEx()
+    public async Task<(bool, string?, string)> BepInExUpdateAvailable()
     {
+        string version = await GetDefaultStableVersionAsync("https://api.github.com/repos/BepInEx/BepInEx/releases");
+        string? currentVersion = RetrieveCurrentBepInExVersion();
+        
+        return (!currentVersion.Equals(version.Replace("v", "")), currentVersion, version);
+    }
+
+    public string? RetrieveCurrentBepInExVersion()
+    {
+        string dllPath = Path.Combine(SteamDirectory, "BepInEx", "core", "BepInEx.dll");
+        
+        if (!File.Exists(dllPath))
+            return null;
+        
+        return FileVersionInfo.GetVersionInfo(dllPath).FileVersion;
+    }
+
+    public async Task InstallBepInEx(bool bypass = false)
+    {
+        var window = new InfoWindow("Installing BepInEx", InfoWindowType.Info, "Checking folders for BepInEx", true);
+        window.Show();
+
         string bepInFolder = Path.Combine(SteamDirectory, "BepInEx");
-        if (Directory.Exists(bepInFolder))
+        string pluginsFolder = Path.Combine(bepInFolder, "plugins");
+        string tempPluginsFolder = Path.Combine(SteamDirectory, "temp_plugins");
+        if (!bypass && Directory.Exists(bepInFolder))
         {
-            if (Directory.Exists(Path.Combine(bepInFolder, "plugins")))
+            if (Directory.Exists(pluginsFolder)) // could check for something like cache or config instead
             {
-                new InfoWindow("Already Installed", InfoWindowType.YesNo, "BepInEx is already installed. Are you trying to reinstall?", true, 
+                window.ChangeWindowType("Already Installed", InfoWindowType.YesNo, "BepInEx is already installed. Are you trying to reinstall?", true, 
                     (window) =>
                     {
-                        Directory.Delete(Path.Combine(SteamDirectory, "BepInEx"), true);
-                        File.Delete(Path.Combine(SteamDirectory, "doorstop_config.ini"));
-                        File.Delete(Path.Combine(SteamDirectory, "winhttp.dll"));
-                        File.Delete(Path.Combine(SteamDirectory, "changelog.txt"));
-                        InstallBepInEx();
+                        PrepBepInExFolders();
+                        _ = InstallBepInEx();
                         window.Close();
-                    },
-                    fontSize:18).Show();
+                    });
             }
             else
             {
-                new InfoWindow("Partially Installed", InfoWindowType.YesNo, "BepInEx is partially installed. Please run Isle Goblin once.", true, fontSize:18).Show();
+                window.ChangeWindowType("Partially Installed", InfoWindowType.YesNo, "BepInEx is partially installed. Please run Isle Goblin once.", true);
             }
         }
         else
         {
-            string version = await GetDefaultStableVersionAsync();
+            if (Directory.Exists(bepInFolder))
+            {
+                PrepBepInExFolders();
+            }
+            
+            window.UpdateInfoText("Getting new BepInEx version information");
+            string version = await GetDefaultStableVersionAsync("https://api.github.com/repos/BepInEx/BepInEx/releases");
             string link = await GetBepInExDownloadLink(version);
-            if (string.IsNullOrEmpty(link)) return;
+            if (string.IsNullOrEmpty(link))
+            {
+                window.ChangeWindowType("Error Fetching Update Link", InfoWindowType.Ok, $"Unable to retrieve a working BepInEx release link :(", true);
+            }
             
     
             if (Directory.Exists(SteamDirectory))
             {
+                window.UpdateInfoText("Installing new BepInEx version");
                 string src = Path.Combine(Directory.GetCurrentDirectory(), "resources\\BepInEx.zip");
-                await DownloadFileAsync(link, src);
+                await DownloadFileAsync(link, src, "BepInEx");
                 ZipFile.ExtractToDirectory(src, SteamDirectory);
                 File.Delete(Path.Combine(SteamDirectory, ".doorstop_version"));
-            }
-            new InfoWindow("BepInEx Installed", InfoWindowType.Ok, "BepInEx was successfully installed! Please run Isle Goblin once, then exit. ", true, fontSize:20).Show();
-        }
-    }
-    
-    public async Task<string> GetDefaultStableVersionAsync()
-    {
-        HttpClient httpClient = new();
-        List<string> releases = new List<string>();
-        string url = "https://api.github.com/repos/BepInEx/BepInEx/releases";
-
-        while (url != null)
-        {
-            httpClient.DefaultRequestHeaders.Add("User-Agent", "Settings");
-
-                HttpResponseMessage response = await httpClient.GetAsync(url);
-                if (response.IsSuccessStatusCode)
+                if (Directory.Exists(tempPluginsFolder))
                 {
-                    string json = await response.Content.ReadAsStringAsync();
-                    var releasesData = JsonSerializer.Deserialize<List<Release>>(json);
-                    foreach (var release in releasesData)
-                    {
-                        releases.Add(release.tag_name);
-                    }
-
-                    if (response.Headers.Contains("Link"))
-                    {
-                        string nextUrl = GetNextPageUrl(response.Headers.GetValues("Link"));
-                        url = nextUrl;
-                    }
-                    else
-                    {
-                        url = null;
-                    }
+                    window.UpdateInfoText("Moving plugins back into BepInEx");
+                    Directory.Move(tempPluginsFolder, pluginsFolder);
                 }
-            
-        }
-
-        var stableVersions = releases.FindAll(version => !version.Contains("pre") && !version.Contains("RC"));
-
-        return stableVersions.Count > 0 ? stableVersions[0] : releases[0];
-        string GetNextPageUrl(IEnumerable<string> linkHeader)
-        {
-            foreach (var link in linkHeader)
+                window.ChangeWindowType("BepInEx Installed", InfoWindowType.Ok, "BepInEx was successfully installed! Please run Isle Goblin once, then exit. ", true, fontSize:20);
+            }
+            else
             {
-                if (link.Contains("rel=\"next\""))
-                {
-                    var url = link.Split(';')[0].Trim('<', '>');
-                    return url;
-                }
+                window.ChangeWindowType("Error Installing BepInEx", InfoWindowType.Ok, $"The current Steam directory ({SteamDirectory}) does not exist", true);
             }
-            return null;
+        }
+
+        void PrepBepInExFolders()
+        {
+            window.UpdateInfoText("Cleaning previous installation of BepInEx (plugins are saved)");
+            Directory.Move(pluginsFolder, tempPluginsFolder);
+            Directory.Delete(Path.Combine(SteamDirectory, "BepInEx"), true);
+            File.Delete(Path.Combine(SteamDirectory, "doorstop_config.ini"));
+            File.Delete(Path.Combine(SteamDirectory, "winhttp.dll"));
+            File.Delete(Path.Combine(SteamDirectory, "changelog.txt"));
         }
     }
     
-
-    public static async Task DownloadFileAsync(string url, string destinationPath)
-    {
-        HttpClient httpClient = new();
-        try
-        {
-            using HttpResponseMessage response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
-            response.EnsureSuccessStatusCode();
-
-            await using FileStream fileStream = new(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None);
-            await using Stream contentStream = await response.Content.ReadAsStreamAsync();
-            await contentStream.CopyToAsync(fileStream);
-        }
-        catch (Exception ex)
-        {
-            new InfoWindow("Error Downloading BepInEx", InfoWindowType.Error, ex.Message, true, fontSize:20).Show();
-
-        }
-    }
     
     private async Task<string> GetBepInExDownloadLink(string version)
     {
         string baseUrl = $"https://github.com/BepInEx/BepInEx/releases/download/{version}/BepInEx";
         string os = System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier.Split("-")[0];
         string arch = GetSystemArch();
+        
         if (os == "osx") os = "macos";
 
         string[] urls = PossibleUrls();
@@ -263,6 +269,87 @@ public class Settings
             return "X86";
         }
     }
+    #endregion
+    
+    #region Goblin Manager
+    
+    #endregion
+    public async Task<string> GetDefaultStableVersionAsync(string url)
+    {
+        HttpClient httpClient = new()
+        {
+            Timeout = TimeSpan.FromSeconds(10)
+        };
+        
+        List<string> releases = new List<string>();
+        
+        while (!url.Equals(""))
+        {
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "Settings");
+
+            HttpResponseMessage response = await httpClient.GetAsync(url);
+            if (!response.IsSuccessStatusCode)
+            {
+                break;
+            }
+            
+            string json = await response.Content.ReadAsStringAsync();
+            var releasesData = JsonSerializer.Deserialize<List<Release>>(json);
+            foreach (var release in releasesData)
+            {
+                releases.Add(release.tag_name);
+            }
+
+            if (response.Headers.Contains("Link"))
+            {
+                string nextUrl = GetNextPageUrl(response.Headers.GetValues("Link"));
+                url = nextUrl;
+            }
+            else
+            {
+                url = "";
+            }
+            
+        }
+        
+        if (releases.Count < 1) return "";
+        
+
+        var stableVersions = releases.FindAll(version => !version.Contains("pre") && !version.Contains("RC"));
+
+        return stableVersions.Count > 0 ? stableVersions[0] : releases[0];
+        string GetNextPageUrl(IEnumerable<string> linkHeader)
+        {
+            foreach (var link in linkHeader)
+            {
+                if (link.Contains("rel=\"next\""))
+                {
+                    var url = link.Split(';')[0].Trim('<', '>');
+                    return url;
+                }
+            }
+            return "";
+        }
+    }
+    
+    public static async Task DownloadFileAsync(string url, string destinationPath, string name)
+    {
+        HttpClient httpClient = new();
+        try
+        {
+            using HttpResponseMessage response = await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+            response.EnsureSuccessStatusCode();
+
+            await using FileStream fileStream = new(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None);
+            await using Stream contentStream = await response.Content.ReadAsStreamAsync();
+            await contentStream.CopyToAsync(fileStream);
+        }
+        catch (Exception ex)
+        {
+            new InfoWindow($"Error Downloading {name}", InfoWindowType.Error, ex.Message, true, fontSize:20).Show();
+        }
+    }
+    
     private static async Task<bool> UrlExistsAsync(string url)
     {
         HttpClient httpClient = new();
@@ -279,7 +366,10 @@ public class Settings
     
     #endregion
 }
+
+
 public class Release
 {
     public string tag_name { get; set; }
 }
+

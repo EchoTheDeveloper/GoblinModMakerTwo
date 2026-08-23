@@ -3,95 +3,113 @@
         xmlns:vm="using:GMMLauncher.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+        xmlns:gmm="clr-namespace:GMMLauncher"
+        xmlns:controls="clr-namespace:Avalonia.Controls"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="GMMLauncher.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/goblin-mod-maker.ico"
         Title="Goblin Mod Maker"
-        Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
-        TransparencyLevelHint="AcrylicBlur">
+        TransparencyLevelHint="AcrylicBlur"
+        WindowDrawnDecorations.TitleBarDecorations="MinimizeButton, MaximizeButton, CloseButton">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Panel>
+    <Panel Margin="{Binding $parent[Window].OffScreenMargin}">
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
                     BackgroundSource="Digger"
-                    TintColor="Black"
+                    TintColor="{DynamicResource WindowColor}"
                     TintOpacity="1"
-                    MaterialOpacity="0.65" />
+                    MaterialOpacity="{DynamicResource OpacityAmount}" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
-        <DockPanel Margin="10,10,0,0">
+        <DockPanel Margin="16,10,0,0">
             <TextBlock DockPanel.Dock="Top" 
-                       Text="{Binding version}"/>
+                       Text="Goblin Mod Maker"/>
         </DockPanel>
         <DockPanel Margin="0,34,0,0">
-            <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
-                <MenuItem Header="File" Foreground="White">
-                    <MenuItem Header="New Project" Command="{Binding NewModCommand}">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File" Classes="parent bottomLeftCorner">
+                    <MenuItem Header="New Project" InputGesture="Ctrl+Shift+N" Command="{Binding NewMod}">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource document_add_regular}" />
+                            <avalonia:SymbolIcon Symbol="Add"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Open Project" Command="{Binding LoadExistingModCommand}">
+                    <MenuItem Header="Open Project">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource folder_open_regular}" />
+                            <avalonia:SymbolIcon Symbol="FolderOpen"/>
                         </MenuItem.Icon>
+                        <MenuItem Header="Open Existing" InputGesture="Ctrl+O" Command="{Binding LoadExistingMod}"/>
+                        <MenuItem Header="Open From File" InputGesture="Ctrl+Shift+O" Command="{Binding LoadModDialog}"/>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="Exit" Command="{Binding QuitAppCommand}">
+                    <MenuItem Header="Exit" InputGesture="Ctrl+Q" Command="{Binding QuitApp}">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource dismiss_regular}" />
+                            <avalonia:SymbolIcon Symbol="Dismiss"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Settings" Foreground="White">
-                    <MenuItem Header="Preferences" Command="{Binding OpenSettingsCommand}">
+                <MenuItem Header="Settings" Classes="parent">
+                    <MenuItem Header="Preferences" InputGesture="Ctrl+," Command="{Binding OpenSettings}">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource settings_regular}" />
+                            <avalonia:SymbolIcon Symbol="Settings"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Open Update Window" Command="{Binding OpenUpdateWindow}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="ArrowDownload"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Reload Visuals" Command="{Binding ReloadVisuals}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="ArrowSync"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Help" Foreground="White">
-                    <MenuItem Header="Documentation" Command="{Binding OpenDocumentationCommand}">
+                <MenuItem Header="Help" Classes="parent">
+                    <MenuItem Header="Documentation" InputGesture="F1" Command="{Binding OpenDocumentation}">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource book_regular}" />
+                            <avalonia:SymbolIcon Symbol="Book"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="About">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource info_regular}" />
+                            <avalonia:SymbolIcon Symbol="Info"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
             </Menu>
+            <Separator DockPanel.Dock="Top" Classes="window"/>
 
             <!-- Main -->
             <Grid Margin="40,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- Header -->
                 <StackPanel Grid.Row="0" Spacing="10">
-                    <TextBlock Text="Welcome to Goblin Mod Maker"
+                    <TextBlock Text="Goblin Mod Maker"
                              HorizontalAlignment="Center"
                              FontSize="32"
-                             FontWeight="Light"
-                             Foreground="White"/>
+                             FontWeight="ExtraBlack"
+                             Foreground="{DynamicResource EditorForegroundBrush}"/>
                     <TextBlock Text="Create and manage your mods with ease"
                              HorizontalAlignment="Center"
                              Opacity="0.7"
-                             Foreground="White"/>
+                             Foreground="{DynamicResource EditorForegroundBrush}"/>
                 </StackPanel>
 
                 <!-- Buttons -->
@@ -100,104 +118,173 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Margin="0,40">
-                    <Border Classes="card" Margin="10" Width="280" Height="160">
-                        <Button Classes="action"
-                                Command="{Binding NewModCommand}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                            <StackPanel>
-                                <PathIcon Data="{StaticResource document_add_regular}"
-                                         Width="32" Height="32" />
-                                <TextBlock Text="Create New Project"
-										 HorizontalAlignment="Center"
-										 VerticalAlignment="Center"
-										 Foreground="White"
-                                         FontSize="20"
-                                         Margin="0,10"/>
-                            </StackPanel>
-                        </Button>
-                    </Border>
-
-                    <Border Classes="card" Margin="10" Width="280" Height="160">
-                        <Button Classes="action"
-                                Command="{Binding LoadExistingModCommand}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                            <StackPanel>
-                                <PathIcon Data="{StaticResource folder_open_regular}"
-                                         Width="32" Height="32" />
-                                <TextBlock Text="Open Existing Project"
-										 HorizontalAlignment="Center"
-										 VerticalAlignment="Center"
-										 Foreground="White"
-                                         FontSize="20"
-                                         Margin="0,10"/>
-                            </StackPanel>
-                        </Button>
-                    </Border>
-
-                    <Border Classes="card" Margin="10" Width="280" Height="160">
-                        <Button Classes="action"
-                                Command="{Binding OpenSettingsCommand}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                            <StackPanel>
-                                <PathIcon Data="{StaticResource settings_regular}"
-                                         Width="32" Height="32" />
-                                <TextBlock Text="Settings"
-										 HorizontalAlignment="Center"
-										 VerticalAlignment="Center"
-										 Foreground="White"
-                                         FontSize="20"
-                                         Margin="0,10"/>
-                            </StackPanel>
-                        </Button>
-                    </Border>
-
-                    <Border Classes="card" Margin="10" Width="280" Height="160">
-                        <Button Classes="action"
-                                Command="{Binding LoadModDialogCommand}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                            <StackPanel>
-                                <PathIcon Data="{StaticResource document_regular}"
-                                         Width="32" Height="32" />
-                                <TextBlock Text="Open From File"
-										 HorizontalAlignment="Center"
-										 VerticalAlignment="Center"
-										 Foreground="White"
-                                         FontSize="20"
-                                         Margin="0,10"/>
-                            </StackPanel>
-                        </Button>
-                    </Border>
+                    <Button Classes="card basic"
+                            Command="{Binding NewMod}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
+                        <StackPanel>
+                            <avalonia:SymbolIcon Symbol="DocumentAdd" FontSize="32" Margin="10"/>
+                            <TextBlock Text="New Project"
+									 HorizontalAlignment="Center"
+									 VerticalAlignment="Center"
+									 Foreground="{DynamicResource EditorForegroundBrush}"
+                                     FontSize="24"
+                                     Margin="0,10,0,0"/>
+                            <TextBlock Text="Create New Mod"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource EditorForegroundBrush}"
+                                       FontSize="14"
+                                       Opacity="0.7"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="card basic"
+                            Command="{Binding LoadExistingMod}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
+                        <StackPanel>
+                            <avalonia:SymbolIcon Symbol="FolderOpen" FontSize="32" Margin="10"/>
+                            <TextBlock Text="Open Project"
+									 HorizontalAlignment="Center"
+									 VerticalAlignment="Center"
+									 Foreground="{DynamicResource EditorForegroundBrush}"
+                                     FontSize="20"
+                                     Margin="0,10,0,0"/>
+                            <TextBlock Text="Open an existing Mod"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource EditorForegroundBrush}"
+                                       FontSize="14"
+                                       Opacity="0.7"/>
+                        </StackPanel>
+                    </Button>
                 </UniformGrid>
+                
+                <StackPanel Grid.Row="2"
+                            Spacing="8"
+                            Margin="0,20,0,0" HorizontalAlignment="Center">
+
+                    <TextBlock Text="Recent Projects"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource EditorForegroundBrush}"
+                               HorizontalAlignment="Center"/>
+                    <Border CornerRadius="16"
+                            ClipToBounds="True">
+                        <ScrollViewer MaxHeight="260"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      VerticalScrollBarVisibility="Auto"
+                                      Padding="8"
+                                      MinWidth="300"
+                                      VerticalAlignment="Stretch"
+                                      Background="{DynamicResource EditorBackgroundBrush}">
+                            <Grid>
+                                <ItemsControl ItemsSource="{Binding RecentProjects}" 
+                                              IsVisible="{Binding RecentProjects.Count}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Spacing="8"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type gmm:ModInfo}">
+                                            <Button Command="{Binding OpenCommand}"
+                                                    Classes="basic"
+                                                    BorderThickness="0"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    Padding="8,10"
+                                                    HorizontalAlignment="Stretch"
+                                                    CornerRadius="12"
+                                                    Cursor="Hand"
+                                                    PointerPressed="Mod_OnPointerPressed">
+                                                <Grid ColumnDefinitions="Auto,*,Auto"
+                                                      ColumnSpacing="12">
+        
+                                                    <StackPanel Grid.Column="1"
+                                                                Spacing="2">
+                                                        <TextBlock Text="{Binding Name}"
+                                                                   FontSize="15"
+                                                                   Foreground="{DynamicResource EditorForegroundBrush}"/>
+        
+                                                        <TextBlock Text="{Binding Path}"
+                                                                   FontSize="11"
+                                                                   Opacity="0.55"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   Foreground="{DynamicResource EditorForegroundBrush}"/>
+                                                    </StackPanel>
+        
+                                                    <TextBlock Grid.Column="2"
+                                                               Text="{Binding LastOpened}"
+                                                               FontSize="11"
+                                                               Opacity="0.5"
+                                                               VerticalAlignment="Top"
+                                                               Foreground="{DynamicResource EditorForegroundBrush}"/>
+                                                </Grid>
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ContextMenu>
+                                        <ContextMenu Closed="OnItemMenuClosed">
+                                            <MenuItem Header="Configure Mod" Command="{Binding ConfigureMod}"/>
+                                            <MenuItem Header="Open Mod In Explorer" Command="{Binding OpenModInExplorer}"/>
+                                            <Separator/>
+                                            <MenuItem Header="Delete Mod" InputGesture="Ctrl+W" Command="{Binding DeleteMod}"/>
+                                        </ContextMenu>
+                                    </ItemsControl.ContextMenu>
+                                </ItemsControl>
+                                <StackPanel IsVisible="{Binding !RecentProjects.Count}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Spacing="6">
+                                    <TextBlock Text="No Recent Projects"
+                                               FontSize="14"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{DynamicResource EditorForegroundBrush}"/>
+        
+                                    <TextBlock Text="Projects you open will appear here"
+                                               FontSize="11"
+                                               Opacity="0.55"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{DynamicResource EditorForegroundBrush}"/>
+                                </StackPanel>
+                            </Grid>
+                        </ScrollViewer>
+                    </Border>
+                </StackPanel>
 
                 <!-- Footer -->
-                <StackPanel Grid.Row="2" 
+                <StackPanel Grid.Row="3" 
                           HorizontalAlignment="Center"
                           Spacing="10"
-                          Margin="0,20">
+                          Margin="0,20,0,0">
                     <Button Classes="link"
-                            Command="{Binding OpenDocumentationCommand}"
-                            Content="Need help? Visit our documentation"
-                            Foreground="#5EA7FF"/>
+                            Command="{Binding OpenDocumentation}"
+                            Content="Need help? Visit our documentation"/>
+                    <TextBlock Text="-" HorizontalAlignment="Center" Foreground="{DynamicResource EditorForegroundBrush}"/>
                     <Button Classes="link"
-                            Content="Report an issue or give feedback"
-                            Foreground="#5EA7FF"/>
+                            Command="{Binding OpenIssues}"
+                            Content="Report an issue or give feedback"/>
                 </StackPanel>
                 
+                <TextBlock Grid.Row="4" 
+                           HorizontalAlignment="Right" 
+                           Text="{Binding Version}" 
+                           Foreground="{DynamicResource EditorForegroundBrush}"
+                           Opacity="0.7"/>
             </Grid>
         </DockPanel>
     </Panel>
 
     <Window.Styles>
-        <Style Selector="Button.action">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="CornerRadius" Value="20"/>
+        <Style Selector="Button.card">
+            <Setter Property="Background" Value="{DynamicResource MenuFlyoutPresenterBackground}"/>
+            <Setter Property="CornerRadius" Value="16"/>
             <Setter Property="Padding" Value="20"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="160"/>
+            <Setter Property="Width" Value="280"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Opacity" Value="0.8"/>
             <Setter Property="Template">
                 <ControlTemplate>
                     <ContentPresenter Name="PART_ContentPresenter"
@@ -210,26 +297,20 @@
                 </ControlTemplate>
             </Setter>
         </Style>
-
-        <Style Selector="Button.link">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
+        <Style Selector="Button.basic">
+            <Setter Property="Background" Value="{DynamicResource MenuFlyoutPresenterBackground}"/>
         </Style>
-
-        <Style Selector="Button.link:pointerover">
-            <Setter Property="Opacity" Value="0.8"/>
+        <Style Selector="Button.basic:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource TabItemHeaderBackgroundUnselectedPointerOverWindowInactive}"/>
         </Style>
-
-        <Style Selector="Border.card">
-            <Setter Property="Background" Value="#30FFFFFF"/>
-            <Setter Property="CornerRadius" Value="20"/>
-            <Setter Property="ClipToBounds" Value="True"/>
-        </Style>
-
-        <Style Selector="PathIcon">
-            <Setter Property="Foreground" Value="White"/>
+        <Style Selector="Button.basic:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource TabItemBackgroundBrushWindowInactive}"/>
         </Style>
     </Window.Styles>
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewMod}"/>
+        <KeyBinding Gesture="Ctrl+O" Command="{Binding LoadExistingMod}"/>
+        <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding LoadModDialog}"/>
+        <KeyBinding Gesture="Ctrl+Q" Command="{Binding QuitApp}"/>
+    </Window.KeyBindings>
 </Window>

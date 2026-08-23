@@ -4,151 +4,199 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Tabalonia.Controls;assembly=Tabalonia"
-        xmlns:global="clr-namespace:"
         xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+        xmlns:ac="clr-namespace:Avalonia.Controls"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
         x:Class="GMMLauncher.Views.CodeEditor"
         x:DataType="vm:CodeEditorViewModel"
         Icon="/Assets/goblin-mod-maker.ico"
         Title="Goblin Mod Maker"
         TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent"
-        ExtendClientAreaToDecorationsHint="True">
-
+        ExtendClientAreaToDecorationsHint="True"
+        WindowDrawnDecorations.TitleBarDecorations="MinimizeButton, MaximizeButton, CloseButton"> <!-- This might be causing margin issues -->
+     
 	
     <Design.DataContext>
         <vm:CodeEditorViewModel/>
     </Design.DataContext>
 
-    <Panel>
-        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+    <Panel Margin="{Binding $parent[Window].OffScreenMargin}">
+        <ExperimentalAcrylicBorder IsHitTestVisible="False" Name="ExperimentalAcrylicBorder">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
                     BackgroundSource="Digger"
-                    TintColor="Black"
+                    TintColor="{DynamicResource WindowColor}"
                     TintOpacity="1"
-                    MaterialOpacity="0.65" />
+                    MaterialOpacity="{DynamicResource OpacityAmount}"/>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
-        <DockPanel Margin="10,10,0,0">
+        <DockPanel Margin="16,10,0,0">
             <TextBlock DockPanel.Dock="Top" 
                        Name="TitleText"
                        Text="Goblin Mod Maker"/>
         </DockPanel>
         <DockPanel Margin="0,34,0,0">
             <!-- Menu Bar -->
-            <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
-                <MenuItem Header="File" Foreground="White">
-                    <MenuItem Header="Save Project" InputGesture="Ctrl+Shift+S" Command="{Binding SaveModCommand}">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File" Classes="parent bottomLeftCorner">
+                    <MenuItem Header="Save Project" InputGesture="Ctrl+Shift+S" Command="{Binding SaveMod}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="Save" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Save"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="New Project" InputGesture="Ctrl+Shift+N" Command="{Binding NewModCommand}">
+                    <MenuItem Header="New Project" InputGesture="Ctrl+Shift+N" Command="{Binding NewMod}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="Add" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Add"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Open Project">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="FolderOpen" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="FolderOpen"/>
                         </MenuItem.Icon>
-                        <MenuItem Header="Open Existing" InputGesture="Ctrl+O" Command="{Binding LoadExistingModCommand}"/>
-                        <MenuItem Header="Open From File" InputGesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
+                        <MenuItem Header="Open Existing" InputGesture="Ctrl+O" Command="{Binding LoadExistingMod}"/>
+                        <MenuItem Header="Open From File" InputGesture="Ctrl+Shift+O" Command="{Binding LoadModDialog}"/>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="New" Foreground="White">
-                        <MenuItem Header="New File" InputGesture="Ctrl+N" Command="{Binding NewFileCommand}">
+                    <MenuItem Header="New">
+                        <MenuItem Header="New File" InputGesture="Ctrl+N" Command="{Binding NewFile}">
                             <MenuItem.Icon>
-                                <avalonia:SymbolIcon Symbol="DocumentAdd" FontSize="16"/>
+                                <avalonia:SymbolIcon Symbol="DocumentAdd"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="New Folder" InputGesture="Ctrl+M" Command="{Binding NewFolderCommand}">
+                        <MenuItem Header="New Folder" InputGesture="Ctrl+M" Command="{Binding NewFolder}">
                             <MenuItem.Icon>
-                                <avalonia:SymbolIcon Symbol="FolderAdd" FontSize="16"/>
+                                <avalonia:SymbolIcon Symbol="FolderAdd"/>
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Save File" InputGesture="Ctrl+S" Command="{Binding SaveFileCommand}">
+                    <MenuItem Header="Save File" InputGesture="Ctrl+S" Command="{Binding SaveFile}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="DocumentSave" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="DocumentSave"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="Open Decompiler" Command="{Binding OpenDecompilerCommand}">
+                    <MenuItem Header="Open Decompiler" Command="{Binding OpenDecompiler}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="WindowNew" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="WindowNew"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Open Isle Goblin" Command="{Binding OpenIsleGoblin}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="Games"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     
                         <Separator />
-                    <MenuItem Header="Exit" InputGesture="Ctrl+Q" Command="{Binding QuitAppCommand}">
+                    <MenuItem Header="Exit" InputGesture="Ctrl+Q" Command="{Binding QuitApp}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="Dismiss" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Dismiss"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Edit" Foreground="White">
-                    <MenuItem Header="Undo" InputGesture="Ctrl+Z" Command="{Binding UndoCommand}">
+                <MenuItem Header="Edit" Classes="parent">
+                    <MenuItem Header="Undo" InputGesture="Ctrl+Z" Command="{Binding Undo}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="ArrowUndo" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="ArrowUndo"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Redo" InputGesture="Ctrl+Y" Command="{Binding RedoCommand}">
+                    <MenuItem Header="Redo" InputGesture="Ctrl+Y" Command="{Binding Redo}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="ArrowRedo" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="ArrowRedo"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
                     <MenuItem Header="Copy" 
                               InputGesture="Ctrl+C"
-                              Command="{Binding CopyCommand}">
+                              Command="{Binding CopyMouse}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="Copy" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Copy"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Cut" 
                               InputGesture="Ctrl+X"
-                              Command="{Binding CutCommand}">
+                              Command="{Binding CutMouse}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="Cut" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Cut"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Paste" 
                               InputGesture="Ctrl+V"
-                              Command="{Binding PasteCommand}">
+                              Command="{Binding PasteMouse}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="ClipboardPaste" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="ClipboardPaste"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Select All" 
                               InputGesture="Ctrl+A"
-                              Command="{Binding SelectAllCommand}"/>
+                              Command="{Binding SelectAllMouse}"/>
                     <Separator/>
-                    <MenuItem Header="Find" InputGesture="Ctrl+F" Command="{Binding FindCommand}"/>
-                    <MenuItem Header="Replace" InputGesture="Ctrl+H" Command="{Binding ReplaceCommand}"/>
-                    <MenuItem Header="Go To Line" InputGesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
-                </MenuItem>
-                <MenuItem Header="Mod" Foreground="White">
-                    <MenuItem Header="Configure Mod" InputGesture="Ctrl+Alt+M" Command="{Binding ConfigureModCommand}">
+                    <MenuItem Header="Find" InputGesture="Ctrl+F" Command="{Binding Find}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="EditSettings" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Search"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Replace" InputGesture="Ctrl+H" Command="{Binding Replace}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="SidebarSearch"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Go To Line" InputGesture="Ctrl+G" Command="{Binding GoToLine}"/>
+                    <MenuItem Header="Go To Definition" InputGesture="F12" Command="{Binding GoToDefinition}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="BookSearch"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Commenting">
+                        <ac:ChordedMenuItem Header="Comment" InputGesture="Ctrl+K, Ctrl+C" Command="{Binding Comment}">
+                            <ac:ChordedMenuItem.Icon>
+                                <avalonia:SymbolIcon Symbol="CommentAdd"/>
+                            </ac:ChordedMenuItem.Icon>
+                        </ac:ChordedMenuItem>
+                        <ac:ChordedMenuItem Header="Uncomment" InputGesture="Ctrl+K, Ctrl+Uk" Command="{Binding Uncomment}">
+                            <ac:ChordedMenuItem.Icon>
+                                <avalonia:SymbolIcon Symbol="CommentDismiss"/>
+                            </ac:ChordedMenuItem.Icon>
+                        </ac:ChordedMenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Folding">
+                        <ac:ChordedMenuItem Header="Collapse All" InputGesture="Ctrl+K, Ctrl+0" Command="{Binding CollapseAll}">
+                            <ac:ChordedMenuItem.Icon>
+                                <avalonia:SymbolIcon Symbol="ArrowCollapseAll"/>
+                            </ac:ChordedMenuItem.Icon>
+                        </ac:ChordedMenuItem>
+                        <ac:ChordedMenuItem Header="Expand All" InputGesture="Ctrl+K, Ctrl+J" Command="{Binding ExpandAll}">
+                            <ac:ChordedMenuItem.Icon>
+                                <avalonia:SymbolIcon Symbol="ArrowExpandAll"/>
+                            </ac:ChordedMenuItem.Icon>
+                        </ac:ChordedMenuItem>
+                    </MenuItem>
+                    
+                    </MenuItem>
+                <MenuItem Header="Mod" Classes="parent">
+                    <MenuItem Header="Open Unity Project" InputGesture="Ctrl+Alt+M" Command="{Binding ConfigureMod}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="EditSettings"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Configure Mod" InputGesture="Ctrl+Alt+M" Command="{Binding ConfigureMod}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="EditSettings"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Create Harmony Patch" InputGesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatchCommand}"/>
-                    <MenuItem Header="Create Config Item" InputGesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
-                    <MenuItem Header="Create Keybind" InputGesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
+                    <MenuItem Header="Create Harmony Patch" InputGesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatch}"/>
+                    <MenuItem Header="Create Config Item" InputGesture="Ctrl+Alt+C" Command="{Binding CreateConfigItem}"/>
+                    <MenuItem Header="Create Keybind" InputGesture="Ctrl+Alt+K" Command="{Binding CreateKeybind}"/>
                     <Separator/>
                     <MenuItem Header="Create Asset" >
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="Notebook" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Notebook"/>
                         </MenuItem.Icon>
                         <MenuItem Header="Important Event" IsEnabled="False"/>
                         <MenuItem Header="Entity">
                             <MenuItem Header="NPC" IsEnabled="False"/>
-                            <MenuItem Header="Fish" Command="{Binding CreateFishCommand}"/>
+                            <MenuItem Header="Fish" Command="{Binding CreateFish}"/>
                             <MenuItem Header="Enemy" IsEnabled="False"/>
                             <MenuItem Header="Boss">
                                 <MenuItem Header="Normal Boss" IsEnabled="False"/>
@@ -162,188 +210,227 @@
                         <MenuItem Header="Quest" IsEnabled="False"/>
                         <MenuItem Header="Research Task" IsEnabled="False"/>
                         <Separator/>
-                        <MenuItem Header="Buff Or Debuff" Command="{Binding CreateBuffOrDebuffCommand}"/>
+                        <MenuItem Header="Buff Or Debuff" Command="{Binding CreateBuffOrDebuff}"/>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Build" Foreground="White">
-                    <MenuItem Header="Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildModCommand}">
+                <MenuItem Header="Build" Classes="parent">
+                    <MenuItem Header="Build and Install" InputGesture="Ctrl+B" Command="{Binding BuildMod}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="Box" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Box"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Quick Build" InputGesture="Ctrl+B" Command="{Binding QuickBuildCommand}">
+                    <MenuItem Header="Quick Build" InputGesture="Ctrl+Shift+B" Command="{Binding QuickBuild}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="FastForward" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="FastForward"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Generate Mod Files" Command="{Binding CreateModFilesCommand}"/>
+                    <MenuItem Header="Generate Mod Files" Command="{Binding CreateModFiles}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="DocumentMultipleSync"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Revert Csproj File" Command="{Binding OverwriteCsprojCommand}"/>
+                    <MenuItem Header="Revert Csproj File" Command="{Binding OverwriteCsproj}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="ArrowHookDownLeft"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Version Control" Foreground="White">
+                <MenuItem Header="Version Control" Classes="parent">
                     <MenuItem Header="Get from VCS" InputGesture="Ctrl+Alt+Y">
                         <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource arrow_download_regular}" />
+                            <avalonia:SymbolIcon Symbol="BranchFork"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Settings"  Foreground="White" Command="{Binding OpenSettingsCommand}">
-                    <MenuItem Header="Preferences" InputGesture="Ctrl+,">
+                <MenuItem Header="Settings" Classes="parent">
+                    <MenuItem Header="Preferences" InputGesture="Ctrl+," Command="{Binding OpenSettings}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="Settings" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Settings"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Reload Visuals" Command="{Binding ReloadVisuals}">
+                        <MenuItem.Icon>
+                            <avalonia:SymbolIcon Symbol="ArrowSync"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Help" Foreground="White">
-                    <MenuItem Header="Documentation" InputGesture="F1" Command="{Binding OpenDocumentationCommand}">
+                <MenuItem Header="Help" Classes="parent">
+                    <MenuItem Header="Documentation" InputGesture="F1" Command="{Binding OpenDocumentation}">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="Book" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Book"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="About">
                         <MenuItem.Icon>
-                            <avalonia:SymbolIcon Symbol="Info" FontSize="16"/>
+                            <avalonia:SymbolIcon Symbol="Info"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
             </Menu>
-            <Separator DockPanel.Dock="Top"/>
+            
+            <Separator DockPanel.Dock="Top" Classes="window"/>
 
             <!-- Main -->
-            <Grid Margin="10,4">
+            <Grid Margin="10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="3"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <Border CornerRadius="8, 8, 0, 0" ClipToBounds="True">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto"
+                                  Background="{DynamicResource EditorBackgroundBrush}">
+                        <TreeView Name="FileTree" 
+                                  Margin="0" 
+                                  Padding="4"
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Stretch">
+                            <TreeView.ItemTemplate>
+                                <TreeDataTemplate DataType="{x:Type TreeViewItem}" >
+                                    <TextBlock Text="{Binding Name}"/>
+                                </TreeDataTemplate>
+                            </TreeView.ItemTemplate>
+                            <TreeView.ContextMenu>
+                                <ContextMenu Closed="OnTabMenuClosed">
+                                    <MenuItem Header="New" Foreground="{DynamicResource EditorForegroundBrush}">
+                                        <MenuItem Header="New File" InputGesture="Ctrl+N" Command="{Binding NewFile}"/>
+                                        <MenuItem Header="New Folder" InputGesture="Ctrl+M" Command="{Binding NewFolder}"/>
+                                    </MenuItem>
+                                    <Separator/>
+                                    <MenuItem Header="Rename" Command="{Binding Rename}"/>
+                                    <MenuItem Header="Open In Explorer" Command="{Binding OpenInExplorer}"/>
+                                    <Separator/>
+                                    <MenuItem Header="Delete" Command="{Binding Delete}"/>
+                                </ContextMenu>
+                            </TreeView.ContextMenu>
+                        </TreeView>
+                    </ScrollViewer>
+                </Border>
                 
-                <ScrollViewer VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Auto" Grid.Row="0" Grid.Column="0">
-                    <TreeView Name="FileTree" 
-                              Margin="10" 
-                              HorizontalAlignment="Left" 
-                              VerticalAlignment="Stretch" 
-                              Width="200">
-                        <TreeView.ItemTemplate>
-                            <TreeDataTemplate DataType="{x:Type TreeViewItem}" >
-                                <TextBlock Text="{Binding Name}"/>
-                            </TreeDataTemplate>
-                        </TreeView.ItemTemplate>
-                        <TreeView.ContextMenu>
-                            <ContextMenu Closed="OnTabMenuClosed">
-                                <MenuItem Header="New" Foreground="White">
-                                    <MenuItem Header="New File" InputGesture="Ctrl+N" Command="{Binding NewFileCommand}"/>
-                                    <MenuItem Header="New Folder" InputGesture="Ctrl+M" Command="{Binding NewFolderCommand}"/>
-                                </MenuItem>
-                                <Separator/>
-                                <MenuItem Header="Rename" Command="{Binding RenameCommand}"/>
-                                <MenuItem Header="Open In Explorer" Command="{Binding OpenInExplorerCommand}"/>
-                                <Separator/>
-                                <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/>
-                            </ContextMenu>
-                        </TreeView.ContextMenu>
-                    </TreeView>
-                </ScrollViewer>
-                
-                <GridSplitter Grid.Row="0" Grid.Column="1" 
-                              ResizeDirection="Columns" 
-                              Background="Transparent" 
-                              HorizontalAlignment="Stretch" />
+                <GridSplitter
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Width="3"
+                    Margin="0,0,0,0"
+                    ResizeDirection="Columns"
+                    Background="Transparent"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Stretch">
+
+                    <GridSplitter.Template>
+                        <ControlTemplate>
+                            <Border
+                                Width="3"
+                                CornerRadius="2,2,0,0"
+                                Margin="0,40,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Stretch"
+                                Background="{DynamicResource WindowAccent}"/>
+                        </ControlTemplate>
+                    </GridSplitter.Template>
+                </GridSplitter>
                 
                 <controls:TabsControl Grid.Row="0" 
                                       Grid.Column="2"
-                                      Background="Transparent"
                                       ItemsSource="{Binding TabItems}"
                                       FixedHeaderCount="0"
                                       Name="TabControl"
                                       ShowDefaultAddButton="False"
                                       ShowDefaultCloseButton="True"
-                                      >
+                                      Background="Transparent"
+                                      VerticalAlignment="Stretch"
+                                      Margin="0"
+                                      Padding="0">
                     <TabControl.ContentTemplate>
                         <DataTemplate DataType="{x:Type vm:TabItemViewModel}">
-                            <Grid Background="{DynamicResource SelectedTabItemBackgroundBrush}">
+                            <Grid>
                                 <ContentPresenter Content="{Binding Content}" 
                                                   HorizontalAlignment="Stretch"
                                                   VerticalAlignment="Stretch"
-                                                  Padding="10"/>
+                                                  Padding = "8"
+                                                  Background="{DynamicResource EditorBackgroundBrush}"
+                                                  CornerRadius="8, 8, 0, 0"/>
                             </Grid>
                         </DataTemplate>
                     </TabControl.ContentTemplate>
                     <TabControl.ContextMenu>
                         <ContextMenu Closed="OnTabMenuClosed">
                             <ContextMenu.KeyBindings>
-                                <KeyBinding Gesture="Ctrl+W" Command="{Binding CloseTabCommand}" />
+                                <KeyBinding Gesture="Ctrl+W" Command="{Binding CloseTab}" />
                             </ContextMenu.KeyBindings>
-                            <MenuItem Header="Close Tab" InputGesture="Ctrl+W" Command="{Binding CloseTabCommand}"/>
-                            <MenuItem Header="Close All Tabs" Command="{Binding CloseAllTabsCommand}"/>
-                            <MenuItem Header="Close Other Tabs" Command="{Binding CloseOtherTabsCommand}"/>
+                            <MenuItem Header="Close Tab" InputGesture="Ctrl+W" Command="{Binding CloseTab}"/>
+                            <MenuItem Header="Close All Tabs" Command="{Binding CloseAllTabs}"/>
+                            <MenuItem Header="Close Other Tabs" Command="{Binding CloseOtherTabs}"/>
                         </ContextMenu>
                     </TabControl.ContextMenu>
                     <TabControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:TabItemViewModel}">
-                            <TextBlock Text="{Binding FileName}" />
+                            <TextBlock Text="{Binding FileName}"
+                                       Foreground="{DynamicResource EditorForegroundBrush}"
+                                       FontWeight="Medium"/>
                         </DataTemplate>
                     </TabControl.ItemTemplate>
                 </controls:TabsControl>
                 <!-- Status Bar -->
-                <StackPanel Grid.Row="1" Grid.Column="0" Name="StatusBar" Background="Transparent" Height="25" Orientation="Horizontal">
-                    <TextBlock Name="StatusText" Margin="5 0 0 0" VerticalAlignment="Center"  FontSize="12"/>
-                </StackPanel>
+                <Separator Grid.Row="1" 
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="3" 
+                    Background="{DynamicResource WindowAccent}"
+                    VerticalAlignment="Top"/>
+                <Border Grid.Row="1" 
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="3" 
+                    CornerRadius="0,0,8,8" 
+                    ClipToBounds="True" 
+                    Name="StatusBar" 
+                    Height="25"
+                    Background="{DynamicResource EditorBackgroundBrush}" 
+                    Margin="0,0,0,8">
+                    <Grid>
+                        <TextBlock Name="StatusText" Margin="8 0 8 0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="12" Foreground="{DynamicResource EditorForegroundBrush}"/>
+                        <TextBlock Name="CaretText" Margin="8 0 8 0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="12" Foreground="{DynamicResource EditorForegroundBrush}"/>
+                    </Grid>
+                </Border>
             </Grid>
         </DockPanel>
     </Panel>
-    <Window.Styles>
-        <Style Selector="Button.link">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
-
-        <Style Selector="Button.link:pointerover">
-            <Setter Property="Opacity" Value="0.8"/>
-        </Style>
-        <Style Selector="PathIcon">
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-        
-        <Style Selector="TreeViewItem">
-            <Setter Property="CornerRadius" Value="4"/>
-        </Style>
-    </Window.Styles>
     <Window.KeyBindings>
-        <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding SaveModCommand}"/>
-        <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveFileCommand}"/>
-        <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewModCommand}"/>
-        <KeyBinding Gesture="Ctrl+N" Command="{Binding NewFileCommand}"/>
-        <KeyBinding Gesture="Ctrl+M" Command="{Binding NewFolderCommand}"/>
-        <KeyBinding Gesture="Ctrl+O" Command="{Binding LoadExistingModCommand}"/>
-        <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding LoadModDialogCommand}"/>
-        <KeyBinding Gesture="Ctrl+Q" Command="{Binding QuitAppCommand}"/>
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding SaveMod}"/>
+        <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveFile}"/>
+        <KeyBinding Gesture="Ctrl+Shift+N" Command="{Binding NewMod}"/>
+        <KeyBinding Gesture="Ctrl+N" Command="{Binding NewFile}"/>
+        <KeyBinding Gesture="Ctrl+M" Command="{Binding NewFolder}"/>
+        <KeyBinding Gesture="Ctrl+O" Command="{Binding LoadExistingMod}"/>
+        <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding LoadModDialog}"/>
+        <KeyBinding Gesture="Ctrl+Q" Command="{Binding QuitApp}"/>
         
-        <KeyBinding Gesture="Ctrl+C" Command="{Binding CopyCommand}"/>
-        <KeyBinding Gesture="Ctrl+X" Command="{Binding CutCommand}"/>
-        <KeyBinding Gesture="Ctrl+V" Command="{Binding PasteCommand}"/>
-        <KeyBinding Gesture="Ctrl+A" Command="{Binding SelectAllCommand}"/>
-        <KeyBinding Gesture="Ctrl+Z" Command="{Binding UndoCommand}"/>
-        <KeyBinding Gesture="Ctrl+Y" Command="{Binding RedoCommand}"/>
+        <KeyBinding Gesture="Ctrl+X" Command="{Binding CutMouse}"/>
+        <KeyBinding Gesture="Ctrl+V" Command="{Binding PasteMouse}"/>
+        <KeyBinding Gesture="Ctrl+A" Command="{Binding SelectAllMouse}"/>
+        <KeyBinding Gesture="Ctrl+Z" Command="{Binding Undo}"/>
+        <KeyBinding Gesture="Ctrl+Y" Command="{Binding Redo}"/>
         
-        <KeyBinding Gesture="Ctrl+F" Command="{Binding FindCommand}"/>
-        <KeyBinding Gesture="Ctrl+H" Command="{Binding ReplaceCommand}"/>
-        <KeyBinding Gesture="Ctrl+G" Command="{Binding GoToLineCommand}"/>
+        <KeyBinding Gesture="Ctrl+F" Command="{Binding Find}"/>
+        <KeyBinding Gesture="Ctrl+H" Command="{Binding Replace}"/>
+        <KeyBinding Gesture="Ctrl+G" Command="{Binding GoToLine}"/>
+        <KeyBinding Gesture="F12" Command="{Binding GoToDefinition}"/>
         
-        <KeyBinding Gesture="Ctrl+W" Command="{Binding CloseTabCommand}"/>
+        <KeyBinding Gesture="Ctrl+W" Command="{Binding CloseTab}"/>
+        <KeyBinding Gesture="Ctrl+Shift+T" Command="{Binding ReopenTab}"/>
         
-        <KeyBinding Gesture="Ctrl+B" Command="{Binding BuildModCommand}"/>
-        <KeyBinding Gesture="Ctrl+," Command="{Binding OpenSettingsCommand}"/>
-        <KeyBinding Gesture="F1" Command="{Binding OpenDocumentationCommand}"/>
+        <KeyBinding Gesture="Ctrl+B" Command="{Binding BuildMod}"/>
+        <KeyBinding Gesture="Ctrl+Shift+B" Command="{Binding QuickBuild}"/>
+        <KeyBinding Gesture="Ctrl+," Command="{Binding OpenSettings}"/>
+        <KeyBinding Gesture="F1" Command="{Binding OpenDocumentation}"/>
         
-        <KeyBinding Gesture="Ctrl+Alt+M" Command="{Binding ConfigureModCommand}"/>
-        <KeyBinding Gesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatchCommand}"/>
-        <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding CreateConfigItemCommand}"/>
-        <KeyBinding Gesture="Ctrl+Alt+K" Command="{Binding CreateKeybindCommand}"/>
+        <KeyBinding Gesture="Ctrl+Alt+M" Command="{Binding ConfigureMod}"/>
+        <KeyBinding Gesture="Ctrl+Alt+H" Command="{Binding CreateHarmonyPatch}"/>
+        <KeyBinding Gesture="Ctrl+Alt+C" Command="{Binding CreateConfigItem}"/>
+        <KeyBinding Gesture="Ctrl+Alt+K" Command="{Binding CreateKeybind}"/>
     </Window.KeyBindings>
 </Window>

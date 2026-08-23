@@ -11,20 +11,21 @@
         Title="Goblin Mod Maker"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
-        ExtendClientAreaToDecorationsHint="True">
+        ExtendClientAreaToDecorationsHint="True"
+        WindowDrawnDecorations.TitleBarDecorations="MinimizeButton, MaximizeButton, CloseButton">
 	
     <Design.DataContext>
         <vm:DecompilerViewModel/>
     </Design.DataContext>
 
-    <Panel>
+    <Panel Margin="{Binding $parent[Window].OffScreenMargin}">
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
                     BackgroundSource="Digger"
-                    TintColor="Black"
+                    TintColor="{DynamicResource WindowColor}"
                     TintOpacity="1"
-                    MaterialOpacity="0.65" />
+                    MaterialOpacity="{DynamicResource OpacityAmount}" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
@@ -34,19 +35,11 @@
         </DockPanel>
         <DockPanel Margin="0,34,0,0">
             <!-- Menu Bar -->
-            <Menu DockPanel.Dock="Top" Background="Transparent" Padding="0">
+            <Menu DockPanel.Dock="Top">
                 <MenuItem Header="Force Reload" InputGesture="Ctrl+R" Command="{Binding ForceReloadCommand}"/>
-                <MenuItem Header="Help" Foreground="White">
-                    <MenuItem Header="Documentation" InputGesture="F1">
-                        <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource book_regular}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="About">
-                        <MenuItem.Icon>
-                            <PathIcon Data="{StaticResource info_regular}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
+                <MenuItem Header="Help" Classes="parent">
+                    <MenuItem Header="Documentation" InputGesture="F1"/>
+                    <MenuItem Header="About"/>
                 </MenuItem>
             </Menu>
             <Separator DockPanel.Dock="Top"/>
@@ -82,7 +75,8 @@
                 <avaloniaEdit:TextEditor 
                     FontSize="14"
                     FontFamily="Cascadia Code"
-                    Background="Black"
+                    Background="{DynamicResource EditorBackgroundBrush}"
+                    LineNumbersForeground="{DynamicResource LineNumberForegroundBrush}"
                     HorizontalScrollBarVisibility="Auto"
                     VerticalScrollBarVisibility="Visible"
                     Name="DecompiledCode" 
@@ -93,25 +87,6 @@
             </Grid>
         </DockPanel>
     </Panel>
-    <Window.Styles>
-        <Style Selector="Button.link">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
-
-        <Style Selector="Button.link:pointerover">
-            <Setter Property="Opacity" Value="0.8"/>
-        </Style>
-        <Style Selector="PathIcon">
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-        
-        <Style Selector="TreeViewItem">
-            <Setter Property="CornerRadius" Value="4"/>
-        </Style>
-    </Window.Styles>
     <Window.KeyBindings>
         <KeyBinding Gesture="Ctrl+R" Command="{Binding ForceReloadCommand}"/>
     </Window.KeyBindings>

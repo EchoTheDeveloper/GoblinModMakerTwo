@@ -6,6 +6,7 @@
         Icon="/Assets/goblin-mod-maker.ico"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
+        WindowDrawnDecorations.TitleBarDecorations="MinimizeButton, MaximizeButton, CloseButton"
         TransparencyLevelHint="AcrylicBlur"
         Width="300"
         Height="300"
@@ -15,14 +16,14 @@
         <vm:InfoWindowViewModel/>
     </Design.DataContext>
 
-    <Panel>
+    <Panel Margin="{Binding $parent[Window].OffScreenMargin}">
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
                     BackgroundSource="Digger"
-                    TintColor="Black"
+                    TintColor="{DynamicResource WindowColor}"
                     TintOpacity="1"
-                    MaterialOpacity="0.65" />
+                    MaterialOpacity="{DynamicResource OpacityAmount}" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
@@ -46,6 +47,13 @@
                 </ScrollViewer>
                 
                 <!-- Footer -->
+                <TextBlock Grid.Row="2" 
+                           Name="IdentifierText"
+                           Foreground="{DynamicResource EditorForegroundBrush}" 
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Bottom"
+                           Opacity="0.6"
+                           FontSize="12"/>
                 <StackPanel Grid.Row="2" 
                           Spacing="10"
                           Margin="0,4"
@@ -56,9 +64,4 @@
         </DockPanel>
     </Panel>
 
-    <Window.Styles>
-        <Style Selector="PathIcon">
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-    </Window.Styles>
 </Window>

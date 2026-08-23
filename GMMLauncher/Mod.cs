@@ -17,7 +17,7 @@ namespace GMMLauncher;
 
 public class Mod
 {
-    public Mod() { }
+    public Mod() { } // DO NOT REMOVE
     
     public Mod(string modName, string modDescription, string modAuthors, string? gmmVersion, string version)
     {
@@ -29,22 +29,104 @@ public class Mod
         Version = version;
     }
 
+    public Mod(string filePath, bool usingName = false)
+    {
+        if (usingName)
+        {
+            filePath = filePath.Replace(" ", string.Empty);
+            filePath = Path.Combine(Directory.GetCurrentDirectory(), "Mods", filePath, filePath + ".json");
+        }
+        
+        using (Stream fileStream = new FileStream(filePath, FileMode.Open))
+        {
+            if (!Path.Exists(filePath))
+            {
+                new InfoWindow("Error Loading Mods", InfoWindowType.Error, $"Mod file not found. Using path {filePath}", true, fontSize:20).Show();
+            }
+
+            Mod? modData;
+            try
+            {
+                modData = JsonSerializer.Deserialize<Mod>(fileStream, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true });
+
+            }
+            catch (Exception e)
+            {
+                new InfoWindow("Error Loading Mods", InfoWindowType.Error, $"Mod file could not be loaded. Using path {filePath}", true, fontSize:20).Show();
+                throw;
+            }
+
+            if (modData != null)
+            {
+                Name = modData.Name;
+                NameNoSpaces = modData.Name.Replace(" ", string.Empty);
+                Description = modData.Description;
+                Authors = modData.Authors;
+                GMMVersion = modData.GMMVersion;
+                Version = modData.Version;
+            }
+        }
+    }
+
     public string Name { get; set; }
     public string NameNoSpaces { get; set; }
     public string Description { get; set; }
     public string Authors { get; set; }
     public string? GMMVersion { get; set; }
     public string Version { get; set; } = "1.0.0";
-
-
-    private string csprojTemplate => File.ReadAllText("Resources/csprojtemplate").Replace("{{mod_name}}", NameNoSpaces);
+    private string CsprojTemplate => $@"<Project Sdk=""Microsoft.NET.Sdk"">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <RootNamespace>{NameNoSpaces}</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include=""BepInEx"">
+      <HintPath>Libraries/BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include=""Assembly-CSharp"">
+      <HintPath>Libraries/Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include=""HarmonyX"">
+      <HintPath>Libraries/0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include=""BepInEx.Harmony"">
+      <HintPath>Libraries/BepInEx.Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include=""UnityEngine"">
+      <HintPath>Libraries/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include=""UnityEngine.CoreModule"">
+      <HintPath>Libraries/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include=""UnityEngine.UI"">
+      <HintPath>Libraries/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include=""UnityEngine.IMGUIModule"">
+      <HintPath>Libraries/UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include=""UnityEngine.AddressableAssets"">
+      <HintPath>Libraries\Unity.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include=""UnityEngine.AssetBundleModule"">
+      <HintPath>Libraries\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include=""UnityEngine.InputLegacyModule"">
+      <HintPath>Libraries\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include=""GoblinManager"">
+      <HintPath>Z:\SteamLibrary\steamapps\common\Isle Goblin Playtest\BepInEx\plugins\GoblinManager_1.0.0\GoblinManager.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
+";
+    
     private string csprojPath => Path.Combine(GetFolderPath(), $"{NameNoSpaces}.csproj");
     
     public void SaveMod()
     {
-        string filePath = Path.Combine(GetFolderPath(), NameNoSpaces + ".json");
+        string filePath = GetModFilePath();
         string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true,  });
-        Console.WriteLine(json);
         File.WriteAllText(filePath, json);
     }
     public void SaveFiles(CodeEditor editor)
@@ -73,7 +155,6 @@ public class Mod
         string filePath = Path.Combine(currentDir, "Mods", NameNoSpaces, "Files", fileName + ".cs");
         File.WriteAllText(filePath, fileContent);
     }
-
     
 
     public void CreateMainFile()
@@ -101,7 +182,7 @@ namespace {NameNoSpaces}
     [ModDescription(""{Description}"")]
     public class {NameNoSpaces} : Mod
     {{
-        public void OnModLoaded(AssetBundle bundle)
+        public override void OnModLoaded(AssetBundle bundle)
         {{
             Debug.Log(""{Name} Loaded"");   
         }}
@@ -125,6 +206,11 @@ namespace {NameNoSpaces}
         return Path.Combine(GetFolderPath(), "Files", NameNoSpaces + ".cs");
     }
     
+    public string GetModFilePath()
+    {
+        return Path.Combine(GetFolderPath(), NameNoSpaces + ".json");;
+    }
+    
     public string GetFolderPath()
     {
         string currentDir = Directory.GetCurrentDirectory();
@@ -139,10 +225,10 @@ namespace {NameNoSpaces}
     
     public void OverwriteCsproj()
     {
-        File.WriteAllText(csprojPath, csprojTemplate);
+        File.WriteAllText(csprojPath, CsprojTemplate);
     }
     
-    public void ConfigureMod(CodeEditor _editor)
+    public void ConfigureMod(CodeEditor? _editor = null, Action<string> invokeOnComplete = null)
     {
         var window = new PromptWindow("Configure Mod", 
             new List<(Type, string, object?, bool)>
@@ -156,6 +242,12 @@ namespace {NameNoSpaces}
 
         void ConfigureModDone(List<Control> answers, Window promptWindow)
         {
+            if (_editor == null)
+            {
+                _editor = WindowManager.SearchForModsInCodeEditor(GetModFilePath());
+            }
+            
+            bool editorFunctions = _editor != null;
             string modName = (answers[0] as TextBox)?.Text ?? Name;
             string modDesc = (answers[1] as TextBox)?.Text ?? Description;
             string modDevelopers = (answers[2] as TextBox)?.Text ?? Authors;
@@ -164,12 +256,17 @@ namespace {NameNoSpaces}
             
             if (modName != Name || modVersion != Version || modDesc != Description || modDevelopers != Authors)
             {
-                SaveFiles(_editor);
+                if (editorFunctions) SaveFiles(_editor);
                 string modNameNoSpaces = modName.Replace(" ", "");
-                TabsControl savedTabControl = _editor._tabControl;
-                _editor.fileTree.Items.Clear();
-                _editor._tabControl = null;
-                _editor.Close();
+
+                TabsControl savedTabControl = null;
+                if (editorFunctions)
+                {
+                    savedTabControl = _editor._tabControl;
+                    _editor.fileTree.Items.Clear();
+                    _editor._tabControl = null;
+                    _editor.Close();
+                }
 
 
                 string modFolder = Path.Combine(Directory.GetCurrentDirectory(), "Mods");
@@ -182,10 +279,10 @@ namespace {NameNoSpaces}
                         Directory.Move(modDirectory, newModDirectory);
                     }
                 }
-                catch (Exception _)
+                catch (Exception ex)
                 {
                     new InfoWindow("Mod couldn't be moved", InfoWindowType.Error,
-                        "Mod files couldn't be moved. This is most likely because you have a mod file open in another application or in the File Explorer",
+                        "Mod files couldn't be moved. This is most likely because you have a mod file open in another application or in the File Explorer\n" + ex.Message,
                         true).Show();
                     promptWindow.Close();
                     return;
@@ -240,26 +337,75 @@ namespace {NameNoSpaces}
                 Version =  modVersion;
                 
                 SaveMod();
-                
-                    
-                var editor = new CodeEditor(this)
+                invokeOnComplete.Invoke(modName);
+
+                if (editorFunctions)
                 {
-                    TabControl = savedTabControl
-                };
-                foreach (var tab in _editor.viewModel.TabItems)
-                {
-                    if (tab.FileName == oldMainFileName)
+                    var editor = new CodeEditor(this)
                     {
-                        string mainFileCode = File.ReadAllText(Path.Combine(filesDir, newMainFileName));
-                        ((tab.Content as TextCodeEditor).Content as TextEditor).Text = mainFileCode;
+                        TabControl = savedTabControl
+                    };
+                    foreach (var tab in _editor.viewModel.TabItems)
+                    {
+                        if (tab.FileName == oldMainFileName)
+                        {
+                            string mainFileCode = File.ReadAllText(Path.Combine(filesDir, newMainFileName));
+                            ((tab.Content as TextCodeEditor).Content as TextEditor).Text = mainFileCode;
+                        }
                     }
+                    editor.Show();
                 }
-                editor.Show();
             }
             promptWindow.Close();
         }
     }
-    
+
+    public void DeleteMod(Action invokeOnComplete = null)
+    {
+        new InfoWindow("Are you sure?", InfoWindowType.YesNo, $"WARNING: This action is irreversible. Do you want to delete the mod: {Name}", true,
+            window =>
+            {
+                if (WindowManager.SearchForModsInCodeEditor(GetModFilePath()) is CodeEditor codeEditor)
+                {
+                    codeEditor.Close();
+                }
+                Directory.Delete(Path.Combine(GetFolderPath()), true);
+                App.RecentProjects.VerifyProjects();
+                invokeOnComplete.Invoke();
+                window.Close();
+            }).Show();
+    }
+
+    public void OpenInExplorer()
+    {
+        string filePath = GetModFilePath();
+        if (File.Exists(filePath))
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "explorer.exe",
+                Arguments = $"/select,\"{filePath}\"",
+                UseShellExecute = true
+            });
+        }
+        else if (Directory.Exists(filePath))
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "explorer.exe",
+                Arguments = $"/select,\"{filePath}\"",
+                UseShellExecute = true
+            });
+        }
+        else
+        {
+            new InfoWindow("Error: Cannot find mod", InfoWindowType.Error, 
+                $"Unable to find mod with path {filePath}", true, (window) =>
+                {
+                    window.Close();
+                }).Show();
+        }
+    }
     
     #region Install/Building Mod
     public async Task InstallMod(InfoWindow infoWindow, CodeEditor editor, bool quickBuild = false)
@@ -417,10 +563,10 @@ namespace {NameNoSpaces}
                 (typeof(TextBox), "Enter Changelog Entry", "", true)
             }, (list, window) =>
             {
+                infoWindow?.UpdateInfoText("Running Dotnet Build...");
                 string entry = (list[0] as TextBox).Text;
                 string changelogEntry = $"## v{Version} - {DateTime.Now:yyyy-MM-dd}\n- {entry}.\n";
                 File.AppendAllText(changelogPath, changelogEntry);
-                infoWindow?.UpdateInfoText("Running Dotnet Build...");
                 window.Close();
                 tcs.SetResult(true);
             }, (window) =>
@@ -439,52 +585,51 @@ namespace {NameNoSpaces}
         
         Task ShowOverwritePrompt()
         {
-            infoWindow?.UpdateInfoText("Waiting For Overwrite Choice...");
+            // infoWindow?.UpdateInfoText("Waiting For Overwrite Choice...");
             var tcs = new TaskCompletionSource<bool>();
             
-            if (Path.Exists(csprojPath))
-            {
-                if (File.ReadAllText(csprojPath) != csprojTemplate)
-                {
-                    if (!quickBuild)
-                    {
-                        var window = new PromptWindow("Overwrite Csproj? ", new List<(Type, string, object?, bool)>
-                        {
-                            (typeof(CheckBox), "The .csproj file has been modified \ndo you want to overwrite it?", false, true)
-                        }, (list, window) =>
-                        {
-                            if ((list[0] as CheckBox)?.IsChecked == true)
-                            {
-                                OverwriteCsproj();
-                            }
-                            tcs.SetResult(true);
-                            window.Close();
-                        }, window =>
-                        {
-                            window.Close();
-                            tcs.SetResult(true);
-                        });
-                        window.Topmost = true;
-                        window.Show();
-                    }
-                    else
-                    {
-                        if (App.Settings.OverwriteCsproj) OverwriteCsproj();
-                        tcs.SetResult(true);
-
-                    }
-                }
-                else
-                {
-                    tcs.SetResult(true);
-                }
-            }
-            else
+            // if (Path.Exists(csprojPath))
+            // {
+            //     if (File.ReadAllText(csprojPath).Equals(CsprojTemplate))
+            //     {
+            //         if (!quickBuild)
+            //         {
+            //             var window = new PromptWindow("Overwrite Csproj? ", new List<(Type, string, object?, bool)>
+            //             {
+            //                 (typeof(CheckBox), "The .csproj file has been modified \ndo you want to overwrite it?", false, true)
+            //             }, (list, window) =>
+            //             {
+            //                 if ((list[0] as CheckBox)?.IsChecked == true)
+            //                 {
+            //                     OverwriteCsproj();
+            //                 }
+            //                 tcs.SetResult(true);
+            //                 window.Close();
+            //             }, window =>
+            //             {
+            //                 window.Close();
+            //                 tcs.SetResult(true);
+            //             });
+            //             window.Topmost = true;
+            //             window.Show();
+            //         }
+            //         else
+            //         {
+            //             if (App.Settings.OverwriteCsproj) OverwriteCsproj();
+            //             tcs.SetResult(true);
+            //         }
+            //     }
+            //     else
+            //     {
+            //         tcs.SetResult(true);
+            //     }
+            // }
+            // else
+            if (!Path.Exists(csprojPath))
             {
                 OverwriteCsproj();
-                tcs.SetResult(true);
             }
-
+            tcs.SetResult(true);
             return tcs.Task;
         }
     }

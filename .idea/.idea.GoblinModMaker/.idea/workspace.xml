@@ -8,58 +8,159 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/GMMBackend/App.config" afterDir="false" />
+    <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="Very large update, I'll try and list everything I've done so far&#10;1. Autocompletion with all dlls from Isle Goblin (any Unity dll and the code for Isle Goblin itself) all loaded from your own copy. (ISLE GOBLIN CODE IS NOT SHIPPED WITH THIS PRODUCT)&#10;2. Custom theming (Resources/Themes) see the documentation for more info on making your own&#10;3. Reopening last tab (holds multiple)&#10;4. Decompiled files are stored for quick access in same session&#10;5. Fixed folding to work with all kinds of syntax&#10;6. Go to definition (works with decompiled tabs)&#10;7. Opening files using middle mouse button&#10;8. Fixed outer margins looking weird on fullscreen&#10;9. Upgraded to Avalonia 12 (NOTE: CURRENT VERSION IS A 12.2 ALPHA, I REALLY NEEDED A CERTAIN FIX THAT WAS ONLY AVAIABLE ON THIS VERSION PLEASE UPDATE TO 12.2 ON RELEASE)&#10;10. Main Menu Overhaul&#10;11. New Documentation (Check wiki section in repo)&#10;12. Added a recent projects section&#10;13. anytime you see a mod for example open existing or in recent projects you can right click for a context menu that lets you configure, open in explorer, and delete mod.&#10;14. Added a value for the level of opacity because I acknowledge that some people may not want the app to be translucent&#10;15. Collapse, expand foldings, coment, and uncomment functions (with chorded keybinds)&#10;16. Chorded keybinding along with a chorded menu item because Avalonia doesn't support chording natively&#10;17. TONS of styling&#10;18. Started work on an update service, accessible through main menu&#10;19. Added some more keybinds&#10;20. Added diagnostics (warnings, errors, and tips in the code editor)&#10;21. Symbol/Diagnostic tooltips&#10;22. Added autoclosing parentheses&#10;23. Added keybinds to main menu&#10;24. Added more icons&#10;25. Added an option to run Isle Goblin in code editor (Its under File &gt; Open Isle Goblin)&#10;26. And more">
+      <change afterPath="$PROJECT_DIR$/GMMLauncher/CSharpDiagnosticRenderer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GMMLauncher/CSharpFoldingStrategy.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GMMLauncher/CSharpSymbolService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GMMLauncher/Overrides/ChordedMenuItem.axaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GMMLauncher/Overrides/ChordedMenuItem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GMMLauncher/Overrides/MenuItem.axaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GMMLauncher/RecentProjects.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/UpdateWindowViewModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GMMLauncher/Views/UpdateWindow.axaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GMMLauncher/Views/UpdateWindow.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMBackend/GMMBackend.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/GMMBackend.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/WindowManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/WindowManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/Properties/AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/App.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/App.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/App.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/App.axaml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/GMMLauncher.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/GMMLauncher.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/MenuCommands.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/MenuCommands.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/Mod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Mod.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Settings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Settings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/CodeEditorViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/CodeEditorViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/DecompilerViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/DecompilerViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/MainWindowViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/MainWindowViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/SettingsWindowViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/SettingsWindowViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CustomMargin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CustomMargin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/GitMenu.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/GitMenu.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/InfoWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/InfoWindow.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/InfoWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/InfoWindow.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/ProgressWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/ProgressWindow.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/ProgressWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/ProgressWindow.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/PromptWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/PromptWindow.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/PromptWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/PromptWindow.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/SettingsWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/SettingsWindow.axaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/SettingsWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/SettingsWindow.axaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/WindowManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/WindowManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony20.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony20.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Base.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Base.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Controls.ColorPicker.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Controls.DataGrid.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Controls.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Controls.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.DesignerSupport.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.DesignerSupport.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Desktop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Desktop.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Diagnostics.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Dialogs.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Dialogs.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Fonts.Inter.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Fonts.Inter.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.FreeDesktop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.FreeDesktop.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Markup.Xaml.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Markup.Xaml.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Markup.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Markup.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Metal.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Metal.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.MicroCom.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.MicroCom.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Native.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Native.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.OpenGL.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.OpenGL.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Remote.Protocol.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Remote.Protocol.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Skia.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Skia.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Themes.Fluent.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Themes.Fluent.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Themes.Simple.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Vulkan.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Vulkan.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Win32.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Win32.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.X11.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.X11.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/AvaloniaEdit.TextMate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/AvaloniaEdit.TextMate.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/AvaloniaEdit.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/AvaloniaEdit.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Harmony.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Harmony.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Preloader.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Preloader.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/Resources.Inputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/Resources.Inputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/references" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/references" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.sourcelink.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/ref/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/ref/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/Avalonia/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/Avalonia/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/HarfBuzzSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/HarfBuzzSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/HarmonyXInterop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/HarmonyXInterop.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MicroCom.Runtime.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MicroCom.Runtime.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Mdb.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Mdb.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Pdb.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Pdb.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Rocks.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Rocks.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.RuntimeDetour.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.RuntimeDetour.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.Utils.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.Utils.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/SkiaSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/SkiaSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/TextMateSharp.Grammars.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/TextMateSharp.Grammars.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/TextMateSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/TextMateSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Tmds.DBus.Protocol.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Tmds.DBus.Protocol.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm/native/libHarfBuzzSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm/native/libHarfBuzzSharp.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm/native/libSkiaSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm/native/libSkiaSharp.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm64/native/libHarfBuzzSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm64/native/libHarfBuzzSharp.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm64/native/libSkiaSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm64/native/libSkiaSharp.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libHarfBuzzSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libHarfBuzzSharp.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libSkiaSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libSkiaSharp.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-x64/native/libHarfBuzzSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-x64/native/libHarfBuzzSharp.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-x64/native/libSkiaSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-x64/native/libSkiaSharp.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux/native/libonigwrap.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libAvaloniaNative.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libAvaloniaNative.dylib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libHarfBuzzSharp.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libHarfBuzzSharp.dylib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libSkiaSharp.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libSkiaSharp.dylib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libonigwrap.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/av_libglesv2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/av_libglesv2.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/libHarfBuzzSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/libHarfBuzzSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/libSkiaSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/libSkiaSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/av_libglesv2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/av_libglesv2.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/libHarfBuzzSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/libHarfBuzzSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/libSkiaSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/libSkiaSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/onigwrap-x64.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/av_libglesv2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/av_libglesv2.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/libHarfBuzzSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/libHarfBuzzSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/libSkiaSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/libSkiaSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/onigwrap-x86.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/Resources.Inputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/references" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLaunc.39CCC4BB.Up2Date" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Overrides/DragTabItem.axaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.genruntimeconfig.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.sourcelink.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/apphost.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/ref/GMMLauncher.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/Avalonia/GMMLauncher.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/GMMLauncher.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.dgspec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.g.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.g.targets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.assets.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.nuget.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.packagespec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.model.nuget.info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.restore.info" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/GoblinModMaker.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/GoblinModMaker.sln.DotSettings.user" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,6 +170,13 @@
   </component>
   <component name="DpaMonitoringSettings">
     <option name="firstShow" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JSON File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -87,41 +195,153 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/.nuget/packages/microsoft.codeanalysis.workspaces.msbuild/4.14.0/contentFiles/any/any/BuildHost-net472/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.exe.config" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/.nuget/packages/microsoft.codeanalysis.workspaces.msbuild/4.14.0/contentFiles/any/any/BuildHost-netcore/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.deps.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/.nuget/packages/microsoft.codeanalysis.workspaces.msbuild/4.14.0/contentFiles/any/any/BuildHost-netcore/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll.config" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/.nuget/packages/microsoft.codeanalysis.workspaces.msbuild/4.14.0/contentFiles/any/any/BuildHost-netcore/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.runtimeconfig.json" root0="SKIP_HIGHLIGHTING" />
     <setting file="jar://$APPLICATION_HOME_DIR$/lib/product.jar!/schemas/PropertyList-1.0.dtd" root0="FORCE_HIGHLIGHTING" />
     <setting file="jar://$APPLICATION_HOME_DIR$/plugins/restClient/lib/restClient.jar!/com/intellij/ws/rest/client/stubs/http-client.common.d.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0ceaca09f3944680b668dee8e1e0370b100a00/81/7f732540/TrayIcon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0ceaca09f3944680b668dee8e1e0370b100a00/db/16976564/PathIcon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0ceaca09f3944680b668dee8e1e0370b100a00/e7/d808f819/IClassicDesktopStyleApplicationLifetime.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1abc149bfb234b69ac8b474866d3f8a63800/28/26f6a963/MicroComVtblBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1ae546e29f2246cab87d85e1ad1e24f51ba00/98/c3bf4d22/TabsControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6935725f304be6b86880a5bf0eb3941be00/23/661e6b04/DragTabItemEventArgs.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6935725f304be6b86880a5bf0eb3941be00/47/5f1d5c52/DragTabItem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6935725f304be6b86880a5bf0eb3941be00/4b/7a6549d6/XamlIlContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6935725f304be6b86880a5bf0eb3941be00/59/313fa69b/FluentTheme.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6935725f304be6b86880a5bf0eb3941be00/5a/5e92f853/!XamlLoader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6935725f304be6b86880a5bf0eb3941be00/93/a4f2a69a/CustomTheme.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6935725f304be6b86880a5bf0eb3941be00/96/4caf6e25/LeftPressedThumb.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6935725f304be6b86880a5bf0eb3941be00/a3/0a2e0692/TabsControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6935725f304be6b86880a5bf0eb3941be00/b8/6f2779b9/TabClosingEventArgs.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1b6935725f304be6b86880a5bf0eb3941be00/f8/da39bafe/!AvaloniaResources.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d9d4154cb5149b3833872f7b9c854cce8e728/6e/89c01963/Guid.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d9d4154cb5149b3833872f7b9c854cce8e728/7b/8b188d01/AssemblyInformationalVersionAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d9d4154cb5149b3833872f7b9c854cce8e728/96/7b198f20/FileSystemInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d9d4154cb5149b3833872f7b9c854cce8e728/97/aeee8a73/Path.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d9d4154cb5149b3833872f7b9c854cce8e728/a3/86a5f3a3/Assembly.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d9d4154cb5149b3833872f7b9c854cce8e728/d9/94db7494/IProgress`1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1d9d4154cb5149b3833872f7b9c854cce8e728/e5/2ca57fa3/Directory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/22d92db124764b1ab49745245c66f01b1e1a00/70/d1260fcc/StyledElement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3689541e22cc48c7a6dac7fd6a3b404ea5c00/82/ff7270c6/ICompletionData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4c94a45a9864434488545d54884d624366c600/a4/641a81e3/GrammarDefinition.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4c94a45a9864434488545d54884d624366c600/bf/6e74b4ac/RegistryOptions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4f8f890b977d4a8ea51383569b3c3fa46400/87/82d7b5cc/TextMate.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/50259a449a144d718864ab156364a913b248/19/aa1c2624/MSBuildLocator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7198a4e9734c4a7c893e868875910a6c148000/77/af1969a0/Window.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7198a4e9734c4a7c893e868875910a6c148000/c2/2c378a31/WindowDrawnDecorations.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7198a4e9734c4a7c893e868875910a6c148000/d3/fb58a094/WindowDecorations.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8f156d94da2744fbaeb6f50c3a37013f573538/8e/5f159dad/Stream.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a7d024836f854465b22d52dd88ace72151530/b3/ffe177f4/ReactiveCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a9cc047f71904d46ab53296a495b3a02247600/19/d7fac563/KeyGesture.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a9cc047f71904d46ab53296a495b3a02247600/3d/067ef208/ExperimentalAcrylicMaterial.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ebd2dce8b84f40ffb7e53cd7e1aeea30148600/46/36373ce8/PlatformKeyGestureConverter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ebd2dce8b84f40ffb7e53cd7e1aeea30148600/6a/668ff72d/Window.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ebd2dce8b84f40ffb7e53cd7e1aeea30148600/96/ec9a4dcb/HeaderedSelectingItemsControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ebd2dce8b84f40ffb7e53cd7e1aeea30148600/9f/7a5c24a9/Application.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ebd2dce8b84f40ffb7e53cd7e1aeea30148600/c1/2100efc9/MenuItem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ebd2dce8b84f40ffb7e53cd7e1aeea30148600/d0/cac84243/SelectingItemsControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ebd2dce8b84f40ffb7e53cd7e1aeea30148600/da/52086bf9/Button.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f2b9ca6674c94cd087de5df2af12dd0414728/d1/009edbdf/ICommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fda8cd9465854b919548f666b6b3e16867a200/12/b75320ae/ThemeName.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fda8cd9465854b919548f666b6b3e16867a200/3f/5ca6c690/RegistryOptions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fda8cd9465854b919548f666b6b3e16867a200/84/ba30590f/ResourceLoader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/metadata/7198a4e9734c4a7c893e868875910a6c148000/98/9f533436/Avalonia.Controls.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/031f531783904d1193c6fc768d41aa6ba1c00/_08240/ICompletionData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0ceaca09f3944680b668dee8e1e0370b100a00/_3ee5d/IClassicDesktopStyleApplicationLifetime.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0ceaca09f3944680b668dee8e1e0370b100a00/_cddb0/IContentPresenterHost.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/0f18698aac9c8bef97c904a47682110e19544e5f64bbdcc822a47825d98e8/TextViewPosition.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/11476fef248236e87aa20b96612f476364fa99438de67b745be354cf76d9f/Popup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/14818b3ff29430909ff1edd74bf8f4d0c431e83e7e5199cfe58ef7705f2726d/TemplatedControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/16a25d89779ca224b34f189688787a4b4f091751ee7706b8b396a5e88aa225/HeaderedSelectingItemsControl.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17bbecded926db66f0c619b11b6b1e95b3ff589ca31d8d9f5b33ea3881a9c/TextMate.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/23405ca730adfd17d34adfee81444aec315bbc4ab37ee66b7dc8452dc222c4d/InputElement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/23da7b5c11e540cba45da587688648f19ca031ffccf04be8cd2f3943b4bb2/VisualLine.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2630d42371638ddfe48d1de625890ebc4c0fde875d119c7a251f77188b45/TemplatedControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2726c402995258958545b7f39525a824beeabd1c2cc54ad8541f394d7e14abf/Dispatcher.Invoke.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/285b13fc858f2bc5a8c3981658076cefd40d7427b57c2b2637c877cc53ffcf/Menu.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/32b56b2df2b8f5917a0856c2cdee7735f38b266b7ca8da4b66d6cf84f35ac/TabControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3689541e22cc48c7a6dac7fd6a3b404ea5c00/_08240/ICompletionData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4624ce6cb2f1c962cedd4662d19e61ebd7f2181548bfb51e713049a8bf9c8cf4/ItemsPresenter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/49b572a64c2c02980ffe97ff1673549ed9bdfbf9738ec66def83611762e85c/TreeView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4a86cf203f9bf5d2fe102fe964e1cbd30f0cba8997ef7e9b0ffd25e8a1acc/StateStack.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4b712b09a77d4afbb67daa85225e75277d03fa42dea5b82ff6fd4e0b85c8019/CompletionService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4f6abe7e8958e37bd77cc735f8e1751f2fe1a7d7b392cbb4b40b8f2c06c2b/FullTypeName.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/50f6139d860dc1e93a65f1a659c6d3a13ac420263927f881346dd6f48826/IRawTheme.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5338d12f664919b54d85af380869c0e72aa461e780f58964e38843342cbed/TextEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/54ed92959ea2c04876eca2bb5049333321bf1862f2f228e8ab6a2c8fe467109c/TextBlock.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/57361bc4e5442f644ff63ec7e745da2eb4bbb6c769d1fb683bab5f6f952b1ab/Control.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5dd249ba7a29d4209fcedd2d29261a3131678151817b62d20914d1706918/RoutedEventArgs.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5fda7f1253ea19edc15f91b94a33322b857f1a9319fbffea8d26e9d304178/Border.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/65108b9a9241625d5f287499e6ddfd7c41e04ff3b123c62b3ac9f2a8e647ba/TextInputEventArgs.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6c82d1c7741011fd4532ab605cd9823f7ee720b9977a44fe7167ca9538f3115/ContentPresenter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6cb17de97a8121f48e5408d49811afb1bc7ab58eb8836f1d2e30a5d79/MenuItem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6dc2406f107476165c65b990c2519c80a8a61159aa1bb4a4ef38934362a27/ITokenizeLineResult.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6fbdee1a31c30b8bdebba194acf19e3c79cd538b527790964c1a8d768f3f10/JSONPListParser.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/71a787433de257de866ebcda85872dce5517d615a5b8e4b61d3d2f67d9c3c/ReadOnlyDictionary.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/741aa7bb86a27636334944a6d843459c16c190825487314c2b6f99073f535a9/ContentControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7a749982abd2299dfced98c79871bdaecab605de17773081c9a98df1094c1/TextView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7b63d533e1b185d3624393829eb47ff8c4b1559829635ec4ebe4c119d53497/TabControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7d8c53fc745913ffa5d34d2fbd591d5a7da293c986687bc71ac6201226c63f/TrayIcon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7eb70fde4273f96e18e4b3aaa7a8f0f4b5dbb555e6c4eae23913fe927134/SelectingItemsControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7fe4909f95e72ba2dbe6d954a3c519426f7b96719489eefa62a2c835a8f622f/AttributedScopeStack.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/81a397321d08bf727202c96547b3579d9891398df7db7e5dc2d835a1fd2f96/TextArea.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/85a5735906a3a06f39a1422a28e0353e3e317f2d923dcc5731fef07dd436f9/FileInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/867ebe21704459cfd8bcca8f59ccccb4944bb58e5a052f3d34b45b6c58dd322/TextMateColoringTransformer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8d7c782df71c7217067d43ac3690b6ff86b74823a72c172d522389388a2bd/AvaloniaProperty.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9b99b33b61e064a95d985c50edb17a9ee889e36b9ae2381866346ee68ced8bd9/ItemsControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9ce4a171ec65cfa9f7e5cac75a8c5ea63f056c8df16c4d425d1aa426a906737/OverloadInsightWindow.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9f78d47dbf27d35ee15638537e873757f0e62a631f55b973999751871ed/ToolTip.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a0d54679afe52de4fada4170f26fbaea6d983d414d55f132748962b1a8add/TextEditorOptions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a3dceb13ae171759daf46d59f6436625a4d76f883e7211e5d91ceebac054/TextEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a7404fd4a922cf2cdee209d115633a823f7a5b52ab31f52597356c8943444dd/SelectingItemsControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/aaed011322428ecfff66abaf684040e447eaf3b926f9f68a72d487e3bf190/Styles.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/acbcb03bdaf8a45582ea1a4055cbb4c7b5cf022aba4df54f88a8c86ac4c59f/VirtualizingPanel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ae9867a6275f8cd12068f22d6644e8e150a919eae173076aeed83a562e4818/Application.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b03d84c4e8e7541fe8b95c855c47a2b73f56a88b76e718723efa46663e8872/Window.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b697bdd0c6b550aef9bd50cc6f6ca83e0c18de05b50ab5af3f9b16b38b82973/IRegistryOptions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b6f9ade1530abdcab9bb1bac1824a6c44933cb315a42e7d313cfac1e69/CompletionService_GetCompletions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b9da4fd9a98eea4361bd7e199149ab99ad936b972f4f9e60b7dda39e8e58c615/Theme.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ba2907b6172ec2c1a54bbd4c2babf2ac5b83569d3f8cddc2a1e19796c9b0ba/MenuBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bb6fabe194b96d1b9091f838cddf2cd4f3bfae54118f5dbbd6db31d46988adf/TreeViewItem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bd51dbe8708880c870f8a3406ee774eb89adb2cd9623c5912c3422b2ee333e/ItemsControl.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c3ee276f469ae08b85332714e152f256536b1ad1bd5e68de55cebe9d31150/CSharpDecompiler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cc84c38d8785b88e166e6741b6a4c0dfa09eaf6e41eb151b255817e11f27570/Button.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cd401c8afbf424823c59842d79aa58b676f4e8a42c8291b6c8fbeb6df9df6/ColorMap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cf5011822fd54235e86fdc54ee3baa876b4876e5549223ffeadca5607e59f6af/Path.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cf5915e05ff7bca0283972d2e0179efe81f8917db49b8e16b7bfecf5da968/TextDocument.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d0e58fcc1e76c45f26dda61db7fecb577c47bc51d8353f89bba173ee6201e/CompletionList.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d736b27cd2931a6e6755df456fd7b8177c233835d4be18e9d4eefe5a8cdb62d2/PointerPoint.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/db7535de71e20def9944cb3a24c53f89797c43b86522e2b9f608c44fad69f54/CompletionList.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e4a1899e50aba368831326cbb4f165e6b386118d355fbe34963ce2f64d945cea/Grid.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e5d623ea960f2c3c9fda144954d339f8d4cd3dad6dd8bd4ab96093a010ab/Dictionary.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e6453ecbae4621f06946419291c89759ddfeae5958187ad65e48d730334f95c1/HeaderedContentControl.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eb7bfb96bd69bdea6a657a8e95c2c38d13607e9d11e169ecc91f26953241f46/TabItem.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/GMMBackend/obj/Release/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f963a2a29ea2bb2d4ad8737293b45c4edbd94e55219dc42cf68343d6d91d9/Control.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f9ef29918fca4cc405c98e5f9f7345a8a1acd5c6d4d42872d3aa73b51247de8/ThemeReader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fcb9104d589e021956403128a5117096b830f6976c42d12388ac7355eafe/Registry.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fce39e7b6cb63bf80985027c06645b026bb94dc1717fdb9f3171aacf4fa76/Project.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fd16bb5772b23d05b21c1d59559bd6a28b1ae3f2324b7853b355961f1d8f83/FluentTheme.xaml.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fd6843291c494dcf98f81205c7f337ef1f9000/_c35ca/IStyle.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fe7fc838983f9b8d22e3ed9b231a3f1bdff266796e394d1bc3753eb9eb39c4/AvaloniaObject.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/fe99d41a49bc4ccc817923f62f81cc67559e5cc66be4569492fc32359da6323/FoldingManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ffd33db55ecf37138ba118a22d4a4330d7d7c41a7ffdb372a809d317aae755b/TabItem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GMMLauncher/Overrides/MenuItem.axaml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GMMLauncher/ViewModels/MainWindowViewModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mods/GoblinManager/Files/AssetHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mods/GoblinManager/Files/CoroutineRunner.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mods/GoblinManager/Files/Mod/Context.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mods/GoblinManager/Files/Mod/Mod.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mods/GoblinManager/Files/Mod/ModDescriptionAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mods/GoblinManager/Files/Mod/ModUI.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mods/GoblinManager/Files/ResourceLoader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mods/MoreItemDetails/Files/MoreItemDetails.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Nick/Downloads/Isle Goblin/isle-goblin-modding/Tools/GoblinModMaker Development/GMM 2.0/GMMLauncher/obj/Debug/net9.0/.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="SWEA" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -131,30 +351,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.GMMLauncher.executor": "Run",
-    ".NET Static Method.GMMLauncher.MenuCommands.LoadExistingMod.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "ShowUsagesActions.previewPropertyKey": "true",
-    "XThreadsFramesViewSplitterKey": "0.33129305",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "ml.llm.LLMTrustedDomainsConfigurableProvider",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.GMMLauncher.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Static Method.GMMLauncher.MenuCommands.LoadExistingMod.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.33129305&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;RiderNuGetOptionsPageId&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "AiIgnore"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;AiIgnore&quot;
     ]
   }
-}]]></component>
+}</component>
+  <component name="RiderProblemsViewState">
+    <hideBySeverity>
+      <option value="20" />
+      <option value="300" />
+    </hideBySeverity>
+  </component>
   <component name="RunManager" selected=".NET Project.GMMLauncher">
     <configuration name="GMMBackend" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.dll" />
@@ -294,7 +520,21 @@
       <workItem from="1780088162569" duration="3269000" />
       <workItem from="1780091450018" duration="13205000" />
       <workItem from="1780112805527" duration="5923000" />
-      <workItem from="1780257575946" duration="25275000" />
+      <workItem from="1780257575946" duration="25650000" />
+      <workItem from="1780345518639" duration="3185000" />
+      <workItem from="1786192773539" duration="127857000" />
+      <workItem from="1786413958189" duration="5700000" />
+      <workItem from="1786419672895" duration="85991000" />
+      <workItem from="1786636858098" duration="27061000" />
+      <workItem from="1786914072727" duration="10970000" />
+      <workItem from="1786927024739" duration="101000" />
+      <workItem from="1786927165402" duration="19409000" />
+      <workItem from="1786982695396" duration="26703000" />
+      <workItem from="1787153919117" duration="20106000" />
+      <workItem from="1787238604291" duration="30948000" />
+      <workItem from="1787332637599" duration="10865000" />
+      <workItem from="1787364019591" duration="7739000" />
+      <workItem from="1787419887372" duration="30278000" />
     </task>
     <task id="LOCAL-00001" summary="Changed simple stuff">
       <option name="closed" value="true" />
@@ -360,7 +600,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780118496426</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Made the file tree useful, added the following: create new files and folders withing the tree, rename anything, delete anything, open in explorer, and some QOL. Also started adding some icons. If there are too many or something doesn't feel right then it can be taken back">
+      <option name="closed" value="true" />
+      <created>1780285414113</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1780285414113</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -410,7 +658,9 @@
     <MESSAGE value="Added code editor" />
     <MESSAGE value="Added renaming files, fixed entire project closing on last tab closure, added splitter." />
     <MESSAGE value="Added Quick Build with its respective settings and added a Overwrite Csproj button just in case" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Quick Build with its respective settings and added a Overwrite Csproj button just in case" />
+    <MESSAGE value="Made the file tree useful, added the following: create new files and folders withing the tree, rename anything, delete anything, open in explorer, and some QOL. Also started adding some icons. If there are too many or something doesn't feel right then it can be taken back" />
+    <MESSAGE value="Very large update, I'll try and list everything I've done so far&#10;1. Autocompletion with all dlls from Isle Goblin (any Unity dll and the code for Isle Goblin itself) all loaded from your own copy. (ISLE GOBLIN CODE IS NOT SHIPPED WITH THIS PRODUCT)&#10;2. Custom theming (Resources/Themes) see the documentation for more info on making your own&#10;3. Reopening last tab (holds multiple)&#10;4. Decompiled files are stored for quick access in same session&#10;5. Fixed folding to work with all kinds of syntax&#10;6. Go to definition (works with decompiled tabs)&#10;7. Opening files using middle mouse button&#10;8. Fixed outer margins looking weird on fullscreen&#10;9. Upgraded to Avalonia 12 (NOTE: CURRENT VERSION IS A 12.2 ALPHA, I REALLY NEEDED A CERTAIN FIX THAT WAS ONLY AVAIABLE ON THIS VERSION PLEASE UPDATE TO 12.2 ON RELEASE)&#10;10. Main Menu Overhaul&#10;11. New Documentation (Check wiki section in repo)&#10;12. Added a recent projects section&#10;13. anytime you see a mod for example open existing or in recent projects you can right click for a context menu that lets you configure, open in explorer, and delete mod.&#10;14. Added a value for the level of opacity because I acknowledge that some people may not want the app to be translucent&#10;15. Collapse, expand foldings, coment, and uncomment functions (with chorded keybinds)&#10;16. Chorded keybinding along with a chorded menu item because Avalonia doesn't support chording natively&#10;17. TONS of styling&#10;18. Started work on an update service, accessible through main menu&#10;19. Added some more keybinds&#10;20. Added diagnostics (warnings, errors, and tips in the code editor)&#10;21. Symbol/Diagnostic tooltips&#10;22. Added autoclosing parentheses&#10;23. Added keybinds to main menu&#10;24. Added more icons&#10;25. Added an option to run Isle Goblin in code editor (Its under File &gt; Open Isle Goblin)&#10;26. And more" />
+    <option name="LAST_COMMIT_MESSAGE" value="Very large update, I'll try and list everything I've done so far&#10;1. Autocompletion with all dlls from Isle Goblin (any Unity dll and the code for Isle Goblin itself) all loaded from your own copy. (ISLE GOBLIN CODE IS NOT SHIPPED WITH THIS PRODUCT)&#10;2. Custom theming (Resources/Themes) see the documentation for more info on making your own&#10;3. Reopening last tab (holds multiple)&#10;4. Decompiled files are stored for quick access in same session&#10;5. Fixed folding to work with all kinds of syntax&#10;6. Go to definition (works with decompiled tabs)&#10;7. Opening files using middle mouse button&#10;8. Fixed outer margins looking weird on fullscreen&#10;9. Upgraded to Avalonia 12 (NOTE: CURRENT VERSION IS A 12.2 ALPHA, I REALLY NEEDED A CERTAIN FIX THAT WAS ONLY AVAIABLE ON THIS VERSION PLEASE UPDATE TO 12.2 ON RELEASE)&#10;10. Main Menu Overhaul&#10;11. New Documentation (Check wiki section in repo)&#10;12. Added a recent projects section&#10;13. anytime you see a mod for example open existing or in recent projects you can right click for a context menu that lets you configure, open in explorer, and delete mod.&#10;14. Added a value for the level of opacity because I acknowledge that some people may not want the app to be translucent&#10;15. Collapse, expand foldings, coment, and uncomment functions (with chorded keybinds)&#10;16. Chorded keybinding along with a chorded menu item because Avalonia doesn't support chording natively&#10;17. TONS of styling&#10;18. Started work on an update service, accessible through main menu&#10;19. Added some more keybinds&#10;20. Added diagnostics (warnings, errors, and tips in the code editor)&#10;21. Symbol/Diagnostic tooltips&#10;22. Added autoclosing parentheses&#10;23. Added keybinds to main menu&#10;24. Added more icons&#10;25. Added an option to run Isle Goblin in code editor (Its under File &gt; Open Isle Goblin)&#10;26. And more" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

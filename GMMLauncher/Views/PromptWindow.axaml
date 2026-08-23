@@ -6,6 +6,7 @@
         Icon="/Assets/goblin-mod-maker.ico"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
+        WindowDrawnDecorations.TitleBarDecorations="MinimizeButton, MaximizeButton, CloseButton"
         TransparencyLevelHint="AcrylicBlur"
         Width="400"
         Height="400"
@@ -15,14 +16,14 @@
         <vm:PromptWindowViewModel/>
     </Design.DataContext>
 
-    <Panel>
+    <Panel Margin="{Binding $parent[Window].OffScreenMargin}">
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
                     BackgroundSource="Digger"
-                    TintColor="Black"
+                    TintColor="{DynamicResource WindowColor}"
                     TintOpacity="1"
-                    MaterialOpacity="0.65" />
+                    MaterialOpacity="{DynamicResource OpacityAmount}" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
@@ -54,22 +55,13 @@
                           Spacing="10"
                           Margin="0,20">
                     <Button Name="Done"
-                            HorizontalAlignment="Center"
                             Content="Done"
-							IsEnabled="True"
-                            Foreground="#5EA7FF"/>
+							IsEnabled="True"/>
                     <Button Name="Cancel"
-                            HorizontalAlignment="Center"
-                            IsEnabled="True"
-                            Foreground="#5EA7FF"/>
+                            IsEnabled="True"/>
                 </StackPanel>
             </Grid>
         </DockPanel>
     </Panel>
 
-    <Window.Styles>
-        <Style Selector="PathIcon">
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-    </Window.Styles>
 </Window>

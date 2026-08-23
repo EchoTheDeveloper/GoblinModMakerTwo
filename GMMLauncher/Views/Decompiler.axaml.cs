@@ -26,15 +26,16 @@ namespace GMMLauncher.Views
             decompiledCode = this.FindControl<TextEditor>("DecompiledCode");
             if (decompiledCode != null)
             {
-                TextMate.Installation _textMateInstallation;
+
+                 TextMate.Installation _textMateInstallation = decompiledCode.InstallTextMate(new RegistryOptions(ThemeName.DarkPlus));
                 decompiledCode.ShowLineNumbers = App.Settings.ShowLineNumbers;
                 decompiledCode.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
-                _textMateInstallation = decompiledCode.InstallTextMate(codeEditor._registryOptions);
-                _textMateInstallation.AppliedTheme += (o, installation) => codeEditor.TextMateInstallationOnAppliedTheme(o, installation, decompiledCode);
+                App.ApplyTheme(_textMateInstallation, App.Settings.SelectedTheme);
+                _textMateInstallation.AppliedTheme += (_, installation) => codeEditor.TextMateInstallationOnAppliedTheme(installation);
                 decompiledCode.TextArea.IndentationStrategy = new CSharpIndentationStrategy(decompiledCode.Options);
-                decompiledCode.TextArea.LeftMargins.Insert(0, codeEditor._margin);
-                Language csharpLanguage = codeEditor._registryOptions.GetLanguageByExtension(".cs");
-                _textMateInstallation.SetGrammar(codeEditor._registryOptions.GetScopeByLanguageId(csharpLanguage.Id));
+                decompiledCode.TextArea.LeftMargins.Add(new CustomMargin());
+                Language csharpLanguage = new RegistryOptions(ThemeName.DarkPlus).GetLanguageByExtension(".cs");
+                _textMateInstallation.SetGrammar(new RegistryOptions(ThemeName.DarkPlus).GetScopeByLanguageId(csharpLanguage.Id));
             }
         }
         private void InitializeComponent()

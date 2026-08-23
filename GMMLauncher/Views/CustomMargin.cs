@@ -4,8 +4,10 @@ using Avalonia;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
+using AvaloniaEdit;
 using AvaloniaEdit.Document;
 using AvaloniaEdit.Editing;
+using AvaloniaEdit.Folding;
 using AvaloniaEdit.Rendering;
 
 #nullable enable
@@ -137,6 +139,169 @@ namespace GMMLauncher.Views
             }
 
             base.Render(context);
+        }
+    }
+    public class CustomFoldingMargin : AbstractMargin
+    {
+        private readonly FoldingManager _foldingManager;
+
+        private int _hoveredLine = -1;
+
+        public CustomFoldingMargin(FoldingManager foldingManager)
+        {
+            _foldingManager = foldingManager;
+
+            Width = 20;
+
+            PointerMoved += OnPointerMoved;
+            PointerExited += OnPointerExited;
+            PointerPressed += OnPointerPressed;
+        }
+
+        public override void Render(DrawingContext context)
+        {
+            base.Render(context);
+
+            var textView = TextView;
+
+            if (textView == null)
+                return;
+
+            foreach (var folding in _foldingManager.AllFoldings)
+            {
+                if (folding.StartOffset < 0 ||
+                    folding.StartOffset > textView.Document.TextLength)
+                    continue;
+
+                var line = textView.Document.GetLineByOffset(
+                    folding.StartOffset);
+
+                var visualLine = textView.GetVisualLine(
+                    line.LineNumber);
+
+                if (visualLine == null)
+                    continue;
+
+                var y = visualLine.VisualTop - textView.VerticalOffset;
+                var center = y + visualLine.Height / 2;
+
+                DrawChevron(
+                    context,
+                    new Point(Width / 2, center),
+                    folding.IsFolded,
+                    line.LineNumber == _hoveredLine);
+            }
+        }
+
+        private void DrawChevron(
+            DrawingContext context,
+            Point center,
+            bool collapsed,
+            bool hovered)
+        {
+            var geometry = new StreamGeometry();
+
+            using (var builder = geometry.Open())
+            {
+                if (collapsed)
+                {
+                    builder.BeginFigure(
+                        new Point(center.X - 2, center.Y - 4),
+                        false);
+
+                    builder.LineTo(
+                        new Point(center.X + 2, center.Y));
+
+                    builder.LineTo(
+                        new Point(center.X - 2, center.Y + 4));
+                }
+                else
+                {
+                    builder.BeginFigure(
+                        new Point(center.X - 3, center.Y - 2),
+                        false);
+
+                    builder.LineTo(
+                        new Point(center.X, center.Y + 2));
+
+                    builder.LineTo(
+                        new Point(center.X + 3, center.Y - 2));
+                }
+            }
+
+            var brush = hovered
+                ? Brushes.White
+                : Brushes.Gray;
+
+            context.DrawGeometry(
+                null,
+                new Pen(brush, 1.5),
+                geometry);
+        }
+
+        private void OnPointerMoved(
+            object? sender,
+            PointerEventArgs e)
+        {
+            var point = e.GetPosition(this);
+
+            var line = TextView?.GetDocumentLineByVisualTop(
+                point.Y + TextView.VerticalOffset);
+
+            var newLine = line?.LineNumber ?? -1;
+
+            if (newLine == _hoveredLine)
+                return;
+
+            _hoveredLine = newLine;
+            InvalidateVisual();
+        }
+
+        private void OnPointerExited(
+            object? sender,
+            PointerEventArgs e)
+        {
+            _hoveredLine = -1;
+            InvalidateVisual();
+        }
+
+        private void OnPointerPressed(object? sender, PointerPressedEventArgs e)
+        {
+            if (TextView == null)
+                return;
+
+            var point = e.GetPosition(this);
+
+            var line = TextView.GetDocumentLineByVisualTop(
+                point.Y + TextView.VerticalOffset);
+
+            if (line == null)
+                return;
+
+            FoldingSection? target = null;
+
+            foreach (var folding in _foldingManager.AllFoldings)
+            {
+                var foldingLine =
+                    TextView.Document.GetLineByOffset(
+                        folding.StartOffset);
+
+                if (foldingLine.LineNumber == line.LineNumber)
+                {
+                    target = folding;
+                    break;
+                }
+            }
+
+            if (target == null)
+                return;
+
+            target.IsFolded = !target.IsFolded;
+
+            e.Handled = true;
+
+            InvalidateVisual();
+            TextView.InvalidateVisual();
         }
     }
 }

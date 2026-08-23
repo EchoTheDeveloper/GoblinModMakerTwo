@@ -1,0 +1,94 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:GMMLauncher.ViewModels"
+        x:Class="GMMLauncher.Views.UpdateWindow"
+        x:DataType="vm:UpdateWindowViewModel"
+        Icon="/Assets/goblin-mod-maker.ico"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        WindowDrawnDecorations.TitleBarDecorations="MinimizeButton, MaximizeButton, CloseButton"
+        TransparencyLevelHint="AcrylicBlur"
+        Width="500"
+        Height="600"
+        CanResize="True">
+
+    <Design.DataContext>
+        <vm:UpdateWindowViewModel/>
+    </Design.DataContext>
+    <Panel Margin="{Binding $parent[Window].OffScreenMargin}">
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="{DynamicResource WindowColor}"
+                    TintOpacity="1"
+                    MaterialOpacity="{DynamicResource OpacityAmount}" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <DockPanel Margin="10,10,0,0">
+            <TextBlock Name="TitleText"
+                       Text="Update Service"
+                       DockPanel.Dock="Top"/>
+        </DockPanel>
+        <DockPanel Margin="0,34,0,0">
+            <!-- Main -->
+            <Grid Margin="25,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <StackPanel IsVisible="{Binding !IsScanning}"  
+                                    Spacing="25"
+                                    HorizontalAlignment="Center"
+                                    Margin="0,20"
+                                    Orientation="Vertical">
+                            <TextBlock Text="Goblin Mod Maker" 
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding GMMVersionText}" 
+                                       HorizontalAlignment="Center"/>
+                            <Button Command="{Binding InstallBepInEx}"
+                                    IsVisible="{Binding ShowGMMUpdateButton}">
+                                <TextBlock Text="{Binding GMMUpdateText}"/>
+                            </Button>
+                            
+                            <Separator/>
+                            
+                            <TextBlock Text="BepInEx" 
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding BepInExVersionText}" 
+                                       HorizontalAlignment="Center"/>
+                            <Button Command="{Binding UpdateBepInEx}"
+                                    IsVisible="{Binding ShowBepInExUpdateButton}">
+                                <TextBlock Text="{Binding BepInExUpdateText}"/>
+                            </Button>
+                            <Button Command="{Binding InstallBepInExCommand}">
+                                <TextBlock Text="Force Install BepInEx"/>
+                            </Button>
+                            
+                        </StackPanel>
+                        <TextBlock Text="{Binding StatusText}" 
+                                   IsVisible="{Binding IsScanning}"
+                                   HorizontalAlignment="Center"/>
+                    </Grid>
+                </ScrollViewer>
+                
+                <!-- Footer -->
+                <StackPanel Grid.Row="2" 
+                          Spacing="10"
+                          Margin="0,10">
+                    <Button Name="Close"
+                            Command="{Binding CloseWindowCommand}"
+                            HorizontalAlignment="Center"
+                            Content="Close"
+                            IsEnabled="True"/>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+    </Panel>
+
+</Window>

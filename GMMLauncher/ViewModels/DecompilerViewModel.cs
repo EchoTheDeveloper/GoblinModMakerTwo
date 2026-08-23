@@ -34,8 +34,7 @@ namespace GMMLauncher.ViewModels
         public ObservableCollection<AssemblyItem> AssemblyTree { get; set; } = new();
         public async Task LoadAssembly(Decompiler decompilerWindow, bool forceLoad)
         {
-            string dllPath = Path.Combine(App.Settings.SteamDirectory, "Isle Goblin_Data", "Managed",
-                "Assembly-CSharp.dll");
+            string dllPath = Path.Combine(App.Settings.SteamDirectory, "Isle Goblin_Data", "Managed", "Assembly-CSharp.dll");
             _decompiler = decompilerWindow;
             if (App.DecompiledTree != null && !forceLoad)
             {

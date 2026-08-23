@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Controls;
+using GMMLauncher.Views;
 
 namespace GMMLauncher;
 
@@ -11,5 +14,10 @@ public static class WindowManager
     {
         Windows.Add(window);
         window.Closed += (_, _) => Windows.Remove(window);
+    }
+
+    public static CodeEditor SearchForModsInCodeEditor(string filePath)
+    {
+        return Windows.OfType<CodeEditor>().FirstOrDefault(w => w.Mod.GetModFilePath().Equals(filePath));
     }
 }

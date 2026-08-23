@@ -11,10 +11,10 @@ namespace GMMLauncher.ViewModels
 {
     public partial class SettingsWindowViewModel : ViewModelBase
     {
-        public ICommand CloseWindowCommand { get; }
-        public ICommand SaveSettingsCommand { get; }
-        public ICommand AutoFindDirectoryCommand { get; }
-        public ICommand InstallBepInExCommand { get; }
+        public ICommand CloseWindowCommand => new RelayCommand(CloseWindow);
+        public ICommand SaveSettingsCommand => new RelayCommand(SaveSettings);
+        public ICommand AutoFindDirectoryCommand => new RelayCommand(AutoFindSteamDirectory);
+        public ICommand InstallBepInExCommand => new RelayCommand(InstallBepInEx);
         
         SettingsWindow settingsWindow;
         CodeEditor editor;
@@ -22,10 +22,6 @@ namespace GMMLauncher.ViewModels
         {
             this.editor = editor;
             this.settingsWindow = settingsWindow;
-            CloseWindowCommand = new RelayCommand(CloseWindow);
-            SaveSettingsCommand = new RelayCommand(SaveSettings);
-            AutoFindDirectoryCommand = new RelayCommand(AutoFindSteamDirectory);
-            InstallBepInExCommand = new RelayCommand(InstallBepInEx);
         }
 
         private void CloseWindow()
@@ -36,12 +32,13 @@ namespace GMMLauncher.ViewModels
         private void SaveSettings()
         {
             string steamDir = settingsWindow.FindControl<TextBox>("SteamDirectory").Text;
-            ThemeName selectedTheme = (ThemeName)settingsWindow.FindControl<ComboBox>("SelectTheme").SelectedIndex;
+            string selectedTheme = settingsWindow.FindControl<ComboBox>("SelectTheme").SelectedValue.ToString();
             bool showLineNumbers = (bool)settingsWindow.FindControl<CheckBox>("ShowLineNumbers").IsChecked;
             bool showExplorer = (bool)settingsWindow.FindControl<CheckBox>("ShowExplorer").IsChecked;
             bool overwriteCsproj = (bool)settingsWindow.FindControl<CheckBox>("OverwriteCsproj").IsChecked;
             bool zipMod = (bool)settingsWindow.FindControl<CheckBox>("ZipMod").IsChecked;
             bool openPluginFolder = (bool)settingsWindow.FindControl<CheckBox>("OpenPluginFolder").IsChecked;
+            string opacityAmount = (string)settingsWindow.FindControl<NumericUpDown>("OpacityAmount").Text;
             
             App.Settings.SteamDirectory = steamDir;
             App.Settings.SelectedTheme = selectedTheme;
@@ -50,12 +47,21 @@ namespace GMMLauncher.ViewModels
             App.Settings.OverwriteCsproj = overwriteCsproj;
             App.Settings.ZipMod =  zipMod;
             App.Settings.OpenPluginFolder = openPluginFolder;
+            App.Settings.OpacityAmount = opacityAmount;
             App.Settings.SaveSettings();
             
-            if (editor != null)
+            foreach (var window in WindowManager.Windows)
             {
-                editor.UpdateVisuals();
-                editor.fileTree.IsVisible = showExplorer;
+                if (window is CodeEditor codeEditor)
+                {
+                    codeEditor.UpdateVisuals();
+                    if (codeEditor.fileTree != null) codeEditor.fileTree.IsVisible = showExplorer;
+                }
+            }
+            
+            if (editor == null)
+            {
+                App.CleanThemeApply();
             }
             
             settingsWindow.Close();

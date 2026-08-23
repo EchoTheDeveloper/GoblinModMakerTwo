@@ -6,6 +6,7 @@
         Icon="/Assets/goblin-mod-maker.ico"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
+        WindowDrawnDecorations.TitleBarDecorations="MinimizeButton, MaximizeButton, CloseButton"
         TransparencyLevelHint="AcrylicBlur"
         Width="500"
         Height="750"
@@ -14,14 +15,14 @@
     <Design.DataContext>
         <vm:SettingsWindowViewModel/>
     </Design.DataContext>
-    <Panel>
+    <Panel Margin="{Binding $parent[Window].OffScreenMargin}">
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
                     BackgroundSource="Digger"
-                    TintColor="Black"
+                    TintColor="{DynamicResource WindowColor}"
                     TintOpacity="1"
-                    MaterialOpacity="0.65" />
+                    MaterialOpacity="{DynamicResource OpacityAmount}" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
@@ -48,8 +49,7 @@
                                 Orientation="Vertical">
                         <TextBlock Text="Steam Directory" 
                                    HorizontalAlignment="Center"/>
-                        <Button HorizontalAlignment="Center"
-                                Command="{Binding AutoFindDirectoryCommand}">
+                        <Button Command="{Binding AutoFindDirectoryCommand}">
                             <TextBlock Text="Auto Find"/>
                         </Button>
                         <TextBox HorizontalAlignment="Stretch" 
@@ -57,29 +57,25 @@
                         
                         <Separator HorizontalAlignment="Stretch"/>
                         
-                        
-                        
                         <TextBlock Text="Select Theme" 
                                    HorizontalAlignment="Center"/>
                         <ComboBox MaxDropDownHeight="200" 
                                   HorizontalAlignment="Center" 
                                   Name="SelectTheme">
-                            <ComboBoxItem><TextBlock Text="Abbys"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Dark"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Dark Plus"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Dimmed Monokai"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Kimbie Dark"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Light"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Light Plus"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Monokai"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Quiet Light"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Red"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Solarized Dark"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Solarized Light"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="Tomorrow Night Blue"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="High Contrast Light"/></ComboBoxItem>
-                            <ComboBoxItem><TextBlock Text="High Contrast Dark"/></ComboBoxItem>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="{x:Type ComboBoxItem}">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
+                        
+                        <TextBlock Text="Opacity Amount (0 to 1)" 
+                                   HorizontalAlignment="Center"/>
+                        <NumericUpDown Increment="0.1" 
+                                       Minimum="0"
+                                       Maximum="1" 
+                                       PlaceholderText="0.65" 
+                                       Name="OpacityAmount"/>
                         
                         <Separator HorizontalAlignment="Stretch"/>
                         
@@ -116,7 +112,7 @@
                         <Separator HorizontalAlignment="Stretch"/>
                         
                         
-                        <Button HorizontalAlignment="Center" Command="{Binding InstallBepInExCommand}">
+                        <Button Command="{Binding InstallBepInExCommand}">
                             <TextBlock Text="Install BepInEx"/>
                         </Button>
                     </StackPanel>
@@ -128,24 +124,16 @@
                           Margin="0,20">
                     <Button Name="Done"
                             Command="{Binding SaveSettingsCommand}"
-                            HorizontalAlignment="Center"
                             Content="Done"
-							IsEnabled="True"
-                            Foreground="#5EA7FF"/>
+							IsEnabled="True"/>
                     <Button Name="Cancel"
                             Command="{Binding CloseWindowCommand}"
                             HorizontalAlignment="Center"
                             Content="Cancel"
-                            IsEnabled="True"
-                            Foreground="#5EA7FF"/>
+                            IsEnabled="True"/>
                 </StackPanel>
             </Grid>
         </DockPanel>
     </Panel>
 
-    <Window.Styles>
-        <Style Selector="PathIcon">
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-    </Window.Styles>
 </Window>

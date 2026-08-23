@@ -1,32 +1,58 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
+using System.Windows.Input;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
 using GMMLauncher.Views;
 
 namespace GMMLauncher.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
-        public ICommand OpenDocumentationCommand => MenuCommands.OpenDocumentationCommand;
-        public ICommand OpenSettingsCommand => new RelayCommand(OpenSettings);
-        public ICommand QuitAppCommand => MenuCommands.QuitAppCommand;
-        public ICommand NewModCommand => MenuCommands.NewModCommand;
-        public ICommand LoadExistingModCommand => MenuCommands.LoadExistingModCommand;
-        public ICommand LoadModDialogCommand => new RelayCommand(LoadModDialog);
+        public ObservableCollection<ModInfo> RecentProjects => App.RecentProjects.RecentProjectList;
 
-        public string version => "Goblin Mod Maker v"+App.appVersion;
+        public string Version => "v" + App.appVersion;
 
         MainWindow mainWindow;
         public MainWindowViewModel(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
+            mainWindow.GettingFocus += (_, _) => ReloadVisuals();
+            
+            // App.RecentProjects.VerifyProjects();
         }
 
-        public void LoadModDialog()
+        public void NewMod() => MenuCommands.NewMod();
+        public void LoadModDialog() => MenuCommands.LoadMod(mainWindow);
+        public void LoadExistingMod() => MenuCommands.LoadExistingMod();
+        public void OpenSettings() => MenuCommands.OpenSettings();
+        public void OpenUpdateWindow() => MenuCommands.OpenUpdateWindow();
+        public void ReloadVisuals() => App.CleanThemeApply();
+        public void QuitApp() => MenuCommands.QuitCompletely();
+        public void OpenDocumentation() => MenuCommands.OpenDocumentation();
+        public void OpenIssues() => MenuCommands.OpenIssues();
+        
+        
+        public void ConfigureMod()
         {
-            MenuCommands.LoadModDialogCommand.Execute(mainWindow);
+            mainWindow.ConfigureMod();
+            
+            mainWindow._rightClickedMod = null;
         }
-        private void OpenSettings()
+        
+        public void OpenModInExplorer()
         {
-            MenuCommands.OpenSettingsCommand.Execute(null);
+            mainWindow.OpenModInExplorer();
+            
+            mainWindow._rightClickedMod = null;
+        }
+        
+        public void DeleteMod()
+        {
+            mainWindow.DeleteMod();
+            
+            mainWindow._rightClickedMod = null;
         }
     }
 }
+

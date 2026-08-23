@@ -208,9 +208,13 @@ public partial class PromptWindow : Window
                 comboBox.SelectedValue = comboBox.Items.Contains(selectedValue) ? selectedValue : "Other";
                 break;
             case Button button:
-                if (prompt.defaultValue is Action action)
+                if (prompt.defaultValue is (Action action, string[] classes))
                 {
                     button.Command = new RelayCommand(action);
+                    foreach (var str in classes)
+                    {
+                        button.Classes.Add(str);
+                    }
                 }
                 button.HorizontalAlignment = HorizontalAlignment.Center;
                 button.Content = prompt.promptText;
@@ -286,4 +290,10 @@ public partial class PromptWindow : Window
         AvaloniaXamlLoader.Load(this);
         WindowManager.Add(this);
     }
+}
+
+public class PromptButtonHelper
+{
+    public Action action;
+    public string[] classes;
 }

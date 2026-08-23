@@ -5,8 +5,8 @@
         x:Class="GMMLauncher.Views.ProgressWindow"
         Title="Progress"
         Width="400" Height="100"
-        ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaToDecorationsHint="True"
+        WindowDrawnDecorations.TitleBarDecorations="MinimizeButton, MaximizeButton, CloseButton"
         Topmost="True">
     
     <Design.DataContext>
