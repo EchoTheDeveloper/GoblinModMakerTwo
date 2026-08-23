@@ -8,160 +8,87 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="Very large update, I'll try and list everything I've done so far&#10;1. Autocompletion with all dlls from Isle Goblin (any Unity dll and the code for Isle Goblin itself) all loaded from your own copy. (ISLE GOBLIN CODE IS NOT SHIPPED WITH THIS PRODUCT)&#10;2. Custom theming (Resources/Themes) see the documentation for more info on making your own&#10;3. Reopening last tab (holds multiple)&#10;4. Decompiled files are stored for quick access in same session&#10;5. Fixed folding to work with all kinds of syntax&#10;6. Go to definition (works with decompiled tabs)&#10;7. Opening files using middle mouse button&#10;8. Fixed outer margins looking weird on fullscreen&#10;9. Upgraded to Avalonia 12 (NOTE: CURRENT VERSION IS A 12.2 ALPHA, I REALLY NEEDED A CERTAIN FIX THAT WAS ONLY AVAIABLE ON THIS VERSION PLEASE UPDATE TO 12.2 ON RELEASE)&#10;10. Main Menu Overhaul&#10;11. New Documentation (Check wiki section in repo)&#10;12. Added a recent projects section&#10;13. anytime you see a mod for example open existing or in recent projects you can right click for a context menu that lets you configure, open in explorer, and delete mod.&#10;14. Added a value for the level of opacity because I acknowledge that some people may not want the app to be translucent&#10;15. Collapse, expand foldings, coment, and uncomment functions (with chorded keybinds)&#10;16. Chorded keybinding along with a chorded menu item because Avalonia doesn't support chording natively&#10;17. TONS of styling&#10;18. Started work on an update service, accessible through main menu&#10;19. Added some more keybinds&#10;20. Added diagnostics (warnings, errors, and tips in the code editor)&#10;21. Symbol/Diagnostic tooltips&#10;22. Added autoclosing parentheses&#10;23. Added keybinds to main menu&#10;24. Added more icons&#10;25. Added an option to run Isle Goblin in code editor (Its under File &gt; Open Isle Goblin)&#10;26. And more">
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/CSharpDiagnosticRenderer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/CSharpFoldingStrategy.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/CSharpSymbolService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/Overrides/ChordedMenuItem.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/Overrides/ChordedMenuItem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/Overrides/MenuItem.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/RecentProjects.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/UpdateWindowViewModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/Views/UpdateWindow.axaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GMMLauncher/Views/UpdateWindow.axaml.cs" afterDir="false" />
+    <list default="true" id="e43a6fcf-e9d3-4804-bfa2-3cf1d889d07f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GoblinModMaker/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/GMMBackend.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GMMBackend/GMMBackend.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/Properties/AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/bin/Debug/GMMBackend.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.AssemblyReference.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.CoreCompileInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.csproj.FileListAbsolute.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMBackend/obj/Debug/GMMBackend.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/App.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/App.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/App.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/App.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/GMMLauncher.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/GMMLauncher.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/MenuCommands.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/MenuCommands.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Mod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Mod.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Settings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Settings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/CodeEditorViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/CodeEditorViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/DecompilerViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/DecompilerViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/MainWindowViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/MainWindowViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/ViewModels/SettingsWindowViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/ViewModels/SettingsWindowViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CodeEditor.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/CustomMargin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/CustomMargin.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/Decompiler.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/InfoWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/InfoWindow.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/InfoWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/InfoWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/MainWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/ProgressWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/ProgressWindow.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/PromptWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/PromptWindow.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/PromptWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/PromptWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/SettingsWindow.axaml" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/SettingsWindow.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/Views/SettingsWindow.axaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Views/SettingsWindow.axaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/WindowManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/WindowManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony20.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony20.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Base.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Base.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Controls.ColorPicker.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Controls.DataGrid.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Controls.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Controls.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.DesignerSupport.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.DesignerSupport.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Desktop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Desktop.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Diagnostics.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Dialogs.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Dialogs.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Fonts.Inter.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Fonts.Inter.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.FreeDesktop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.FreeDesktop.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Markup.Xaml.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Markup.Xaml.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Markup.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Markup.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Metal.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Metal.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.MicroCom.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.MicroCom.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Native.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Native.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.OpenGL.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.OpenGL.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Remote.Protocol.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Remote.Protocol.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Skia.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Skia.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Themes.Fluent.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Themes.Fluent.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Themes.Simple.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Vulkan.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Vulkan.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Win32.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Win32.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.X11.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.X11.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/AvaloniaEdit.TextMate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/AvaloniaEdit.TextMate.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/AvaloniaEdit.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/AvaloniaEdit.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Harmony.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Harmony.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Preloader.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Preloader.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/HarfBuzzSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/HarfBuzzSharp.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/HarmonyXInterop.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/HarmonyXInterop.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MicroCom.Runtime.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MicroCom.Runtime.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Mdb.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Mdb.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Pdb.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Pdb.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Rocks.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Rocks.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.RuntimeDetour.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.RuntimeDetour.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.Utils.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.Utils.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/SkiaSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/SkiaSharp.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/TextMateSharp.Grammars.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/TextMateSharp.Grammars.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/TextMateSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/TextMateSharp.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Tmds.DBus.Protocol.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Tmds.DBus.Protocol.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm/native/libHarfBuzzSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm/native/libHarfBuzzSharp.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm/native/libSkiaSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm/native/libSkiaSharp.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm64/native/libHarfBuzzSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm64/native/libHarfBuzzSharp.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm64/native/libSkiaSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm64/native/libSkiaSharp.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libHarfBuzzSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libHarfBuzzSharp.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libSkiaSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libSkiaSharp.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-x64/native/libHarfBuzzSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-x64/native/libHarfBuzzSharp.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-x64/native/libSkiaSharp.so" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-x64/native/libSkiaSharp.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux/native/libonigwrap.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libAvaloniaNative.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libAvaloniaNative.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libHarfBuzzSharp.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libHarfBuzzSharp.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libSkiaSharp.dylib" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libSkiaSharp.dylib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libonigwrap.dylib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/av_libglesv2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/av_libglesv2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/libHarfBuzzSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/libHarfBuzzSharp.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/libSkiaSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/libSkiaSharp.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/av_libglesv2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/av_libglesv2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/libHarfBuzzSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/libHarfBuzzSharp.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/libSkiaSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/libSkiaSharp.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/onigwrap-x64.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/av_libglesv2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/av_libglesv2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/libHarfBuzzSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/libHarfBuzzSharp.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/libSkiaSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/libSkiaSharp.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/onigwrap-x86.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/.NETCoreApp,Version=v9.0.AssemblyAttributes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/GMMLauncher.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/Resources.Inputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/references" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/Avalonia/resources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLaunc.39CCC4BB.Up2Date" beforeDir="false" afterPath="$PROJECT_DIR$/GMMLauncher/Overrides/DragTabItem.axaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.AssemblyInfoInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.assets.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.AssemblyReference.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.CoreCompileInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.csproj.FileListAbsolute.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.genruntimeconfig.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/GMMLauncher.sourcelink.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/apphost.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/ref/GMMLauncher.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/Avalonia/GMMLauncher.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/Debug/net9.0/refint/GMMLauncher.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.dgspec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.g.props" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/GMMLauncher.csproj.nuget.g.targets" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.assets.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.nuget.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/project.packagespec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.model.nuget.info" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GMMLauncher/obj/rider.project.restore.info" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GoblinModMaker.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/GoblinModMaker.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/0Harmony20.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Base.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Controls.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.DesignerSupport.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Desktop.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Dialogs.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Fonts.Inter.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.FreeDesktop.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Markup.Xaml.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Markup.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Metal.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.MicroCom.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Native.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.OpenGL.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Remote.Protocol.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Skia.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Themes.Fluent.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Vulkan.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.Win32.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.X11.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Avalonia.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/AvaloniaEdit.TextMate.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/AvaloniaEdit.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Harmony.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Harmony.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Preloader.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.Preloader.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/BepInEx.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/CommunityToolkit.Mvvm.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/DynamicData.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMBackend.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/GMMLauncher.runtimeconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/HarfBuzzSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/HarmonyXInterop.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MicroCom.Runtime.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Mdb.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Pdb.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.Rocks.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Mono.Cecil.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.RuntimeDetour.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.RuntimeDetour.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.Utils.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/MonoMod.Utils.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/ReactiveUI.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/SkiaSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Splat.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/System.Reactive.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/TextMateSharp.Grammars.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/TextMateSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/Tmds.DBus.Protocol.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm/native/libHarfBuzzSharp.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm/native/libSkiaSharp.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm64/native/libHarfBuzzSharp.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-arm64/native/libSkiaSharp.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libHarfBuzzSharp.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libSkiaSharp.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-x64/native/libHarfBuzzSharp.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/linux-x64/native/libSkiaSharp.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libAvaloniaNative.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libHarfBuzzSharp.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/osx/native/libSkiaSharp.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/av_libglesv2.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/libHarfBuzzSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-arm64/native/libSkiaSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/av_libglesv2.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/libHarfBuzzSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x64/native/libSkiaSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/av_libglesv2.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/libHarfBuzzSharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GMMLauncher/bin/Debug/net9.0/runtimes/win-x86/native/libSkiaSharp.dll" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -534,7 +461,8 @@
       <workItem from="1787238604291" duration="30948000" />
       <workItem from="1787332637599" duration="10865000" />
       <workItem from="1787364019591" duration="7739000" />
-      <workItem from="1787419887372" duration="30278000" />
+      <workItem from="1787419887372" duration="30794000" />
+      <workItem from="1787509692612" duration="355000" />
     </task>
     <task id="LOCAL-00001" summary="Changed simple stuff">
       <option name="closed" value="true" />
@@ -608,7 +536,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780285414113</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Very large update, I'll try and list everything I've done so far&#10;1. Autocompletion with all dlls from Isle Goblin (any Unity dll and the code for Isle Goblin itself) all loaded from your own copy. (ISLE GOBLIN CODE IS NOT SHIPPED WITH THIS PRODUCT)&#10;2. Custom theming (Resources/Themes) see the documentation for more info on making your own&#10;3. Reopening last tab (holds multiple)&#10;4. Decompiled files are stored for quick access in same session&#10;5. Fixed folding to work with all kinds of syntax&#10;6. Go to definition (works with decompiled tabs)&#10;7. Opening files using middle mouse button&#10;8. Fixed outer margins looking weird on fullscreen&#10;9. Upgraded to Avalonia 12 (NOTE: CURRENT VERSION IS A 12.2 ALPHA, I REALLY NEEDED A CERTAIN FIX THAT WAS ONLY AVAIABLE ON THIS VERSION PLEASE UPDATE TO 12.2 ON RELEASE)&#10;10. Main Menu Overhaul&#10;11. New Documentation (Check wiki section in repo)&#10;12. Added a recent projects section&#10;13. anytime you see a mod for example open existing or in recent projects you can right click for a context menu that lets you configure, open in explorer, and delete mod.&#10;14. Added a value for the level of opacity because I acknowledge that some people may not want the app to be translucent&#10;15. Collapse, expand foldings, coment, and uncomment functions (with chorded keybinds)&#10;16. Chorded keybinding along with a chorded menu item because Avalonia doesn't support chording natively&#10;17. TONS of styling&#10;18. Started work on an update service, accessible through main menu&#10;19. Added some more keybinds&#10;20. Added diagnostics (warnings, errors, and tips in the code editor)&#10;21. Symbol/Diagnostic tooltips&#10;22. Added autoclosing parentheses&#10;23. Added keybinds to main menu&#10;24. Added more icons&#10;25. Added an option to run Isle Goblin in code editor (Its under File &gt; Open Isle Goblin)&#10;26. And more">
+      <option name="closed" value="true" />
+      <created>1787509184195</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1787509184195</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
